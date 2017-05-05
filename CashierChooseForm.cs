@@ -35,10 +35,7 @@ namespace DvizhSeller
 
                 cashiersList.Items.Add(item);
 
-                if (cashier.GetId() == Properties.Settings.Default.cashboxId)
-                {
-                    cashiersList.SelectedItem = item;
-                }
+                cashiersList.SelectedItem = item;
             }
         }
 

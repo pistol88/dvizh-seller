@@ -537,8 +537,9 @@
             // 
             // cashierName
             // 
+            this.cashierName.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cashierName.AutoSize = true;
-            this.cashierName.Location = new System.Drawing.Point(464, 9);
+            this.cashierName.Location = new System.Drawing.Point(582, 9);
             this.cashierName.Name = "cashierName";
             this.cashierName.Size = new System.Drawing.Size(51, 13);
             this.cashierName.TabIndex = 12;
@@ -548,10 +549,11 @@
             // 
             // label8
             // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label8.Location = new System.Drawing.Point(424, 9);
+            this.label8.Location = new System.Drawing.Point(542, 9);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(44, 13);
             this.label8.TabIndex = 13;
@@ -692,7 +694,7 @@
             this.MaximizeBox = false;
             this.Name = "CashierForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dvizh Seller";
+            this.Text = "Dvizh.АРМ.кассир";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CashierForm_FormClosing);
             this.Load += new System.EventHandler(this.Cashier_Load);
             this.menuStrip1.ResumeLayout(false);
