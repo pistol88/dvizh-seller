@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DvizhSeller.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="dbFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\pistol2\Documents\dvizSeller.mdf</Value>
+    </Setting>
+    <Setting Name="dbTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="currency" Type="System.String" Scope="User">
+      <Value Profile="(Default)">р.</Value>
+    </Setting>
+    <Setting Name="host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dvizh.net</Value>
+    </Setting>
+    <Setting Name="protocol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https</Value>
+    </Setting>
+    <Setting Name="client" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dss-demo</Value>
+    </Setting>
+    <Setting Name="token" Type="System.String" Scope="User">
+      <Value Profile="(Default)">k2j33hdj39aqskdenneckksa303kd</Value>
+    </Setting>
+    <Setting Name="online" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="fiscal" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="checkNote" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dvizh.net</Value>
+    </Setting>
+    <Setting Name="barcodescaner" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="cashboxId" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
