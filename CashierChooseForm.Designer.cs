@@ -36,6 +36,7 @@
             // 
             // cashiersList
             // 
+            this.cashiersList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cashiersList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cashiersList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cashiersList.Location = new System.Drawing.Point(12, 36);
@@ -71,11 +72,15 @@
             this.Controls.Add(this.chooseButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cashiersList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CashierChooseForm";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Выбор кассира";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.CashierChooseForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

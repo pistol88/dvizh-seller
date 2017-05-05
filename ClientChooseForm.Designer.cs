@@ -1,6 +1,6 @@
 ﻿namespace DvizhSeller
 {
-    partial class ClientsForm
+    partial class ClientChooseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientChooseForm));
             this.label1 = new System.Windows.Forms.Label();
             this.clientsListView = new System.Windows.Forms.ListView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.searchBox = new System.Windows.Forms.TextBox();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label2 = new System.Windows.Forms.Label();
+            this.searchBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -62,6 +62,16 @@
             this.clientsListView.View = System.Windows.Forms.View.Details;
             this.clientsListView.DoubleClick += new System.EventHandler(this.clientsListView_DoubleClick);
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Имя";
+            this.columnHeader1.Width = 250;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Телефон";
+            this.columnHeader2.Width = 150;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -79,17 +89,7 @@
             this.searchBox.TabIndex = 3;
             this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Имя";
-            this.columnHeader1.Width = 250;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Телефон";
-            this.columnHeader2.Width = 150;
-            // 
-            // ClientsForm
+            // ClientChooseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -98,11 +98,14 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.clientsListView);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ClientsForm";
+            this.Name = "ClientChooseForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Выбор клиента";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.ClientsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

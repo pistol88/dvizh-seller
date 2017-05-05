@@ -10,12 +10,15 @@ using System.Windows.Forms;
 
 namespace DvizhSeller
 {
-    public partial class Cashier : Form
+    public partial class CashierForm : Form
     {
+        CashierChooseForm cashierForm;
+
         repositories.Category categories = new repositories.Category();
         repositories.Product products = new repositories.Product();
         repositories.Client clients = new repositories.Client();
         repositories.Cart cart = new repositories.Cart();
+        tools.CartData cartData = new tools.CartData();
 
         entities.Product selectedProduct;
         entities.Product cartElementSelected;
@@ -27,11 +30,11 @@ namespace DvizhSeller
 
         bool fiscalActivated;
 
-        public Cashier()
+        public CashierForm()
         {
             InitializeComponent();
         }
-        
+
         private void Cashier_Load(object sender, EventArgs e)
         {
             dataMapper = new services.DataMapper();
@@ -43,12 +46,13 @@ namespace DvizhSeller
             RenderProducts(products.GetList());
             RenderCategories(categories.GetList());
 
-            barCodeBox.Select();
-
             if (Properties.Settings.Default.fiscal && fiscal.DriverExists())
                 ActivateFiscal();
             else
                 DeactivateFiscal();
+
+            cashierForm = new CashierChooseForm(this);
+            cashierForm.Show();
         }
 
         public void ChooseCashier(int id, string name)
@@ -117,57 +121,33 @@ namespace DvizhSeller
             productPrice.Text = product.GetPrice().ToString() + Properties.Settings.Default.currency;
             productSku.Text = product.GetSku();
             productCount.Value = 1;
-            productName.Text = product.GetName();
+            productBox.Text = product.GetName();
             productBox.Visible = true;
             productAmount.Text = product.GetAmount().ToString();
         }
 
-        private void RenderSelectedCartElement(entities.Product product)
-        {
-            cartElementCount.Value = product.GetCartCount();
-
-            cartElementBoxBox.Visible = true;
-        }
-
-        private void HideSelectedCartElement()
-        {
-            cartElementBoxBox.Visible = false;
-        }
-
         private void RenderCart()
         {
-            cartListView.Items.Clear();
-
-            orderBox.Visible = false;
-
-            foreach (entities.Product product in cart.GetElements())
+            cartData.Clear();
+            foreach(entities.Product product in cart.GetElements())
             {
-                orderBox.Visible = true;
-
-                Item item = new Item(product.GetName(), product.GetId());
-
-                dynamic row = cartListView.Items.Add(product.GetName());
-
-                row.Tag = item.Value;
-
-                int index = row.Index;
-
-                cartListView.Items[index].SubItems.Add(product.GetPrice().ToString());
-                cartListView.Items[index].SubItems.Add(product.GetCartCount().ToString());
+                cartData.Add(product);
             }
+            cartGridView.DataSource = cartData;
 
-            orderTotal.Text = cart.GetTotal() + Properties.Settings.Default.currency;
-            
+            orderTotal.Text = cart.GetTotal().ToString() + Properties.Settings.Default.currency;
         }
 
         private void PutToCart()
         {
             cart.Put(selectedProduct, Convert.ToInt16(productCount.Value));
 
+            cartBox.Visible = true;
+    
             RenderCart();
         }
 
-        private void BuyBySku(string sku)
+        public void BuyBySku(string sku)
         {
             entities.Product product = products.FindOneBySku(sku);
 
@@ -250,30 +230,10 @@ namespace DvizhSeller
             PutToCart();
         }
 
-        private void cartListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in cartListView.SelectedItems)
-            {
-                cartElementSelected = products.FindOne(Convert.ToInt32(item.Tag));
-            }
-
-            RenderSelectedCartElement(cartElementSelected);
-            //HideProductBox();
-        }
-
-        private void cartElementCount_ValueChanged(object sender, EventArgs e)
-        {
-            cartElementSelected.SetCartCount(Convert.ToInt32(cartElementCount.Value));
-
-            RenderCart();
-        }
-
         private void cartElementRemove_Click(object sender, EventArgs e)
         {
             cart.Delete(cartElementSelected);
-
-            HideSelectedCartElement();
-
+            
             RenderCart();
         }
 
@@ -302,37 +262,11 @@ namespace DvizhSeller
 
         }
 
-        private void barCodeBox_TextChanged(object sender, EventArgs e)
-        {
-            BuyBySku(barCodeBox.Text);
-        }
-
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(this);
 
             settingsForm.Show();
-        }
-
-        private void barCodeBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            String barCodeStr = barCodeBox.Text;
-
-            if (e.KeyCode == Keys.Enter)
-            {
-                BuyBySku(barCodeStr);
-                barCodeBox.Text = "";
-            }
-        }
-
-        private void setBarcodeScanerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            barCodeBox.Select();
-        }
-
-        private void barCodeBox_TextChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -342,7 +276,7 @@ namespace DvizhSeller
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ClientsForm clientsForm = new ClientsForm(this);
+            ClientChooseForm clientsForm = new ClientChooseForm(this);
 
             clientsForm.Show();
         }
@@ -354,16 +288,46 @@ namespace DvizhSeller
 
         private void cashierName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CashierChooseForm cashierForm = new CashierChooseForm(this);
-
+            cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
         }
 
         private void выбратьКассирToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CashierChooseForm cashierForm = new CashierChooseForm(this);
-
             cashierForm.Show();
+        }
+
+        private void barCodeScanerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BarcodeScanerForm bcsForm = new BarcodeScanerForm(this);
+
+            bcsForm.Show();
+        }
+
+        private void CashierForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cartGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex == 3)
+            {
+                //Удаление из корзины
+                cart.GetElements().RemoveAt(cartGridView.CurrentCell.RowIndex);
+                RenderCart();
+            }
+        }
+
+        private void cartGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            RenderCart();
         }
     }
 }

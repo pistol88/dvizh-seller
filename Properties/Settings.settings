@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="dbFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\pistol2\Documents\dvizSeller.mdf</Value>
+      <Value Profile="(Default)">dvizSeller.mdf</Value>
     </Setting>
     <Setting Name="dbTimeout" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="currency" Type="System.String" Scope="User">
       <Value Profile="(Default)">р.</Value>

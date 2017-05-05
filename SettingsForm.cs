@@ -12,13 +12,13 @@ namespace DvizhSeller
 {
     public partial class SettingsForm : Form
     {
-        Cashier cashierForm;
+        CashierForm cashierForm;
 
         repositories.Cashbox cashboxes = new repositories.Cashbox();
 
         services.DataMapper dataMapper;
 
-        public SettingsForm(Cashier setCashierForm)
+        public SettingsForm(CashierForm setCashierForm)
         {
             cashierForm = setCashierForm;
 

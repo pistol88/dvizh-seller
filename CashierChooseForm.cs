@@ -15,9 +15,9 @@ namespace DvizhSeller
         repositories.Cashier cashiers = new repositories.Cashier();
         services.DataMapper dataMapper;
 
-        Cashier cashierForm;
+        CashierForm cashierForm;
 
-        public CashierChooseForm(Cashier setCashierForm)
+        public CashierChooseForm(CashierForm setCashierForm)
         {
             cashierForm = setCashierForm;
 

@@ -34,6 +34,24 @@ namespace DvizhSeller.entities
             }
         }
 
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        public int CartCount
+        {
+            get { return cartcount; }
+            set { cartcount = value; }
+        }
+
         public string GetName()
         {
             return name;

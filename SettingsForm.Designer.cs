@@ -45,13 +45,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.barcodescaner = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cashboxId = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.languageBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.currencyBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.cashboxId = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -211,6 +211,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "dvizh.net";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 150);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(41, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Касса:";
+            // 
+            // cashboxId
+            // 
+            this.cashboxId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cashboxId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cashboxId.FormattingEnabled = true;
+            this.cashboxId.Location = new System.Drawing.Point(70, 147);
+            this.cashboxId.Name = "cashboxId";
+            this.cashboxId.Size = new System.Drawing.Size(141, 21);
+            this.cashboxId.TabIndex = 20;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.languageBox);
@@ -226,6 +245,9 @@
             // 
             // languageBox
             // 
+            this.languageBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.languageBox.Enabled = false;
+            this.languageBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.languageBox.FormattingEnabled = true;
             this.languageBox.Items.AddRange(new object[] {
             "Русский"});
@@ -233,7 +255,6 @@
             this.languageBox.Name = "languageBox";
             this.languageBox.Size = new System.Drawing.Size(141, 21);
             this.languageBox.TabIndex = 18;
-            this.languageBox.Text = "Русский";
             // 
             // label5
             // 
@@ -246,6 +267,11 @@
             // 
             // currencyBox
             // 
+            this.currencyBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "р.",
+            "грн.",
+            "$",
+            "euro"});
             this.currencyBox.Location = new System.Drawing.Point(73, 27);
             this.currencyBox.Name = "currencyBox";
             this.currencyBox.Size = new System.Drawing.Size(141, 20);
@@ -261,23 +287,6 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "Валюта:";
             // 
-            // cashboxId
-            // 
-            this.cashboxId.FormattingEnabled = true;
-            this.cashboxId.Location = new System.Drawing.Point(70, 147);
-            this.cashboxId.Name = "cashboxId";
-            this.cashboxId.Size = new System.Drawing.Size(141, 21);
-            this.cashboxId.TabIndex = 20;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 150);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Касса:";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -291,6 +300,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.SettingsForm_Load);

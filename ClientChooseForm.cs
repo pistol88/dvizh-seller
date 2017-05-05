@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace DvizhSeller
 {
-    public partial class ClientsForm : Form
+    public partial class ClientChooseForm : Form
     {
-        Cashier cashierForm;
+        CashierForm cashierForm;
 
         repositories.Client clients = new repositories.Client();
         services.DataMapper dataMapper;
 
-        public ClientsForm(Cashier setCashierForm)
+        public ClientChooseForm(CashierForm setCashierForm)
         {
             cashierForm = setCashierForm;
 

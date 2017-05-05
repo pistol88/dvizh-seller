@@ -25,7 +25,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\pistol2\\Documents\\dvizSeller.mdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("dvizSeller.mdf")]
         public string dbFile {
             get {
                 return ((string)(this["dbFile"]));
@@ -37,7 +37,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int dbTimeout {
             get {
                 return ((int)(this["dbTimeout"]));
