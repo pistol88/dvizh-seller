@@ -29,6 +29,11 @@ namespace DvizhSeller.repositories
             products.Add(product);
         }
 
+        public void Clear()
+        {
+            products = new List<entities.interfaces.CartElement>();
+        }
+
         public void Delete(entities.interfaces.CartElement product)
         {
             products.Remove(product);

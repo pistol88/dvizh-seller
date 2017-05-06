@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CashierForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.кассирToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseCashierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cashboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +41,7 @@
             this.salesRecieprToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barCodeScanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.журналЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordersListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +76,7 @@
             this.paymentType0 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.orderButton = new System.Windows.Forms.Button();
             this.orderTotal = new System.Windows.Forms.Label();
             this.cashierName = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
@@ -104,7 +102,6 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.кассирToolStripMenuItem,
             this.devicesToolStripMenuItem,
             this.отчетыToolStripMenuItem,
             this.listsToolStripMenuItem,
@@ -114,21 +111,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(870, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // кассирToolStripMenuItem
-            // 
-            this.кассирToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseCashierToolStripMenuItem});
-            this.кассирToolStripMenuItem.Name = "кассирToolStripMenuItem";
-            this.кассирToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this.кассирToolStripMenuItem.Text = "Кассир";
-            // 
-            // chooseCashierToolStripMenuItem
-            // 
-            this.chooseCashierToolStripMenuItem.Name = "chooseCashierToolStripMenuItem";
-            this.chooseCashierToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.chooseCashierToolStripMenuItem.Text = "Выбрать кассира";
-            this.chooseCashierToolStripMenuItem.Click += new System.EventHandler(this.выбратьКассирToolStripMenuItem_Click);
             // 
             // devicesToolStripMenuItem
             // 
@@ -199,16 +181,17 @@
             // отчетыToolStripMenuItem
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.журналЗаказовToolStripMenuItem});
+            this.ordersListToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
             // 
-            // журналЗаказовToolStripMenuItem
+            // ordersListToolStripMenuItem
             // 
-            this.журналЗаказовToolStripMenuItem.Name = "журналЗаказовToolStripMenuItem";
-            this.журналЗаказовToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.журналЗаказовToolStripMenuItem.Text = "Журнал заказов";
+            this.ordersListToolStripMenuItem.Name = "ordersListToolStripMenuItem";
+            this.ordersListToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.ordersListToolStripMenuItem.Text = "Журнал заказов";
+            this.ordersListToolStripMenuItem.Click += new System.EventHandler(this.ordersListToolStripMenuItem_Click);
             // 
             // listsToolStripMenuItem
             // 
@@ -471,7 +454,7 @@
             // 
             // cartDataBindingSource
             // 
-            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartData);
+            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartProvider);
             // 
             // orderBox
             // 
@@ -483,7 +466,7 @@
             this.orderBox.Controls.Add(this.paymentType0);
             this.orderBox.Controls.Add(this.label2);
             this.orderBox.Controls.Add(this.label1);
-            this.orderBox.Controls.Add(this.button1);
+            this.orderBox.Controls.Add(this.orderButton);
             this.orderBox.Controls.Add(this.orderTotal);
             this.orderBox.Location = new System.Drawing.Point(538, 271);
             this.orderBox.Name = "orderBox";
@@ -498,7 +481,6 @@
             this.discountBox.Name = "discountBox";
             this.discountBox.Size = new System.Drawing.Size(89, 20);
             this.discountBox.TabIndex = 14;
-            this.discountBox.TextChanged += new System.EventHandler(this.discountBox_TextChanged);
             this.discountBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.discountBox_KeyDown);
             // 
             // linkLabel1
@@ -572,17 +554,18 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Клиент:";
             // 
-            // button1
+            // orderButton
             // 
-            this.button1.BackColor = System.Drawing.Color.LightGreen;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(9, 164);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(293, 39);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Заказ";
-            this.button1.UseVisualStyleBackColor = false;
+            this.orderButton.BackColor = System.Drawing.Color.LightGreen;
+            this.orderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.orderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.orderButton.Location = new System.Drawing.Point(9, 164);
+            this.orderButton.Name = "orderButton";
+            this.orderButton.Size = new System.Drawing.Size(293, 39);
+            this.orderButton.TabIndex = 4;
+            this.orderButton.Text = "Заказ";
+            this.orderButton.UseVisualStyleBackColor = false;
+            this.orderButton.Click += new System.EventHandler(this.orderButton_Click);
             // 
             // orderTotal
             // 
@@ -747,7 +730,7 @@
         private System.Windows.Forms.ToolStripMenuItem printerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesRecieprToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem журналЗаказовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ordersListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
         private System.Windows.Forms.GroupBox productBox;
@@ -761,7 +744,7 @@
         private System.Windows.Forms.Label productSku;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button orderButton;
         private System.Windows.Forms.RadioButton paymentType1;
         private System.Windows.Forms.RadioButton paymentType0;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
@@ -775,8 +758,6 @@
         private System.Windows.Forms.Label clientName;
         private System.Windows.Forms.TextBox discountBox;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.ToolStripMenuItem кассирToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chooseCashierToolStripMenuItem;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox productsSearchBox;
         private System.Windows.Forms.ComboBox productsCategoriesComboBox;

@@ -17,9 +17,10 @@ namespace DvizhSeller
         repositories.Category categories = new repositories.Category();
         repositories.Product products = new repositories.Product();
         repositories.Client clients = new repositories.Client();
+        repositories.Order orders = new repositories.Order();
         repositories.Cart cart = new repositories.Cart();
         repositories.Discount discounts = new repositories.Discount();
-        tools.CartData cartData = new tools.CartData();
+        tools.CartProvider cartData = new tools.CartProvider();
 
         entities.Product selectedProduct;
         entities.Product cartElementSelected;
@@ -250,12 +251,6 @@ namespace DvizhSeller
             cashierForm.Show();
         }
 
-        private void выбратьКассирToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CashierChooseForm cashierForm = new CashierChooseForm(this);
-            cashierForm.Show();
-        }
-
         private void barCodeScanerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BarcodeScanerForm bcsForm = new BarcodeScanerForm(this);
@@ -305,9 +300,44 @@ namespace DvizhSeller
             }
         }
 
-        private void discountBox_TextChanged(object sender, EventArgs e)
+        private void ordersListToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OrdersForm ordersForm = new OrdersForm();
+            ordersForm.Show();
+        }
 
+        private void orderButton_Click(object sender, EventArgs e)
+        {
+            entities.Order order = new entities.Order(0, DateTime.Now.ToString(), cart.GetTotal());
+
+            foreach(entities.Product product in cart.GetElements())
+            {
+                entities.OrderElement orderElement = new entities.OrderElement(product.GetId(), product.GetName(), product.GetPrice(), product.GetCartCount());
+
+                order.AddElement(orderElement);
+            }
+
+            cart.Clear();
+
+            orders.AddWithSql(order);
+
+            RenderCart();
+            ClearClient();
+            ClearDiscount();
+
+            paymentType0.Select();
+        }
+
+        public void ClearClient()
+        {
+            selectedClientId = 0;
+            clientName.Text = "-";
+        }
+
+        public void ClearDiscount()
+        {
+            cart.UnsetDiscount();
+            discountBox.Text = "";
         }
     }
 }

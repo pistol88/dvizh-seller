@@ -181,5 +181,44 @@ namespace DvizhSeller.services
 
             return true;
         }
+
+        public bool FillOrders(repositories.Order orderRepository)
+        {
+            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL ORDER BY id DESC", connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    entities.Order order = new entities.Order(reader.GetInt32(0), reader.GetDateTime(3).ToLongTimeString(), Convert.ToDouble(reader.GetDecimal(8)));
+
+                    orderRepository.Add(order);
+                }
+            }
+
+            reader.Close();
+
+            foreach(entities.Order order in orderRepository.GetList())
+            {
+                SqlCommand elementCommand = new SqlCommand("SELECT * FROM order_element_list WHERE order_id = " + order.GetId().ToString(), connection);
+
+                SqlDataReader elementReader = elementCommand.ExecuteReader();
+
+                if (elementReader.HasRows)
+                {
+                    while (elementReader.Read())
+                    {
+                        entities.OrderElement element = new entities.OrderElement(elementReader.GetInt32(0), elementReader.GetString(3), Convert.ToDouble(elementReader.GetDecimal(5)), elementReader.GetInt32(4));
+                        order.AddElement(element);
+                    }
+                }
+
+                elementReader.Close();
+            }
+
+            return true;
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace DvizhSeller.tools
 {
-    class CartData : BindingList<entities.Product>
+    class CartProvider : BindingList<entities.Product>
     {
 
     }
