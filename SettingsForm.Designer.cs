@@ -48,6 +48,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cashboxId = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.roundingTypeBox = new System.Windows.Forms.ComboBox();
+            this.roundingBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.languageBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.currencyBox = new System.Windows.Forms.TextBox();
@@ -59,7 +63,7 @@
             // 
             // settingsSave
             // 
-            this.settingsSave.Location = new System.Drawing.Point(209, 242);
+            this.settingsSave.Location = new System.Drawing.Point(207, 356);
             this.settingsSave.Name = "settingsSave";
             this.settingsSave.Size = new System.Drawing.Size(75, 23);
             this.settingsSave.TabIndex = 20;
@@ -157,7 +161,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.barcodescaner);
             this.groupBox1.Controls.Add(this.fiscal);
-            this.groupBox1.Location = new System.Drawing.Point(250, 22);
+            this.groupBox1.Location = new System.Drawing.Point(9, 227);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(229, 104);
             this.groupBox1.TabIndex = 22;
@@ -232,16 +236,59 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.roundingTypeBox);
+            this.groupBox3.Controls.Add(this.roundingBox);
+            this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.languageBox);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.currencyBox);
             this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Location = new System.Drawing.Point(250, 132);
+            this.groupBox3.Location = new System.Drawing.Point(249, 22);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(229, 89);
+            this.groupBox3.Size = new System.Drawing.Size(229, 309);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Общие";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 97);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(70, 13);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "Округление:";
+            // 
+            // roundingTypeBox
+            // 
+            this.roundingTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.roundingTypeBox.FormattingEnabled = true;
+            this.roundingTypeBox.Items.AddRange(new object[] {
+            "не округлять копейки",
+            "до 1",
+            "до 5",
+            "до 10"});
+            this.roundingTypeBox.Location = new System.Drawing.Point(15, 120);
+            this.roundingTypeBox.Name = "roundingTypeBox";
+            this.roundingTypeBox.Size = new System.Drawing.Size(199, 21);
+            this.roundingTypeBox.TabIndex = 25;
+            // 
+            // roundingBox
+            // 
+            this.roundingBox.Location = new System.Drawing.Point(169, 147);
+            this.roundingBox.Name = "roundingBox";
+            this.roundingBox.Size = new System.Drawing.Size(45, 20);
+            this.roundingBox.TabIndex = 23;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 152);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(141, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "После запятой оставлять:";
             // 
             // languageBox
             // 
@@ -291,7 +338,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(490, 274);
+            this.ClientSize = new System.Drawing.Size(490, 391);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -339,5 +386,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cashboxId;
+        private System.Windows.Forms.ComboBox roundingTypeBox;
+        private System.Windows.Forms.TextBox roundingBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }

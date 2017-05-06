@@ -15,6 +15,12 @@ namespace DvizhSeller.services
         public DataMapper()
         {
             connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+        }
+
+        ~DataMapper()
+        {
+            //connection.Close();
         }
 
         public void SetConnectionString(string setDbConnectionString)
@@ -24,8 +30,6 @@ namespace DvizhSeller.services
 
         public bool FillProducts(repositories.Product productRepository, repositories.Category categoryRepository)
         {
-            connection.Open();
-
             SqlCommand command = new SqlCommand("SELECT * FROM product", connection);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -66,14 +70,11 @@ namespace DvizhSeller.services
 
             reader.Close();
 
-            connection.Close();
-
             return true;
         }
 
         public bool FillCategories(repositories.Category categoryRepository)
         {
-            connection.Open();
 
             SqlCommand command = new SqlCommand("SELECT * FROM category", connection);
 
@@ -90,15 +91,11 @@ namespace DvizhSeller.services
 
             reader.Close();
 
-            connection.Close();
-
             return true;
         }
 
         public bool FillClients(repositories.Client clientRepository)
         {
-            connection.Open();
-
             SqlCommand command = new SqlCommand("SELECT * FROM client", connection);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -121,15 +118,11 @@ namespace DvizhSeller.services
 
             reader.Close();
 
-            connection.Close();
-
             return true;
         }
 
         public bool FillCashboxes(repositories.Cashbox cashboxRepository)
         {
-            connection.Open();
-
             SqlCommand command = new SqlCommand("SELECT * FROM cashbox", connection);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -146,15 +139,11 @@ namespace DvizhSeller.services
 
             reader.Close();
 
-            connection.Close();
-
             return true;
         }
 
         public bool FillCashiers(repositories.Cashier cashierRepository)
         {
-            connection.Open();
-
             SqlCommand command = new SqlCommand("SELECT * FROM cashier", connection);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -170,7 +159,25 @@ namespace DvizhSeller.services
 
             reader.Close();
 
-            connection.Close();
+            return true;
+        }
+
+        public bool FillDiscounts(repositories.Discount discountRepository)
+        {
+            SqlCommand command = new SqlCommand("SELECT * FROM discount", connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    entities.Discount discount = new entities.Discount(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
+                    discountRepository.Add(discount);
+                }
+            }
+
+            reader.Close();
 
             return true;
         }

@@ -166,5 +166,29 @@ namespace DvizhSeller.Properties {
                 this["cashboxId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int rounding {
+            get {
+                return ((int)(this["rounding"]));
+            }
+            set {
+                this["rounding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int roundingType {
+            get {
+                return ((int)(this["roundingType"]));
+            }
+            set {
+                this["roundingType"] = value;
+            }
+        }
     }
 }

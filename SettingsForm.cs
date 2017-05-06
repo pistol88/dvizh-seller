@@ -39,6 +39,8 @@ namespace DvizhSeller
             fiscal.Checked = Properties.Settings.Default.online;
             barcodescaner.Checked = Properties.Settings.Default.barcodescaner;
             checkNoteBox.Text = Properties.Settings.Default.checkNote;
+            roundingTypeBox.SelectedIndex = Properties.Settings.Default.roundingType;
+            roundingBox.Text = Properties.Settings.Default.rounding.ToString();
 
             foreach (entities.Cashbox cashbox in cashboxes.GetList())
             {
@@ -64,6 +66,8 @@ namespace DvizhSeller
             Properties.Settings.Default.online = fiscal.Checked;
             Properties.Settings.Default.barcodescaner = barcodescaner.Checked;
             Properties.Settings.Default.checkNote = checkNoteBox.Text;
+            Properties.Settings.Default.roundingType = roundingTypeBox.SelectedIndex;
+            Properties.Settings.Default.rounding = Convert.ToInt16(roundingBox.Text);
 
             object selectedItem = cashboxId.SelectedItem;
             Properties.Settings.Default.cashboxId = Convert.ToInt32(selectedItem.GetHashCode());

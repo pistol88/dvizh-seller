@@ -61,8 +61,16 @@
             this.toCartButton = new System.Windows.Forms.Button();
             this.cartBox = new System.Windows.Forms.GroupBox();
             this.cartGridView = new System.Windows.Forms.DataGridView();
+            this.cartProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartProductPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartProductCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartProductDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.orderBox = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.discountBox = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.clientName = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -80,11 +88,6 @@
             this.productNameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productPriceHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cartProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cartProductPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cartProductCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cartProductDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.productBox.SuspendLayout();
@@ -92,9 +95,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.productCount)).BeginInit();
             this.cartBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
             this.orderBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -233,14 +236,14 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.settingsToolStripMenuItem.Text = "Настройки";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // информацияToolStripMenuItem
             // 
             this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
-            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.информацияToolStripMenuItem.Text = "О программе";
             // 
             // productBox
@@ -263,7 +266,6 @@
             this.productBox.TabStop = false;
             this.productBox.Text = "Название товара";
             this.productBox.Visible = false;
-            this.productBox.Enter += new System.EventHandler(this.productBox_Enter);
             // 
             // label7
             // 
@@ -350,7 +352,6 @@
             0,
             0,
             0});
-            this.productCount.ValueChanged += new System.EventHandler(this.productCount_ValueChanged);
             // 
             // productPrice
             // 
@@ -397,7 +398,10 @@
             this.cartProductName,
             this.cartProductPrice,
             this.cartProductCount,
-            this.cartProductDelete});
+            this.cartProductDelete,
+            this.nameDataGridViewTextBoxColumn,
+            this.priceDataGridViewTextBoxColumn,
+            this.cartCountDataGridViewTextBoxColumn});
             this.cartGridView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cartGridView.DataSource = this.cartDataBindingSource;
             this.cartGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
@@ -410,12 +414,68 @@
             this.cartGridView.Size = new System.Drawing.Size(490, 183);
             this.cartGridView.TabIndex = 0;
             this.cartGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cartGridView_CellClick);
-            this.cartGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.cartGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cartGridView_CellEndEdit);
+            // 
+            // cartProductName
+            // 
+            this.cartProductName.DataPropertyName = "Name";
+            this.cartProductName.HeaderText = "Товар";
+            this.cartProductName.Name = "cartProductName";
+            this.cartProductName.ReadOnly = true;
+            this.cartProductName.Width = 265;
+            // 
+            // cartProductPrice
+            // 
+            this.cartProductPrice.DataPropertyName = "Price";
+            this.cartProductPrice.HeaderText = "Цена";
+            this.cartProductPrice.Name = "cartProductPrice";
+            this.cartProductPrice.ReadOnly = true;
+            this.cartProductPrice.Width = 70;
+            // 
+            // cartProductCount
+            // 
+            this.cartProductCount.DataPropertyName = "CartCount";
+            this.cartProductCount.HeaderText = "Кол-во";
+            this.cartProductCount.Name = "cartProductCount";
+            this.cartProductCount.Width = 70;
+            // 
+            // cartProductDelete
+            // 
+            this.cartProductDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cartProductDelete.HeaderText = "X";
+            this.cartProductDelete.Name = "cartProductDelete";
+            this.cartProductDelete.ReadOnly = true;
+            this.cartProductDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cartProductDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cartProductDelete.Text = "X";
+            this.cartProductDelete.UseColumnTextForButtonValue = true;
+            this.cartProductDelete.Width = 40;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            this.priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            // 
+            // cartCountDataGridViewTextBoxColumn
+            // 
+            this.cartCountDataGridViewTextBoxColumn.DataPropertyName = "CartCount";
+            this.cartCountDataGridViewTextBoxColumn.HeaderText = "CartCount";
+            this.cartCountDataGridViewTextBoxColumn.Name = "cartCountDataGridViewTextBoxColumn";
+            // 
+            // cartDataBindingSource
+            // 
+            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartData);
             // 
             // orderBox
             // 
-            this.orderBox.Controls.Add(this.textBox1);
+            this.orderBox.Controls.Add(this.discountBox);
             this.orderBox.Controls.Add(this.linkLabel1);
             this.orderBox.Controls.Add(this.clientName);
             this.orderBox.Controls.Add(this.label5);
@@ -432,12 +492,14 @@
             this.orderBox.TabStop = false;
             this.orderBox.Text = "Заказ";
             // 
-            // textBox1
+            // discountBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(79, 104);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 14;
+            this.discountBox.Location = new System.Drawing.Point(79, 104);
+            this.discountBox.Name = "discountBox";
+            this.discountBox.Size = new System.Drawing.Size(89, 20);
+            this.discountBox.TabIndex = 14;
+            this.discountBox.TextChanged += new System.EventHandler(this.discountBox_TextChanged);
+            this.discountBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.discountBox_KeyDown);
             // 
             // linkLabel1
             // 
@@ -459,7 +521,6 @@
             this.clientName.Size = new System.Drawing.Size(11, 13);
             this.clientName.TabIndex = 12;
             this.clientName.Text = "-";
-            this.clientName.Click += new System.EventHandler(this.label8_Click);
             // 
             // label5
             // 
@@ -501,7 +562,6 @@
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Промокод:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -511,7 +571,6 @@
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Клиент:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -567,7 +626,6 @@
             this.productsSearchBox.TabIndex = 3;
             this.productsSearchBox.Text = "Название или штрихкод";
             this.productsSearchBox.Click += new System.EventHandler(this.productsSearchBox_Click);
-            this.productsSearchBox.TextChanged += new System.EventHandler(this.productsSearchBox_TextChanged);
             this.productsSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productsSearchBox_KeyDown);
             // 
             // productsCategoriesComboBox
@@ -593,13 +651,12 @@
             this.productsListView.HideSelection = false;
             this.productsListView.Location = new System.Drawing.Point(6, 46);
             this.productsListView.Name = "productsListView";
-            this.productsListView.Size = new System.Drawing.Size(491, 148);
+            this.productsListView.Size = new System.Drawing.Size(491, 173);
             this.productsListView.TabIndex = 0;
             this.productsListView.UseCompatibleStateImageBehavior = false;
             this.productsListView.View = System.Windows.Forms.View.Details;
             this.productsListView.SelectedIndexChanged += new System.EventHandler(this.productsListView_SelectedIndexChanged);
             this.productsListView.DoubleClick += new System.EventHandler(this.productsListView_DoubleClick);
-            this.productsListView.Leave += new System.EventHandler(this.productsListView_Leave);
             // 
             // productNameHeader
             // 
@@ -622,45 +679,6 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Каталог";
-            // 
-            // cartDataBindingSource
-            // 
-            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartData);
-            // 
-            // cartProductName
-            // 
-            this.cartProductName.DataPropertyName = "Name";
-            this.cartProductName.HeaderText = "Товар";
-            this.cartProductName.Name = "cartProductName";
-            this.cartProductName.ReadOnly = true;
-            this.cartProductName.Width = 265;
-            // 
-            // cartProductPrice
-            // 
-            this.cartProductPrice.DataPropertyName = "Price";
-            this.cartProductPrice.HeaderText = "Цена";
-            this.cartProductPrice.Name = "cartProductPrice";
-            this.cartProductPrice.ReadOnly = true;
-            this.cartProductPrice.Width = 70;
-            // 
-            // cartProductCount
-            // 
-            this.cartProductCount.DataPropertyName = "CartCount";
-            this.cartProductCount.HeaderText = "Кол-во";
-            this.cartProductCount.Name = "cartProductCount";
-            this.cartProductCount.Width = 70;
-            // 
-            // cartProductDelete
-            // 
-            this.cartProductDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cartProductDelete.HeaderText = "X";
-            this.cartProductDelete.Name = "cartProductDelete";
-            this.cartProductDelete.ReadOnly = true;
-            this.cartProductDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cartProductDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.cartProductDelete.Text = "X";
-            this.cartProductDelete.UseColumnTextForButtonValue = true;
-            this.cartProductDelete.Width = 40;
             // 
             // groupBox1
             // 
@@ -695,7 +713,6 @@
             this.Name = "CashierForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dvizh.АРМ.кассир";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CashierForm_FormClosing);
             this.Load += new System.EventHandler(this.Cashier_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -705,11 +722,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.productCount)).EndInit();
             this.cartBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).EndInit();
             this.orderBox.ResumeLayout(false);
             this.orderBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -756,7 +773,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.LinkLabel cashierName;
         private System.Windows.Forms.Label clientName;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox discountBox;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.ToolStripMenuItem кассирToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chooseCashierToolStripMenuItem;
@@ -774,6 +791,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cartProductCount;
         private System.Windows.Forms.DataGridViewButtonColumn cartProductDelete;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cartCountDataGridViewTextBoxColumn;
     }
 }
 

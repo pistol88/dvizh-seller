@@ -10,6 +10,9 @@ namespace DvizhSeller.repositories
     {
         private List<entities.interfaces.CartElement> products = new List<entities.interfaces.CartElement>();
 
+        entities.Discount discount = null;
+        services.Rounder rounder = new services.Rounder();
+
         public void Put(entities.interfaces.CartElement product, int count = 1)
         {
             foreach (entities.interfaces.CartElement existsProduct in GetElements())
@@ -76,7 +79,24 @@ namespace DvizhSeller.repositories
                 total += product.GetPrice() * product.GetCartCount();
             }
 
-            return total;
+            double returnTotal = 0;
+
+            if (discount != null && total > 0)
+                returnTotal = total - (total * discount.GetDiscount() / 100);
+            else
+                returnTotal = total;
+            
+            return rounder.Round(returnTotal);
+        }
+
+        public void SetDiscount(entities.Discount setDiscount)
+        {
+            discount = setDiscount;
+        }
+
+        public void UnsetDiscount()
+        {
+            discount = null;
         }
     }
 }

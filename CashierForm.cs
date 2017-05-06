@@ -18,6 +18,7 @@ namespace DvizhSeller
         repositories.Product products = new repositories.Product();
         repositories.Client clients = new repositories.Client();
         repositories.Cart cart = new repositories.Cart();
+        repositories.Discount discounts = new repositories.Discount();
         tools.CartData cartData = new tools.CartData();
 
         entities.Product selectedProduct;
@@ -40,6 +41,7 @@ namespace DvizhSeller
             dataMapper = new services.DataMapper();
             dataMapper.FillCategories(categories);
             dataMapper.FillProducts(products, categories);
+            dataMapper.FillDiscounts(discounts);
 
             fiscal = new services.Fiscal(cart);
 
@@ -210,19 +212,9 @@ namespace DvizhSeller
             //HideSelectedCartElement();
         }
 
-        private void productsListView_Leave(object sender, EventArgs e)
-        {
-            
-        }
-
         private void productsListView_DoubleClick(object sender, EventArgs e)
         {
             PutToCart();
-        }
-
-        private void productCount_ValueChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void toCartButton_Click(object sender, EventArgs e)
@@ -237,41 +229,11 @@ namespace DvizhSeller
             RenderCart();
         }
 
-        private void productBox_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void discountBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(this);
 
             settingsForm.Show();
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -281,10 +243,6 @@ namespace DvizhSeller
             clientsForm.Show();
         }
 
-        private void productsSearchBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void cashierName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -305,16 +263,6 @@ namespace DvizhSeller
             bcsForm.Show();
         }
 
-        private void CashierForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void cartGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.ColumnIndex == 3)
@@ -328,6 +276,38 @@ namespace DvizhSeller
         private void cartGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             RenderCart();
+        }
+
+        private void discountBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if(discountBox.Text == "")
+                {
+                    cart.UnsetDiscount();
+
+                    return;
+                }
+
+                entities.Discount discount = discounts.FindOneByName(discountBox.Text);
+
+                if (discount != null)
+                {
+                    cart.SetDiscount(discount);
+                    MessageBox.Show("Промокод применен. Скидка " + discount.GetDiscount().ToString() + "%");
+                    RenderCart();
+                }
+                else
+                {
+                    MessageBox.Show("Промокод не найден");
+                    discountBox.Text = "";
+                }
+            }
+        }
+
+        private void discountBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
