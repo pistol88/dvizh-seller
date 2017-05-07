@@ -15,7 +15,7 @@
       <Value Profile="(Default)">dvizh.net</Value>
     </Setting>
     <Setting Name="protocol" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https</Value>
+      <Value Profile="(Default)">http</Value>
     </Setting>
     <Setting Name="client" Type="System.String" Scope="User">
       <Value Profile="(Default)">dss-demo</Value>

@@ -24,9 +24,12 @@ namespace DvizhSeller.repositories
             SqlConnection connection = new SqlConnection(dbConnectionString);
             connection.Open();
 
-            SqlCommand orderCommand = new SqlCommand("INSERT INTO order_list(date, total) OUTPUT INSERTED.ID VALUES(@date, @total)", connection);
+            SqlCommand orderCommand = new SqlCommand("INSERT INTO order_list(date, total, cashier_id, client_id, discount_id) OUTPUT INSERTED.ID VALUES(@date, @total, @cashier_id, @client_id, @discount_id)", connection);
 
             orderCommand.Parameters.AddWithValue("@date", order.Date);
+            orderCommand.Parameters.AddWithValue("@cashier_id", order.cashierId);
+            orderCommand.Parameters.AddWithValue("@client_id", order.clientId);
+            orderCommand.Parameters.AddWithValue("@discount_id", order.discountId);
             orderCommand.Parameters.AddWithValue("@total", order.Total.ToString());
             
             order.Id = (int) orderCommand.ExecuteScalar();
@@ -39,7 +42,7 @@ namespace DvizhSeller.repositories
                 elementCommand.Parameters.AddWithValue("@product_id", element.GetProductId());
                 elementCommand.Parameters.AddWithValue("@product_name", element.GetProductName());
                 elementCommand.Parameters.AddWithValue("@count", element.GetCount());
-                elementCommand.Parameters.AddWithValue("@price", order.Total.ToString());
+                elementCommand.Parameters.AddWithValue("@price", element.GetPrice().ToString());
 
                 elementCommand.ExecuteNonQuery();
             }

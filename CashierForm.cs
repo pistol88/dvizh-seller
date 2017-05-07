@@ -24,8 +24,9 @@ namespace DvizhSeller
 
         entities.Product selectedProduct;
         entities.Product cartElementSelected;
-        int selectedClientId;
-        int selectedCashierId;
+        int selectedClientId = 0;
+        int selectedCashierId = 0;
+        int selectedDiscountId = 0;
 
         services.DataMapper dataMapper;
         services.Fiscal fiscal;
@@ -273,30 +274,36 @@ namespace DvizhSeller
             RenderCart();
         }
 
+        private void SetDiscount(string promocode)
+        {
+            if (promocode == "")
+            {
+                cart.UnsetDiscount();
+
+                return;
+            }
+
+            entities.Discount discount = discounts.FindOneByName(promocode);
+
+            if (discount != null)
+            {
+                cart.SetDiscount(discount);
+                selectedDiscountId = discount.GetId();
+                MessageBox.Show("Промокод применен. Скидка " + discount.GetDiscount().ToString() + "%");
+                RenderCart();
+            }
+            else
+            {
+                MessageBox.Show("Промокод не найден");
+                discountBox.Text = "";
+            }
+        }
+
         private void discountBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if(discountBox.Text == "")
-                {
-                    cart.UnsetDiscount();
-
-                    return;
-                }
-
-                entities.Discount discount = discounts.FindOneByName(discountBox.Text);
-
-                if (discount != null)
-                {
-                    cart.SetDiscount(discount);
-                    MessageBox.Show("Промокод применен. Скидка " + discount.GetDiscount().ToString() + "%");
-                    RenderCart();
-                }
-                else
-                {
-                    MessageBox.Show("Промокод не найден");
-                    discountBox.Text = "";
-                }
+                SetDiscount(discountBox.Text);
             }
         }
 
@@ -308,7 +315,10 @@ namespace DvizhSeller
 
         private void orderButton_Click(object sender, EventArgs e)
         {
-            entities.Order order = new entities.Order(0, DateTime.Now.ToString(), cart.GetTotal());
+            if (cart.GetElements().Count <= 0)
+                return;
+
+            entities.Order order = new entities.Order(0, DateTime.Now.ToString(), cart.GetTotal(), selectedCashierId, selectedClientId, selectedDiscountId);
 
             foreach(entities.Product product in cart.GetElements())
             {
@@ -337,7 +347,13 @@ namespace DvizhSeller
         public void ClearDiscount()
         {
             cart.UnsetDiscount();
+            selectedDiscountId = 0;
             discountBox.Text = "";
+        }
+
+        private void discountBox_Leave(object sender, EventArgs e)
+        {
+            SetDiscount(discountBox.Text);
         }
     }
 }

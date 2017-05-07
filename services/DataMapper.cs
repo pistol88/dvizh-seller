@@ -184,7 +184,10 @@ namespace DvizhSeller.services
 
         public bool FillOrders(repositories.Order orderRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL ORDER BY id DESC", connection);
+            DateTime dt1 = DateTime.Now;
+            string date = dt1.AddDays(-2).ToShortTimeString();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND date > '" + date + "' ORDER BY id DESC", connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -192,7 +195,14 @@ namespace DvizhSeller.services
             {
                 while (reader.Read())
                 {
-                    entities.Order order = new entities.Order(reader.GetInt32(0), reader.GetDateTime(3).ToLongTimeString(), Convert.ToDouble(reader.GetDecimal(8)));
+                    entities.Order order = new entities.Order(
+                        reader.GetInt32(0), //id
+                        reader.GetDateTime(3).ToLongTimeString(), //date
+                        Convert.ToDouble(reader.GetDecimal(8)), //total
+                        reader.GetInt32(2), //cashier
+                        reader.GetInt32(7), //client
+                        reader.GetInt32(6) //discount
+                    );
 
                     orderRepository.Add(order);
                 }

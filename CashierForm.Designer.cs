@@ -482,6 +482,7 @@
             this.discountBox.Size = new System.Drawing.Size(89, 20);
             this.discountBox.TabIndex = 14;
             this.discountBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.discountBox_KeyDown);
+            this.discountBox.Leave += new System.EventHandler(this.discountBox_Leave);
             // 
             // linkLabel1
             // 

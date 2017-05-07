@@ -32,6 +32,22 @@ namespace DvizhSeller
             }
 
             ordersListGridView.DataSource = ordersProvider;
+
+            if(orders.GetList().Count() > 0)
+            {
+                orderElementsBox.Visible = true;
+
+                entities.Order order = orders.GetList()[0];
+
+                elementsProvider = new tools.OrderElementProvider();
+
+                foreach (entities.OrderElement orderElement in order.GetElements())
+                {
+                    elementsProvider.Add(orderElement);
+                }
+
+                elementsListGridView.DataSource = elementsProvider;
+            }
         }
 
         private void ordersListGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -41,9 +57,7 @@ namespace DvizhSeller
             int index = ordersListGridView.CurrentCell.RowIndex;
 
             entities.Order order = orders.GetList()[index];
-
-            orderTotal.Text = order.Total.ToString() + Properties.Settings.Default.currency;
-
+            
             elementsProvider = new tools.OrderElementProvider();
 
             foreach(entities.OrderElement orderElement in order.GetElements())

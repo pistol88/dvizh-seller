@@ -73,7 +73,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http")]
         public string protocol {
             get {
                 return ((string)(this["protocol"]));
