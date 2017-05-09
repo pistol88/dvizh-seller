@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace DvizhSeller.repositories
 {
@@ -24,8 +25,22 @@ namespace DvizhSeller.repositories
 
             SqlCommand orderCommand = new SqlCommand("UPDATE order_list SET dvizh_id = @dvizh_id WHERE id = @id", connection);
 
-            orderCommand.Parameters.AddWithValue("@dvizh_id", order.DvizhId);
+            orderCommand.Parameters.AddWithValue("@dvizh_id", dvizhId);
             orderCommand.Parameters.AddWithValue("@id", order.GetId());
+
+            orderCommand.ExecuteNonQuery();
+        }
+
+        public static void CancelElement(entities.OrderElement element)
+        {
+            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
+            SqlConnection connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+
+            SqlCommand orderCommand = new SqlCommand("UPDATE order_element_list SET cancel_at = @cancel_at WHERE id = @id", connection);
+
+            orderCommand.Parameters.AddWithValue("@cancel_at", DateTime.Now.ToLongDateString());
+            orderCommand.Parameters.AddWithValue("@id", element.GetId());
 
             orderCommand.ExecuteNonQuery();
         }

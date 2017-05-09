@@ -35,7 +35,6 @@
             this.cashboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cancelLastOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stornToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesRecieprToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,6 +86,7 @@
             this.productPriceHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.shiftOpened = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.productBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
@@ -127,7 +127,6 @@
             this.cashboxToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openShiftToolStripMenuItem,
             this.closeShiftToolStripMenuItem,
-            this.cancelLastOrderToolStripMenuItem,
             this.stornToolStripMenuItem});
             this.cashboxToolStripMenuItem.Name = "cashboxToolStripMenuItem";
             this.cashboxToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
@@ -136,25 +135,22 @@
             // openShiftToolStripMenuItem
             // 
             this.openShiftToolStripMenuItem.Name = "openShiftToolStripMenuItem";
-            this.openShiftToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.openShiftToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.openShiftToolStripMenuItem.Text = "Открыть смену";
+            this.openShiftToolStripMenuItem.Click += new System.EventHandler(this.openShiftToolStripMenuItem_Click);
             // 
             // closeShiftToolStripMenuItem
             // 
             this.closeShiftToolStripMenuItem.Name = "closeShiftToolStripMenuItem";
-            this.closeShiftToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.closeShiftToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.closeShiftToolStripMenuItem.Text = "Закрыть смену";
-            // 
-            // cancelLastOrderToolStripMenuItem
-            // 
-            this.cancelLastOrderToolStripMenuItem.Name = "cancelLastOrderToolStripMenuItem";
-            this.cancelLastOrderToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
-            this.cancelLastOrderToolStripMenuItem.Text = "Отменить последний заказ";
+            this.closeShiftToolStripMenuItem.Click += new System.EventHandler(this.closeShiftToolStripMenuItem_Click);
             // 
             // stornToolStripMenuItem
             // 
+            this.stornToolStripMenuItem.Enabled = false;
             this.stornToolStripMenuItem.Name = "stornToolStripMenuItem";
-            this.stornToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.stornToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.stornToolStripMenuItem.Text = "Сторнирование";
             // 
             // printerToolStripMenuItem
@@ -220,14 +216,14 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.settingsToolStripMenuItem.Text = "Настройки";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // информацияToolStripMenuItem
             // 
             this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
-            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.информацияToolStripMenuItem.Text = "О программе";
             this.информацияToolStripMenuItem.Click += new System.EventHandler(this.информацияToolStripMenuItem_Click);
             // 
@@ -616,6 +612,7 @@
             // 
             // productsCategoriesComboBox
             // 
+            this.productsCategoriesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productsCategoriesComboBox.FormattingEnabled = true;
             this.productsCategoriesComboBox.Location = new System.Drawing.Point(376, 18);
             this.productsCategoriesComboBox.Name = "productsCategoriesComboBox";
@@ -679,6 +676,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Карточка товара";
             // 
+            // shiftOpened
+            // 
+            this.shiftOpened.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.shiftOpened.AutoSize = true;
+            this.shiftOpened.BackColor = System.Drawing.Color.Transparent;
+            this.shiftOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.shiftOpened.Location = new System.Drawing.Point(406, 9);
+            this.shiftOpened.Name = "shiftOpened";
+            this.shiftOpened.Size = new System.Drawing.Size(10, 13);
+            this.shiftOpened.TabIndex = 16;
+            this.shiftOpened.Text = "-";
+            // 
             // CashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -686,6 +695,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Lavender;
             this.ClientSize = new System.Drawing.Size(870, 500);
+            this.Controls.Add(this.shiftOpened);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.cashierName);
@@ -729,7 +739,6 @@
         private System.Windows.Forms.ToolStripMenuItem cashboxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openShiftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeShiftToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cancelLastOrderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stornToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesRecieprToolStripMenuItem;
@@ -779,6 +788,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cartCountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Label shiftOpened;
     }
 }
 

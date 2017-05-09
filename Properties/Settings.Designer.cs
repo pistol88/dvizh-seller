@@ -121,7 +121,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool fiscal {
             get {
                 return ((bool)(this["fiscal"]));
@@ -193,7 +193,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("backend/web/index.php?r=csvapi")]
+        [global::System.Configuration.DefaultSettingValueAttribute("backend/web/csvapi")]
         public string csvRestPath {
             get {
                 return ((string)(this["csvRestPath"]));
@@ -205,7 +205,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("&")]
+        [global::System.Configuration.DefaultSettingValueAttribute("?")]
         public string tokenPrefix {
             get {
                 return ((string)(this["tokenPrefix"]));

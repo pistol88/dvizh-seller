@@ -33,6 +33,7 @@ namespace DvizhSeller
         services.DataExchanger dataExchanger = new services.DataExchanger();
         services.Fiscal fiscal;
 
+        bool shiftOpen;
         bool fiscalActivated;
 
         public CashierForm()
@@ -58,6 +59,8 @@ namespace DvizhSeller
                 ActivateFiscal();
             else
                 DeactivateFiscal();
+
+            RenderShift();
 
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
@@ -327,9 +330,33 @@ namespace DvizhSeller
 
             foreach(entities.Product product in cart.GetElements())
             {
-                entities.OrderElement orderElement = new entities.OrderElement(product.GetId(), product.GetName(), product.GetPrice(), product.GetCartCount());
+                entities.OrderElement orderElement = new entities.OrderElement(0, product.GetId(), product.GetName(), product.GetPrice(), product.GetCartCount(), "");
 
                 order.AddElement(orderElement);
+            }
+
+            if(Properties.Settings.Default.fiscal)
+            {
+                string cashierName;
+
+                if(selectedCashierId > 0)
+                {
+                    entities.Cashier cashier = cashiers.FindOne(selectedCashierId);
+                    cashierName = cashier.GetName();
+                }
+                else
+                {
+                    cashierName = "Основной";
+                }
+
+                int paymentType;
+
+                if (paymentType0.Checked)
+                    paymentType = 0;
+                else
+                    paymentType = 3;
+
+                FiscalRegister(cashierName, paymentType);
             }
 
             cart.Clear();
@@ -425,6 +452,63 @@ namespace DvizhSeller
         {
             AboutForm aboutWindow = new AboutForm();
             aboutWindow.Show();
+        }
+
+        private void openShiftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!fiscal.OpenShift())
+            {
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+            }
+
+            RenderShift();
+        }
+
+        private void closeShiftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!fiscal.CloseShift())
+            {
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+            }
+
+            RenderShift();
+        }
+
+        private Boolean FiscalRegister(string cashierName, int paymentType)
+        {
+            if (!shiftOpen)
+            {
+                MessageBox.Show("Смена не запущена, не удается провести заказ.");
+
+                return false;
+            }
+
+            if (!fiscal.Register(cashierName, paymentType))
+            {
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public void RenderShift()
+        {
+            shiftOpen = fiscal.SessionOpened();
+
+            if (shiftOpen)
+            {
+                shiftOpened.Text = "Смена открыта";
+                openShiftToolStripMenuItem.Enabled = false;
+                closeShiftToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                shiftOpened.Text = "Смена не открыта";
+                openShiftToolStripMenuItem.Enabled = true;
+                closeShiftToolStripMenuItem.Enabled = false;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DvizhSeller.services
         dynamic driver = false;
         dynamic cmd = false;
 
-        public Fiscal(repositories.Cart setCart)
+        public Fiscal(repositories.Cart setCart = null)
         {
             cart = setCart;
             lastElements = new List<entities.Product>();
@@ -66,14 +66,9 @@ namespace DvizhSeller.services
             }
         }
 
-        public Boolean Annulate()
+        public Boolean Annulate(entities.OrderElement orderElement)
         {
             if (!DriverExists())
-            {
-                return false;
-            }
-
-            if (lastElements.Count == 0)
             {
                 return false;
             }
@@ -103,24 +98,17 @@ namespace DvizhSeller.services
                 cmd.Alignment = 1;
                 cmd.Caption = "Отмена операции";
                 cmd.PrintString();
-                cmd.Alignment = 2;
-                cmd.Caption = "Кассир: 1";
-                cmd.PrintString();
                 cmd.TextWrap = 2;
-
-                foreach (entities.Product element in lastElements)
-                {
-                    cmd.Name = element.GetName();
-                    cmd.Price = element.GetPrice();
-                    cmd.Quantity = element.GetCartCount();
-                    cmd.BarCode = element.GetSku();
+                
+                    cmd.Name = orderElement.GetProductName();
+                    cmd.Price = orderElement.GetPrice();
+                    cmd.Quantity = orderElement.GetCount();
 
                     cmd.Caption = cmd.Name + " - отменен";
                     cmd.PrintString();
 
                     cmd.BuyReturn();
                     //cmd.Registration();
-                }
 
                 lastElements.Clear();
 
@@ -145,7 +133,7 @@ namespace DvizhSeller.services
             return true;
         }
 
-        public Boolean Register()
+        public Boolean Register(string cashierName, int paymentType = 0)
         {
             if (!DriverExists())
             {
@@ -180,10 +168,10 @@ namespace DvizhSeller.services
                 cmd.Caption = "-------------------------DVIZH";
                 cmd.PrintString();
                 cmd.Alignment = 1;
-                cmd.Caption = "Кассовый чек";
+                cmd.Caption = Properties.Settings.Default.checkNote;
                 cmd.PrintString();
                 cmd.Alignment = 2;
-                cmd.Caption = "Кассир: 1";
+                cmd.Caption = cashierName.ToString();
                 cmd.TextWrap = 2;
                 cmd.PrintString();
 
@@ -216,7 +204,7 @@ namespace DvizhSeller.services
                 cmd.Caption = "                              ";
                 cmd.PrintString();
 
-                cmd.TypeClose = 0;
+                cmd.TypeClose = paymentType;
                 cmd.Payment();
                 cmd.CloseCheck();
                 cmd.EndDocument();

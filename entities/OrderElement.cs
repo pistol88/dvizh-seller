@@ -13,13 +13,16 @@ namespace DvizhSeller.entities
         string productName;
         double price;
         int count;
+        string cancel_at;
 
-        public OrderElement(int setProductId, string setProductName, double setPrice, int setCount)
+        public OrderElement(int setId, int setProductId, string setProductName, double setPrice, int setCount, string setCancelAt)
         {
+            id = setId;
             productId = setProductId;
             productName = setProductName;
             price = setPrice;
             count = setCount;
+            cancel_at = setCancelAt;
         }
 
         public int Id
@@ -32,6 +35,12 @@ namespace DvizhSeller.entities
         {
             get { return productName; }
             set { productName = value; }
+        }
+
+        public string CancelAt
+        {
+            get { return cancel_at; }
+            set { cancel_at = value; }
         }
 
         public int Count
@@ -69,6 +78,11 @@ namespace DvizhSeller.entities
         public int GetCount()
         {
             return count;
+        }
+
+        public void SetCancelAt(string date)
+        {
+            cancel_at = date;
         }
     }
 }

@@ -27,7 +27,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="fiscal" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="checkNote" Type="System.String" Scope="User">
       <Value Profile="(Default)">dvizh.net</Value>
@@ -45,10 +45,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="csvRestPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">backend/web/index.php?r=csvapi</Value>
+      <Value Profile="(Default)">backend/web/csvapi</Value>
     </Setting>
     <Setting Name="tokenPrefix" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&amp;</Value>
+      <Value Profile="(Default)">?</Value>
     </Setting>
   </Settings>
 </SettingsFile>

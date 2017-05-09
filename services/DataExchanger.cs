@@ -11,6 +11,14 @@ namespace DvizhSeller.services
 {
     class DataExchanger
     {
+        string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
+        SqlConnection connection;
+
+        public DataExchanger()
+        {
+            connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+        }
 
         public Tuple<int, int, int> LoadProducts(repositories.Product products, repositories.Category categories)
         {
@@ -224,7 +232,7 @@ namespace DvizhSeller.services
         {
             int counter = 0;
 
-            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND date > '" + date + "' ORDER BY id DESC", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND (dvizh_id = 0 OR dvizh_id IS NULL) ORDER BY id DESC", connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -282,8 +290,6 @@ namespace DvizhSeller.services
                 + "&clientId="
                 + order.GetClientId().ToString();
 
-            Clipboard.SetText(url);
-
             try
             {
                 string result = new WebClient().DownloadString(url);
@@ -313,7 +319,7 @@ namespace DvizhSeller.services
                 + Properties.Settings.Default.tokenPrefix
                 + "token="
                 + Properties.Settings.Default.token;
-
+            Clipboard.SetText(url);
             try
             {
                 string csv = new WebClient().DownloadString(url);

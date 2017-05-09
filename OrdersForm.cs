@@ -16,6 +16,8 @@ namespace DvizhSeller
         repositories.Order orders = new repositories.Order();
         services.DataMapper dataMapper;
         tools.OrderElementProvider elementsProvider;
+        services.Fiscal fiscal;
+
         public OrdersForm()
         {
             InitializeComponent();
@@ -23,6 +25,8 @@ namespace DvizhSeller
 
         private void OrdersForm_Load(object sender, EventArgs e)
         {
+            fiscal = new services.Fiscal();
+
             dataMapper = new services.DataMapper();
             dataMapper.FillOrders(orders);
 
@@ -66,6 +70,20 @@ namespace DvizhSeller
             }
 
             elementsListGridView.DataSource = elementsProvider;
+        }
+
+        private void canceSelectedElement_Click(object sender, EventArgs e)
+        {
+            int index = elementsListGridView.CurrentCell.RowIndex;
+            entities.OrderElement orderElement = elementsProvider[index];
+
+            orderElement.SetCancelAt(DateTime.Now.ToLongDateString());
+            repositories.Order.CancelElement(orderElement);
+
+            if(Properties.Settings.Default.fiscal)
+                fiscal.Annulate(orderElement);
+
+            elementsListGridView.Update();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace DvizhSeller
             currencyBox.Text = Properties.Settings.Default.currency;
             tokenBox.Text = Properties.Settings.Default.token;
             online.Checked = Properties.Settings.Default.online;
-            fiscal.Checked = Properties.Settings.Default.online;
+            fiscal.Checked = Properties.Settings.Default.fiscal;
             barcodescaner.Checked = Properties.Settings.Default.barcodescaner;
             checkNoteBox.Text = Properties.Settings.Default.checkNote;
             roundingTypeBox.SelectedIndex = Properties.Settings.Default.roundingType;

@@ -234,7 +234,14 @@ namespace DvizhSeller.services
                 {
                     while (elementReader.Read())
                     {
-                        entities.OrderElement element = new entities.OrderElement(elementReader.GetInt32(0), elementReader.GetString(3), Convert.ToDouble(elementReader.GetDecimal(5)), elementReader.GetInt32(4));
+                        string cancelAt;
+
+                        if (!elementReader.IsDBNull(6))
+                            cancelAt = elementReader.GetString(6);
+                        else
+                            cancelAt = "";
+
+                        entities.OrderElement element = new entities.OrderElement(elementReader.GetInt32(0), elementReader.GetInt32(1), elementReader.GetString(3), Convert.ToDouble(elementReader.GetDecimal(5)), elementReader.GetInt32(4), cancelAt);
                         order.AddElement(element);
                     }
                 }
