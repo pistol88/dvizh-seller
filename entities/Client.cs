@@ -29,14 +29,29 @@ namespace DvizhSeller.entities
             return phone;
         }
 
-        public string GetNameAndPhone()
-        {
-            return name + phone;
-        }
-
         public int GetId()
         {
             return id;
+        }
+
+        public void SetName(string setName)
+        {
+            name = setName;
+        }
+
+        public void SetPhone(string setPhone)
+        {
+            phone = setPhone;
+        }
+
+        public void SetId(int setId)
+        {
+            id = setId;
+        }
+
+        public string GetNameAndPhone()
+        {
+            return name + phone;
         }
     }
 }

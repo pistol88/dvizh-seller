@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace DvizhSeller.repositories
 {
@@ -13,6 +15,39 @@ namespace DvizhSeller.repositories
         public void Add(entities.Product product)
         {
             products.Add(product);
+        }
+
+        public int SaveWithSql(entities.Product product)
+        {
+            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
+            SqlConnection connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+
+            entities.Product hasProduct = FindOne(product.GetId());
+
+            SqlCommand command;
+
+            if (hasProduct == null)
+            {
+                Add(product);
+                command = new SqlCommand("INSERT INTO product(id, sku, name, price, category_id, image, amount) VALUES(@id, @sku, @name, @price, @category_id, @image, @amount)", connection);
+            }
+            else
+            {
+                command = new SqlCommand("UPDATE product SET sku = @sku, name = @name, price = @price, category_id = @category_id, image = @image, amount = @amount WHERE id = @id ", connection);
+            }
+
+            command.Parameters.AddWithValue("@id", product.GetId());
+            command.Parameters.AddWithValue("@sku", product.GetSku());
+            command.Parameters.AddWithValue("@name", product.GetName());
+            command.Parameters.AddWithValue("@price", Convert.ToDecimal(product.GetPrice()));
+            command.Parameters.AddWithValue("@category_id", product.GetCategoryId());
+            command.Parameters.AddWithValue("@image", product.GetImage());
+            command.Parameters.AddWithValue("@amount", product.GetAmount());
+
+            int num = command.ExecuteNonQuery();
+
+            return num;
         }
 
         public void Delete(entities.Product product)

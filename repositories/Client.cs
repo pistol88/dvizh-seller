@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace DvizhSeller.repositories
 {
@@ -10,14 +12,43 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Client> clients = new List<entities.Client>();
 
-        public void Add(entities.Client category)
+        public void Add(entities.Client client)
         {
-            clients.Add(category);
+            clients.Add(client);
         }
 
-        public void Delete(entities.Client category)
+        public int SaveWithSql(entities.Client client)
         {
-            clients.Remove(category);
+            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
+            SqlConnection connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+
+            entities.Client hasClient = FindOne(client.GetId());
+
+            SqlCommand command;
+
+            if (hasClient == null)
+            {
+                Add(client);
+                command = new SqlCommand("INSERT INTO client(id, name, phone) VALUES(@id, @name, @phone)", connection);
+            }
+            else
+            {
+                command = new SqlCommand("UPDATE client SET name = @name, phone = @phone WHERE id = @id ", connection);
+            }
+
+            command.Parameters.AddWithValue("@id", client.GetId());
+            command.Parameters.AddWithValue("@name", client.GetName());
+            command.Parameters.AddWithValue("@phone", client.GetPhone());
+
+            int num = command.ExecuteNonQuery();
+
+            return num;
+        }
+
+        public void Delete(entities.Client client)
+        {
+            clients.Remove(client);
         }
 
         public List<entities.Client> GetList()

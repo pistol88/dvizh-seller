@@ -190,5 +190,29 @@ namespace DvizhSeller.Properties {
                 this["roundingType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("backend/web/index.php?r=csvapi")]
+        public string csvRestPath {
+            get {
+                return ((string)(this["csvRestPath"]));
+            }
+            set {
+                this["csvRestPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("&")]
+        public string tokenPrefix {
+            get {
+                return ((string)(this["tokenPrefix"]));
+            }
+            set {
+                this["tokenPrefix"] = value;
+            }
+        }
     }
 }

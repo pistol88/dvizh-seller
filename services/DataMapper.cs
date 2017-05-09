@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+
 namespace DvizhSeller.services
 {
     class DataMapper
@@ -182,6 +183,26 @@ namespace DvizhSeller.services
             return true;
         }
 
+        public static entities.Order BuildOrder(SqlDataReader reader)
+        {
+            int dvizhId = 0;
+
+            if (!reader.IsDBNull(1))
+                dvizhId = reader.GetInt32(1);
+            else
+                dvizhId = 0;
+
+            return new entities.Order(
+                        reader.GetInt32(0), //id
+                        reader.GetDateTime(3).ToLongTimeString(), //date
+                        Convert.ToDouble(reader.GetDecimal(8)), //total
+                        reader.GetInt32(2), //cashier
+                        reader.GetInt32(7), //client
+                        reader.GetInt32(6), //discount
+                        dvizhId //dvizh id
+                    );
+        }
+
         public bool FillOrders(repositories.Order orderRepository)
         {
             DateTime dt1 = DateTime.Now;
@@ -195,14 +216,7 @@ namespace DvizhSeller.services
             {
                 while (reader.Read())
                 {
-                    entities.Order order = new entities.Order(
-                        reader.GetInt32(0), //id
-                        reader.GetDateTime(3).ToLongTimeString(), //date
-                        Convert.ToDouble(reader.GetDecimal(8)), //total
-                        reader.GetInt32(2), //cashier
-                        reader.GetInt32(7), //client
-                        reader.GetInt32(6) //discount
-                    );
+                    entities.Order order = BuildOrder(reader);
 
                     orderRepository.Add(order);
                 }

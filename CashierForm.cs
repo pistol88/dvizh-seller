@@ -17,6 +17,7 @@ namespace DvizhSeller
         repositories.Category categories = new repositories.Category();
         repositories.Product products = new repositories.Product();
         repositories.Client clients = new repositories.Client();
+        repositories.Cashier cashiers = new repositories.Cashier();
         repositories.Order orders = new repositories.Order();
         repositories.Cart cart = new repositories.Cart();
         repositories.Discount discounts = new repositories.Discount();
@@ -29,6 +30,7 @@ namespace DvizhSeller
         int selectedDiscountId = 0;
 
         services.DataMapper dataMapper;
+        services.DataExchanger dataExchanger = new services.DataExchanger();
         services.Fiscal fiscal;
 
         bool fiscalActivated;
@@ -44,6 +46,8 @@ namespace DvizhSeller
             dataMapper.FillCategories(categories);
             dataMapper.FillProducts(products, categories);
             dataMapper.FillDiscounts(discounts);
+            dataMapper.FillClients(clients);
+            dataMapper.FillCashiers(cashiers);
 
             fiscal = new services.Fiscal(cart);
 
@@ -128,6 +132,7 @@ namespace DvizhSeller
             productBox.Text = product.GetName();
             productBox.Visible = true;
             productAmount.Text = product.GetAmount().ToString();
+            productPicture.ImageLocation = product.GetImage();
         }
 
         private void RenderCart()
@@ -329,6 +334,15 @@ namespace DvizhSeller
 
             cart.Clear();
 
+            if(Properties.Settings.Default.online)
+            {
+                int dvizhOrderId = dataExchanger.SendOrder(order);
+                if (dvizhOrderId > 0)
+                {
+                    order.SetDvizhId(dvizhOrderId);
+                }
+            }
+
             orders.AddWithSql(order);
 
             RenderCart();
@@ -354,6 +368,63 @@ namespace DvizhSeller
         private void discountBox_Leave(object sender, EventArgs e)
         {
             SetDiscount(discountBox.Text);
+        }
+
+        private void productsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(!Properties.Settings.Default.online)
+            {
+                MessageBox.Show("Включите в настройках онлайн режим");
+                return;
+            }
+
+            DataExchangeForm loadWindow = new DataExchangeForm();
+            loadWindow.Show();
+
+            try
+            {
+                loadWindow.SetMessage("Загрузка товаров");
+                Tuple<int, int, int>  productsResult = dataExchanger.LoadProducts(products, categories);
+                RenderProducts(products.GetList());
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Загрузка категорий");
+                dataExchanger.LoadCategories(categories);
+                RenderCategories(categories.GetList());
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Загрузка клиентов");
+                dataExchanger.LoadClients(clients);
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Загрузка скидок");
+                dataExchanger.LoadDiscounts(discounts);
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Загрузка кассирова");
+                dataExchanger.LoadCashiers(cashiers);
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Обмен заказами");
+                dataExchanger.SendOrders();
+                loadWindow.Step();
+
+                loadWindow.Step();
+
+                loadWindow.SetMessage("Обмен завершен. Добавлено товаров: " + productsResult.Item1.ToString() + "; новых цен: " + productsResult.Item2.ToString() + "; новых остатков: " + productsResult.Item3.ToString());
+            }
+            catch (System.Data.SqlClient.SqlException exc)
+            {
+                MessageBox.Show(exc.Message);
+                MessageBox.Show("Обмен не удалось завершить до конца");
+            }
+            
+        }
+
+        private void информацияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm aboutWindow = new AboutForm();
+            aboutWindow.Show();
         }
     }
 }

@@ -44,5 +44,11 @@
     <Setting Name="roundingType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="csvRestPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">backend/web/index.php?r=csvapi</Value>
+    </Setting>
+    <Setting Name="tokenPrefix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&amp;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

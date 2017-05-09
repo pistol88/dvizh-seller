@@ -10,18 +10,23 @@ namespace DvizhSeller.entities
     {
         int id;
         int discount;
-        string name;
+        string code;
 
-        public Discount(int setId, string setName, int setDiscount)
+        public Discount(int setId, string setCode, int setDiscount)
         {
             id = setId;
-            name = setName;
+            code = setCode;
             discount = setDiscount;
         }
 
         public string GetName()
         {
-            return name;
+            return code;
+        }
+
+        public string GetCode()
+        {
+            return code;
         }
 
         public int GetDiscount()
@@ -32,6 +37,21 @@ namespace DvizhSeller.entities
         public int GetId()
         {
             return id;
+        }
+
+        public void SetCode(string setCode)
+        {
+            code = setCode;
+        }
+
+        public void SetDiscount(int setDiscount)
+        {
+            discount = setDiscount;
+        }
+
+        public void SetId(int setId)
+        {
+            id = setId;
         }
     }
 }

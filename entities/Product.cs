@@ -106,5 +106,35 @@ namespace DvizhSeller.entities
         {
             cartcount = count;
         }
+
+        public void SetName(string setName)
+        {
+            name = setName;
+        }
+        
+        public void SetCategoryId(int setCategoryId)
+        {
+            categoryId = setCategoryId;
+        }
+
+        public void SetPrice(double setPrice)
+        {
+            price = setPrice;
+        }
+
+        public void SetSku(string setSku)
+        {
+            sku = setSku;
+        }
+
+        public void SetAmount(int setAmount)
+        {
+            amount = setAmount;
+        }
+
+        public void SetImage(string setImage)
+        {
+            image = setImage;
+        }
     }
 }

@@ -198,14 +198,15 @@
             this.listsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productsToolStripMenuItem});
             this.listsToolStripMenuItem.Name = "listsToolStripMenuItem";
-            this.listsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.listsToolStripMenuItem.Text = "Справочники";
+            this.listsToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.listsToolStripMenuItem.Text = "dvizh.net";
             // 
             // productsToolStripMenuItem
             // 
             this.productsToolStripMenuItem.Name = "productsToolStripMenuItem";
-            this.productsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.productsToolStripMenuItem.Text = "Выгрузить все";
+            this.productsToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.productsToolStripMenuItem.Text = "Обновить данные";
+            this.productsToolStripMenuItem.Click += new System.EventHandler(this.productsToolStripMenuItem_Click);
             // 
             // оПрограммеToolStripMenuItem
             // 
@@ -219,15 +220,16 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "Настройки";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // информацияToolStripMenuItem
             // 
             this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
-            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.информацияToolStripMenuItem.Text = "О программе";
+            this.информацияToolStripMenuItem.Click += new System.EventHandler(this.информацияToolStripMenuItem_Click);
             // 
             // productBox
             // 
@@ -290,7 +292,7 @@
             this.productPicture.ImageLocation = "http://dvizh.net/images/placeholder-product.png";
             this.productPicture.Location = new System.Drawing.Point(6, 27);
             this.productPicture.Name = "productPicture";
-            this.productPicture.Size = new System.Drawing.Size(120, 115);
+            this.productPicture.Size = new System.Drawing.Size(120, 120);
             this.productPicture.TabIndex = 6;
             this.productPicture.TabStop = false;
             // 
@@ -636,6 +638,7 @@
             this.productsListView.Location = new System.Drawing.Point(6, 46);
             this.productsListView.Name = "productsListView";
             this.productsListView.Size = new System.Drawing.Size(491, 173);
+            this.productsListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.productsListView.TabIndex = 0;
             this.productsListView.UseCompatibleStateImageBehavior = false;
             this.productsListView.View = System.Windows.Forms.View.Details;
@@ -645,7 +648,7 @@
             // productNameHeader
             // 
             this.productNameHeader.Text = "Товар";
-            this.productNameHeader.Width = 435;
+            this.productNameHeader.Width = 420;
             // 
             // productPriceHeader
             // 

@@ -16,6 +16,20 @@ namespace DvizhSeller.repositories
             orders.Add(order);
         }
 
+        public static void SaveDvizhIdWithSql(entities.Order order, int dvizhId)
+        {
+            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
+            SqlConnection connection = new SqlConnection(dbConnectionString);
+            connection.Open();
+
+            SqlCommand orderCommand = new SqlCommand("UPDATE order_list SET dvizh_id = @dvizh_id WHERE id = @id", connection);
+
+            orderCommand.Parameters.AddWithValue("@dvizh_id", order.DvizhId);
+            orderCommand.Parameters.AddWithValue("@id", order.GetId());
+
+            orderCommand.ExecuteNonQuery();
+        }
+
         public void AddWithSql(entities.Order order)
         {
             Add(order);
@@ -24,8 +38,9 @@ namespace DvizhSeller.repositories
             SqlConnection connection = new SqlConnection(dbConnectionString);
             connection.Open();
 
-            SqlCommand orderCommand = new SqlCommand("INSERT INTO order_list(date, total, cashier_id, client_id, discount_id) OUTPUT INSERTED.ID VALUES(@date, @total, @cashier_id, @client_id, @discount_id)", connection);
+            SqlCommand orderCommand = new SqlCommand("INSERT INTO order_list(dvizh_id, date, total, cashier_id, client_id, discount_id) OUTPUT INSERTED.ID VALUES(@dvizh_id, @date, @total, @cashier_id, @client_id, @discount_id)", connection);
 
+            orderCommand.Parameters.AddWithValue("@dvizh_id", order.DvizhId);
             orderCommand.Parameters.AddWithValue("@date", order.Date);
             orderCommand.Parameters.AddWithValue("@cashier_id", order.cashierId);
             orderCommand.Parameters.AddWithValue("@client_id", order.clientId);

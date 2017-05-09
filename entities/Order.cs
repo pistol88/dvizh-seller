@@ -19,7 +19,7 @@ namespace DvizhSeller.entities
 
         private List<entities.OrderElement> elements = new List<entities.OrderElement>();
 
-        public Order(int setId, string setDate, double setTotal, int setCashier, int setClient, int setDiscount)
+        public Order(int setId, string setDate, double setTotal, int setCashier, int setClient, int setDiscount, int setDvizhId = 0)
         {
             id = setId;
             date = setDate;
@@ -27,6 +27,7 @@ namespace DvizhSeller.entities
             cashier_id = setCashier;
             client_id = setClient;
             discount_id = setDiscount;
+            dvizh_id = setDvizhId;
         }
 
         public void AddElement(entities.OrderElement element)
@@ -84,6 +85,36 @@ namespace DvizhSeller.entities
         public int GetId()
         {
             return id;
+        }
+
+        public double GetTotal()
+        {
+            return total;
+        }
+
+        public int GetDiscountId()
+        {
+            return discount_id;
+        }
+
+        public string GetDate()
+        {
+            return date;
+        }
+
+        public int GetCashierId()
+        {
+            return cashier_id;
+        }
+
+        public int GetClientId()
+        {
+            return client_id;
+        }
+
+        public void SetDvizhId(int setDvizhId)
+        {
+            dvizh_id = setDvizhId;
         }
     }
 }

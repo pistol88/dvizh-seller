@@ -26,5 +26,15 @@ namespace DvizhSeller.entities
         {
             return id;
         }
+
+        public void SetName(string setName)
+        {
+            name = setName;
+        }
+
+        public void SetId(int setId)
+        {
+            id = setId;
+        }
     }
 }
