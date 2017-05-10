@@ -12,7 +12,9 @@ namespace DvizhSeller
 {
     public partial class CashierChooseForm : Form
     {
-        repositories.Cashier cashiers = new repositories.Cashier();
+        services.Database db = new services.Database();
+
+        repositories.Cashier cashiers;
         services.DataMapper dataMapper;
 
         CashierForm cashierForm;
@@ -21,7 +23,9 @@ namespace DvizhSeller
         {
             cashierForm = setCashierForm;
 
-            dataMapper = new services.DataMapper();
+            cashiers = new repositories.Cashier(db);
+
+            dataMapper = new services.DataMapper(db);
             dataMapper.FillCashiers(cashiers);
 
             InitializeComponent();

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="dbFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">dvizSeller.mdf</Value>
+      <Value Profile="(Default)">database.db</Value>
     </Setting>
     <Setting Name="dbTimeout" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
@@ -18,16 +18,16 @@
       <Value Profile="(Default)">http</Value>
     </Setting>
     <Setting Name="client" Type="System.String" Scope="User">
-      <Value Profile="(Default)">dss-demo</Value>
+      <Value Profile="(Default)">demo-dss</Value>
     </Setting>
     <Setting Name="token" Type="System.String" Scope="User">
       <Value Profile="(Default)">k2j33hdj39aqskdenneckksa303kd</Value>
     </Setting>
     <Setting Name="online" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="fiscal" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="checkNote" Type="System.String" Scope="User">
       <Value Profile="(Default)">dvizh.net</Value>

@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DvizhSeller
@@ -14,14 +13,18 @@ namespace DvizhSeller
     {
         CashierForm cashierForm;
 
-        repositories.Client clients = new repositories.Client();
+        services.Database db = new services.Database();
+
+        repositories.Client clients;
         services.DataMapper dataMapper;
 
         public ClientChooseForm(CashierForm setCashierForm)
         {
             cashierForm = setCashierForm;
 
-            dataMapper = new services.DataMapper();
+            clients =  new repositories.Client(db);
+
+            dataMapper = new services.DataMapper(db);
             dataMapper.FillClients(clients);
 
             InitializeComponent();

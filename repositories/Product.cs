@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace DvizhSeller.repositories
@@ -12,6 +12,13 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Product> products = new List<entities.Product>();
 
+        services.Database db;
+
+        public Product(services.Database setDb)
+        {
+            db = setDb;
+        }
+
         public void Add(entities.Product product)
         {
             products.Add(product);
@@ -19,22 +26,19 @@ namespace DvizhSeller.repositories
 
         public int SaveWithSql(entities.Product product)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
             entities.Product hasProduct = FindOne(product.GetId());
 
-            SqlCommand command;
+            SQLiteCommand command;
 
             if (hasProduct == null)
             {
                 Add(product);
-                command = new SqlCommand("INSERT INTO product(id, sku, name, price, category_id, image, amount) VALUES(@id, @sku, @name, @price, @category_id, @image, @amount)", connection);
+                
+                command = new SQLiteCommand("INSERT INTO product(id, sku, name, price, category_id, image, amount) VALUES(@id, @sku, @name, @price, @category_id, @image, @amount)", db.connection);
             }
             else
             {
-                command = new SqlCommand("UPDATE product SET sku = @sku, name = @name, price = @price, category_id = @category_id, image = @image, amount = @amount WHERE id = @id ", connection);
+                command = new SQLiteCommand("UPDATE product SET sku = @sku, name = @name, price = @price, category_id = @category_id, image = @image, amount = @amount WHERE id = @id ", db.connection);
             }
 
             command.Parameters.AddWithValue("@id", product.GetId());

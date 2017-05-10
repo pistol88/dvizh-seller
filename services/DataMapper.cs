@@ -3,37 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace DvizhSeller.services
 {
     class DataMapper
     {
-        string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-        SqlConnection connection;
+        Database db;
 
-        public DataMapper()
+        public DataMapper(Database setDb)
         {
-            connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-        }
-
-        ~DataMapper()
-        {
-            //connection.Close();
-        }
-
-        public void SetConnectionString(string setDbConnectionString)
-        {
-            dbConnectionString = setDbConnectionString;
+            db = setDb;
         }
 
         public bool FillProducts(repositories.Product productRepository, repositories.Category categoryRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM product", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM product", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -77,9 +65,9 @@ namespace DvizhSeller.services
         public bool FillCategories(repositories.Category categoryRepository)
         {
 
-            SqlCommand command = new SqlCommand("SELECT * FROM category", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM category", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -97,9 +85,9 @@ namespace DvizhSeller.services
 
         public bool FillClients(repositories.Client clientRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM client", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM client", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -124,9 +112,9 @@ namespace DvizhSeller.services
 
         public bool FillCashboxes(repositories.Cashbox cashboxRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM cashbox", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM cashbox", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -145,15 +133,16 @@ namespace DvizhSeller.services
 
         public bool FillCashiers(repositories.Cashier cashierRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM cashier", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM cashier", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    entities.Cashier cashbox = new entities.Cashier(reader.GetInt32(0), reader.GetString(1));
+                    //MessageBox.Show(reader["name"].ToString());
+                    entities.Cashier cashbox = new entities.Cashier(Convert.ToInt32(reader["id"].ToString()), reader["name"].ToString());
                     cashierRepository.Add(cashbox);
                 }
             }
@@ -165,9 +154,9 @@ namespace DvizhSeller.services
 
         public bool FillDiscounts(repositories.Discount discountRepository)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM discount", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM discount", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -183,7 +172,7 @@ namespace DvizhSeller.services
             return true;
         }
 
-        public static entities.Order BuildOrder(SqlDataReader reader)
+        public static entities.Order BuildOrder(SQLiteDataReader reader)
         {
             int dvizhId = 0;
 
@@ -194,7 +183,7 @@ namespace DvizhSeller.services
 
             return new entities.Order(
                         reader.GetInt32(0), //id
-                        reader.GetDateTime(3).ToLongTimeString(), //date
+                        reader.GetString(3), //date
                         Convert.ToDouble(reader.GetDecimal(8)), //total
                         reader.GetInt32(2), //cashier
                         reader.GetInt32(7), //client
@@ -206,11 +195,9 @@ namespace DvizhSeller.services
         public bool FillOrders(repositories.Order orderRepository)
         {
             DateTime dt1 = DateTime.Now;
-            string date = dt1.AddDays(-2).ToShortTimeString();
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM order_list WHERE cancel_at IS NULL ORDER BY id DESC LIMIT 1000", db.connection);
 
-            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND date > '" + date + "' ORDER BY id DESC", connection);
-
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -226,9 +213,9 @@ namespace DvizhSeller.services
 
             foreach(entities.Order order in orderRepository.GetList())
             {
-                SqlCommand elementCommand = new SqlCommand("SELECT * FROM order_element_list WHERE order_id = " + order.GetId().ToString(), connection);
+                SQLiteCommand elementCommand = new SQLiteCommand("SELECT * FROM order_element_list WHERE order_id = " + order.GetId().ToString(), db.connection);
 
-                SqlDataReader elementReader = elementCommand.ExecuteReader();
+                SQLiteDataReader elementReader = elementCommand.ExecuteReader();
 
                 if (elementReader.HasRows)
                 {

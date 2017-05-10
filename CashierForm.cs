@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DvizhSeller
@@ -14,13 +13,16 @@ namespace DvizhSeller
     {
         CashierChooseForm cashierForm;
 
-        repositories.Category categories = new repositories.Category();
-        repositories.Product products = new repositories.Product();
-        repositories.Client clients = new repositories.Client();
-        repositories.Cashier cashiers = new repositories.Cashier();
-        repositories.Order orders = new repositories.Order();
-        repositories.Cart cart = new repositories.Cart();
-        repositories.Discount discounts = new repositories.Discount();
+        services.Database db = new services.Database();
+
+        repositories.Category categories;
+        repositories.Product products;
+        repositories.Client clients;
+        repositories.Cashier cashiers;
+        repositories.Order orders;
+        repositories.Cart cart;
+        repositories.Discount discounts;
+
         tools.CartProvider cartData = new tools.CartProvider();
 
         entities.Product selectedProduct;
@@ -30,7 +32,7 @@ namespace DvizhSeller
         int selectedDiscountId = 0;
 
         services.DataMapper dataMapper;
-        services.DataExchanger dataExchanger = new services.DataExchanger();
+        services.DataExchanger dataExchanger;
         services.Fiscal fiscal;
 
         bool shiftOpen;
@@ -43,7 +45,17 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
-            dataMapper = new services.DataMapper();
+            categories = new repositories.Category(db);
+            products = new repositories.Product(db);
+            clients = new repositories.Client(db);
+            cashiers = new repositories.Cashier(db);
+            orders = new repositories.Order(db);
+            cart = new repositories.Cart();
+            discounts = new repositories.Discount(db);
+
+            dataExchanger = new services.DataExchanger(db);
+
+            dataMapper = new services.DataMapper(db);
             dataMapper.FillCategories(categories);
             dataMapper.FillProducts(products, categories);
             dataMapper.FillDiscounts(discounts);
@@ -416,16 +428,16 @@ namespace DvizhSeller
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка категорий");
-                dataExchanger.LoadCategories(categories);
+                //dataExchanger.LoadCategories(categories);
                 RenderCategories(categories.GetList());
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка клиентов");
-                dataExchanger.LoadClients(clients);
+                //dataExchanger.LoadClients(clients);
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка скидок");
-                dataExchanger.LoadDiscounts(discounts);
+                //dataExchanger.LoadDiscounts(discounts);
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка кассирова");
@@ -433,7 +445,7 @@ namespace DvizhSeller
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Обмен заказами");
-                dataExchanger.SendOrders();
+                dataExchanger.SendOrders(orders);
                 loadWindow.Step();
 
                 loadWindow.Step();

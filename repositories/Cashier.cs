@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace DvizhSeller.repositories
 {
     class Cashier
     {
         private List<entities.Cashier> cashiers = new List<entities.Cashier>();
+
+        services.Database db;
+
+        public Cashier(services.Database setDb)
+        {
+            db = setDb;
+        }
 
         public void Add(entities.Cashier cashier)
         {
@@ -18,22 +25,18 @@ namespace DvizhSeller.repositories
 
         public int SaveWithSql(entities.Cashier cashier)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
             entities.Cashier hasCashier = FindOne(cashier.GetId());
 
-            SqlCommand command;
+            SQLiteCommand command;
 
             if (hasCashier == null)
             {
                 Add(cashier);
-                command = new SqlCommand("INSERT INTO cashier(id, name) VALUES(@id, @name)", connection);
+                command = new SQLiteCommand("INSERT INTO cashier(id, name) VALUES(@id, @name)", db.connection);
             }
             else
             {
-                command = new SqlCommand("UPDATE cashier SET name = @name WHERE id = @id ", connection);
+                command = new SQLiteCommand("UPDATE cashier SET name = @name WHERE id = @id ", db.connection);
             }
 
             command.Parameters.AddWithValue("@id", cashier.GetId());

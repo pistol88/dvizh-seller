@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace DvizhSeller.repositories
 {
@@ -11,30 +11,32 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Category> categories = new List<entities.Category>();
 
+        services.Database db;
+
+        public Category(services.Database setDb)
+        {
+            db = setDb;
+        }
+
         public void Add(entities.Category category)
         {
             categories.Add(category);
         }
 
-
         public int SaveWithSql(entities.Category category)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
             entities.Category hasCategory = FindOne(category.GetId());
 
-            SqlCommand command;
+            SQLiteCommand command;
 
             if (hasCategory == null)
             {
                 Add(category);
-                command = new SqlCommand("INSERT INTO category(id, name, parent_id) VALUES(@id, @name, @parent_id)", connection);
+                command = new SQLiteCommand("INSERT INTO category(id, name, parent_id) VALUES(@id, @name, @parent_id)", db.connection);
             }
             else
             {
-                command = new SqlCommand("UPDATE category SET name = @name, parent_id = @parent_id WHERE id = @id ", connection);
+                command = new SQLiteCommand("UPDATE category SET name = @name, parent_id = @parent_id WHERE id = @id ", db.connection);
             }
 
             command.Parameters.AddWithValue("@id", category.GetId());

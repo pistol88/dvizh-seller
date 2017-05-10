@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace DvizhSeller.repositories
 {
     class Discount
     {
         private List<entities.Discount> discounts = new List<entities.Discount>();
+
+        services.Database db;
+
+        public Discount(services.Database setDb)
+        {
+            db = setDb;
+        }
 
         public void Add(entities.Discount discount)
         {
@@ -18,22 +25,18 @@ namespace DvizhSeller.repositories
 
         public int SaveWithSql(entities.Discount discount)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
             entities.Discount hasDiscount = FindOne(discount.GetId());
 
-            SqlCommand command;
+            SQLiteCommand command;
 
             if (hasDiscount == null)
             {
                 Add(discount);
-                command = new SqlCommand("INSERT INTO discount(id, code, discount) VALUES(@id, @code, @discount)", connection);
+                command = new SQLiteCommand("INSERT INTO discount(id, code, discount) VALUES(@id, @code, @discount)", db.connection);
             }
             else
             {
-                command = new SqlCommand("UPDATE discount SET code = @code, discount = @discount WHERE id = @id ", connection);
+                command = new SQLiteCommand("UPDATE discount SET code = @code, discount = @discount WHERE id = @id ", db.connection);
             }
 
             command.Parameters.AddWithValue("@id", discount.GetId());

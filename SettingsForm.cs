@@ -14,7 +14,9 @@ namespace DvizhSeller
     {
         CashierForm cashierForm;
 
-        repositories.Cashbox cashboxes = new repositories.Cashbox();
+        services.Database db = new services.Database();
+
+        repositories.Cashbox cashboxes;
 
         services.DataMapper dataMapper;
 
@@ -22,7 +24,9 @@ namespace DvizhSeller
         {
             cashierForm = setCashierForm;
 
-            dataMapper = new services.DataMapper();
+            cashboxes = new repositories.Cashbox(db);
+
+            dataMapper = new services.DataMapper(db);
             dataMapper.FillCashboxes(cashboxes);
 
             InitializeComponent();
@@ -63,7 +67,7 @@ namespace DvizhSeller
             Properties.Settings.Default.currency = currencyBox.Text;
             Properties.Settings.Default.token = tokenBox.Text;
             Properties.Settings.Default.online = online.Checked;
-            Properties.Settings.Default.online = fiscal.Checked;
+            Properties.Settings.Default.fiscal = fiscal.Checked;
             Properties.Settings.Default.barcodescaner = barcodescaner.Checked;
             Properties.Settings.Default.checkNote = checkNoteBox.Text;
             Properties.Settings.Default.roundingType = roundingTypeBox.SelectedIndex;

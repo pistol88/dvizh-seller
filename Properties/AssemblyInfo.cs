@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("DvizhSeller")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("АРМ кассира")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Движ")]
 [assembly: AssemblyProduct("DvizhSeller")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 // Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
 // для компонентов COM. Если необходимо обратиться к типу в этой сборке через
 // COM, задайте атрибуту ComVisible значение TRUE для этого типа.
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
 [assembly: Guid("73e44830-4927-4d9f-9205-730b7d64c3ff")]

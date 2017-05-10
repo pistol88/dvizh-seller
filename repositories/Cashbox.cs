@@ -10,6 +10,13 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Cashbox> cashboxes = new List<entities.Cashbox>();
 
+        services.Database db;
+
+        public Cashbox(services.Database setDb)
+        {
+            db = setDb;
+        }
+
         public void Add(entities.Cashbox cashbox)
         {
             cashboxes.Add(cashbox);

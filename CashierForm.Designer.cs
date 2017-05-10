@@ -709,7 +709,7 @@
             this.MaximizeBox = false;
             this.Name = "CashierForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dvizh.АРМ.кассир";
+            this.Text = "Dvizh.АРМ.Кассир";
             this.Load += new System.EventHandler(this.Cashier_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -25,7 +25,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("dvizSeller.mdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("database.db")]
         public string dbFile {
             get {
                 return ((string)(this["dbFile"]));
@@ -85,7 +85,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("dss-demo")]
+        [global::System.Configuration.DefaultSettingValueAttribute("demo-dss")]
         public string client {
             get {
                 return ((string)(this["client"]));
@@ -109,7 +109,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool online {
             get {
                 return ((bool)(this["online"]));
@@ -121,7 +121,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool fiscal {
             get {
                 return ((bool)(this["fiscal"]));

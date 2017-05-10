@@ -12,8 +12,10 @@ namespace DvizhSeller
 {
     public partial class OrdersForm : Form
     {
+        services.Database db = new services.Database();
+
         tools.OrderProvider ordersProvider = new tools.OrderProvider();
-        repositories.Order orders = new repositories.Order();
+        repositories.Order orders;
         services.DataMapper dataMapper;
         tools.OrderElementProvider elementsProvider;
         services.Fiscal fiscal;
@@ -27,7 +29,9 @@ namespace DvizhSeller
         {
             fiscal = new services.Fiscal();
 
-            dataMapper = new services.DataMapper();
+            orders = new repositories.Order(db);
+
+            dataMapper = new services.DataMapper(db);
             dataMapper.FillOrders(orders);
 
             foreach(entities.Order order in orders.GetList())
@@ -78,7 +82,7 @@ namespace DvizhSeller
             entities.OrderElement orderElement = elementsProvider[index];
 
             orderElement.SetCancelAt(DateTime.Now.ToLongDateString());
-            repositories.Order.CancelElement(orderElement);
+            orders.CancelElement(orderElement);
 
             if(Properties.Settings.Default.fiscal)
                 fiscal.Annulate(orderElement);

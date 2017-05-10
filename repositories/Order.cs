@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace DvizhSeller.repositories
 {
@@ -12,18 +12,21 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Order> orders = new List<entities.Order>();
 
+        services.Database db;
+
+        public Order(services.Database setDb)
+        {
+            db = setDb;
+        }
+
         public void Add(entities.Order order)
         {
             orders.Add(order);
         }
 
-        public static void SaveDvizhIdWithSql(entities.Order order, int dvizhId)
+        public void SaveDvizhIdWithSql(entities.Order order, int dvizhId)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
-            SqlCommand orderCommand = new SqlCommand("UPDATE order_list SET dvizh_id = @dvizh_id WHERE id = @id", connection);
+            SQLiteCommand orderCommand = new SQLiteCommand("UPDATE order_list SET dvizh_id = @dvizh_id WHERE id = @id", db.connection);
 
             orderCommand.Parameters.AddWithValue("@dvizh_id", dvizhId);
             orderCommand.Parameters.AddWithValue("@id", order.GetId());
@@ -31,13 +34,9 @@ namespace DvizhSeller.repositories
             orderCommand.ExecuteNonQuery();
         }
 
-        public static void CancelElement(entities.OrderElement element)
+        public void CancelElement(entities.OrderElement element)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
-            SqlCommand orderCommand = new SqlCommand("UPDATE order_element_list SET cancel_at = @cancel_at WHERE id = @id", connection);
+            SQLiteCommand orderCommand = new SQLiteCommand("UPDATE order_element_list SET cancel_at = @cancel_at WHERE id = @id", db.connection);
 
             orderCommand.Parameters.AddWithValue("@cancel_at", DateTime.Now.ToLongDateString());
             orderCommand.Parameters.AddWithValue("@id", element.GetId());
@@ -49,11 +48,9 @@ namespace DvizhSeller.repositories
         {
             Add(order);
 
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
+            SQLiteCommand orderCommand;
 
-            SqlCommand orderCommand = new SqlCommand("INSERT INTO order_list(dvizh_id, date, total, cashier_id, client_id, discount_id) OUTPUT INSERTED.ID VALUES(@dvizh_id, @date, @total, @cashier_id, @client_id, @discount_id)", connection);
+            orderCommand = new SQLiteCommand("INSERT INTO order_list(dvizh_id, date, total, cashier_id, client_id, discount_id) VALUES(@dvizh_id, @date, @total, @cashier_id, @client_id, @discount_id)", db.connection);
 
             orderCommand.Parameters.AddWithValue("@dvizh_id", order.DvizhId);
             orderCommand.Parameters.AddWithValue("@date", order.Date);
@@ -61,12 +58,18 @@ namespace DvizhSeller.repositories
             orderCommand.Parameters.AddWithValue("@client_id", order.clientId);
             orderCommand.Parameters.AddWithValue("@discount_id", order.discountId);
             orderCommand.Parameters.AddWithValue("@total", order.Total.ToString());
+
+            orderCommand.ExecuteNonQuery();
+
+            orderCommand.CommandText = "SELECT last_insert_rowid()";
             
-            order.Id = (int) orderCommand.ExecuteScalar();
+            Int64 LastRowID64 = (Int64)orderCommand.ExecuteScalar();
+
+            order.Id = (int)LastRowID64;
 
             foreach (entities.OrderElement element in order.GetElements())
             {
-                SqlCommand elementCommand = new SqlCommand("INSERT INTO order_element_list(order_id, product_id, product_name, count, price) values(@order_id, @product_id, @product_name, @count, @price)", connection);
+                SQLiteCommand elementCommand = new SQLiteCommand("INSERT INTO order_element_list(order_id, product_id, product_name, count, price) values(@order_id, @product_id, @product_name, @count, @price)", db.connection);
 
                 elementCommand.Parameters.AddWithValue("@order_id", order.GetId());
                 elementCommand.Parameters.AddWithValue("@product_id", element.GetProductId());

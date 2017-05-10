@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace DvizhSeller.repositories
@@ -12,6 +12,13 @@ namespace DvizhSeller.repositories
     {
         private List<entities.Client> clients = new List<entities.Client>();
 
+        services.Database db;
+
+        public Client(services.Database setDb)
+        {
+            db = setDb;
+        }
+        
         public void Add(entities.Client client)
         {
             clients.Add(client);
@@ -19,22 +26,18 @@ namespace DvizhSeller.repositories
 
         public int SaveWithSql(entities.Client client)
         {
-            string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-            SqlConnection connection = new SqlConnection(dbConnectionString);
-            connection.Open();
-
             entities.Client hasClient = FindOne(client.GetId());
 
-            SqlCommand command;
+            SQLiteCommand command;
 
             if (hasClient == null)
             {
                 Add(client);
-                command = new SqlCommand("INSERT INTO client(id, name, phone) VALUES(@id, @name, @phone)", connection);
+                command = new SQLiteCommand("INSERT INTO client(id, name, phone) VALUES(@id, @name, @phone)", db.connection);
             }
             else
             {
-                command = new SqlCommand("UPDATE client SET name = @name, phone = @phone WHERE id = @id ", connection);
+                command = new SQLiteCommand("UPDATE client SET name = @name, phone = @phone WHERE id = @id ", db.connection);
             }
 
             command.Parameters.AddWithValue("@id", client.GetId());

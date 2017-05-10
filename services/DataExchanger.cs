@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace DvizhSeller.services
 {
     class DataExchanger
     {
-        string dbConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Environment.CurrentDirectory + "\\" + Properties.Settings.Default.dbFile + "; Integrated Security=True;Connect Timeout=" + Properties.Settings.Default.dbTimeout.ToString();
-        SqlConnection connection;
+        Database db;
 
-        public DataExchanger()
+        public DataExchanger(Database setDb)
         {
-            connection = new SqlConnection(dbConnectionString);
-            connection.Open();
+            db = setDb;
         }
 
         public Tuple<int, int, int> LoadProducts(repositories.Product products, repositories.Category categories)
@@ -32,6 +31,7 @@ namespace DvizhSeller.services
                 string sku = line[1];
                 string name = line[2];
                 double price = Convert.ToDouble(line[3]);
+
                 int category_id;
                 if (line[4] != "")
                     category_id = Convert.ToInt32(line[4]);
@@ -228,13 +228,13 @@ namespace DvizhSeller.services
             return new Tuple<int>(added);
         }
 
-        public Tuple<int> SendOrders()
+        public Tuple<int> SendOrders(repositories.Order orders)
         {
             int counter = 0;
 
-            SqlCommand command = new SqlCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND (dvizh_id = 0 OR dvizh_id IS NULL) ORDER BY id DESC", connection);
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM order_list WHERE cancel_at IS NULL AND (dvizh_id = 0 OR dvizh_id IS NULL) ORDER BY id DESC", db.connection);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -244,7 +244,7 @@ namespace DvizhSeller.services
                     int dvizhid = SendOrder(order);
                     if(dvizhid > 0)
                     {
-                        repositories.Order.SaveDvizhIdWithSql(order, dvizhid);
+                        orders.SaveDvizhIdWithSql(order, dvizhid);
                         counter++;
                     }
                 }
@@ -319,7 +319,7 @@ namespace DvizhSeller.services
                 + Properties.Settings.Default.tokenPrefix
                 + "token="
                 + Properties.Settings.Default.token;
-            Clipboard.SetText(url);
+            //Clipboard.SetText(url);
             try
             {
                 string csv = new WebClient().DownloadString(url);
