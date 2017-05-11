@@ -39,6 +39,10 @@
             this.printerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesRecieprToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barCodeScanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shopListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.promocodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,6 +107,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.devicesToolStripMenuItem,
+            this.allListsToolStripMenuItem,
             this.отчетыToolStripMenuItem,
             this.listsToolStripMenuItem,
             this.оПрограммеToolStripMenuItem});
@@ -174,6 +179,37 @@
             this.barCodeScanerToolStripMenuItem.Text = "Сканер штрихкода";
             this.barCodeScanerToolStripMenuItem.Click += new System.EventHandler(this.barCodeScanerToolStripMenuItem_Click);
             // 
+            // allListsToolStripMenuItem
+            // 
+            this.allListsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.shopListToolStripMenuItem,
+            this.clientsToolStripMenuItem,
+            this.promocodesToolStripMenuItem});
+            this.allListsToolStripMenuItem.Name = "allListsToolStripMenuItem";
+            this.allListsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.allListsToolStripMenuItem.Text = "Справочники";
+            // 
+            // shopListToolStripMenuItem
+            // 
+            this.shopListToolStripMenuItem.Name = "shopListToolStripMenuItem";
+            this.shopListToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.shopListToolStripMenuItem.Text = "Магазин";
+            this.shopListToolStripMenuItem.Click += new System.EventHandler(this.shopListToolStripMenuItem_Click);
+            // 
+            // clientsToolStripMenuItem
+            // 
+            this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.clientsToolStripMenuItem.Text = "Клиенты";
+            this.clientsToolStripMenuItem.Click += new System.EventHandler(this.clientsToolStripMenuItem_Click);
+            // 
+            // promocodesToolStripMenuItem
+            // 
+            this.promocodesToolStripMenuItem.Name = "promocodesToolStripMenuItem";
+            this.promocodesToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.promocodesToolStripMenuItem.Text = "Промокоды";
+            this.promocodesToolStripMenuItem.Click += new System.EventHandler(this.promocodesToolStripMenuItem_Click);
+            // 
             // отчетыToolStripMenuItem
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -194,8 +230,8 @@
             this.listsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productsToolStripMenuItem});
             this.listsToolStripMenuItem.Name = "listsToolStripMenuItem";
-            this.listsToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.listsToolStripMenuItem.Text = "dvizh.net";
+            this.listsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+            this.listsToolStripMenuItem.Text = "Dvizh.net";
             // 
             // productsToolStripMenuItem
             // 
@@ -480,7 +516,6 @@
             this.discountBox.Size = new System.Drawing.Size(89, 20);
             this.discountBox.TabIndex = 14;
             this.discountBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.discountBox_KeyDown);
-            this.discountBox.Leave += new System.EventHandler(this.discountBox_Leave);
             // 
             // linkLabel1
             // 
@@ -682,7 +717,7 @@
             this.shiftOpened.AutoSize = true;
             this.shiftOpened.BackColor = System.Drawing.Color.Transparent;
             this.shiftOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.shiftOpened.Location = new System.Drawing.Point(406, 9);
+            this.shiftOpened.Location = new System.Drawing.Point(759, 11);
             this.shiftOpened.Name = "shiftOpened";
             this.shiftOpened.Size = new System.Drawing.Size(10, 13);
             this.shiftOpened.TabIndex = 16;
@@ -789,6 +824,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cartCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.Label shiftOpened;
+        private System.Windows.Forms.ToolStripMenuItem allListsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shopListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem promocodesToolStripMenuItem;
     }
 }
 

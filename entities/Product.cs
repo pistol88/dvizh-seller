@@ -34,16 +34,53 @@ namespace DvizhSeller.entities
             }
         }
 
+        private void updateDb()
+        {
+            //EventHandler<UpdateEventArgs> handler = 1;
+
+            //if (handler != null)
+            //{
+            //    handler(this, e);
+            //}
+        }
+
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set {
+                name = value;
+                updateDb();
+            }
+        }
+
+        public string Sku
+        {
+            get { return sku; }
+            set { sku = value; }
         }
 
         public double Price
         {
             get { return price; }
             set { price = value; }
+        }
+
+        public int Amount
+        {
+            get { return amount; }
+            set { amount = value; }
+        }
+
+        public int CategoryId
+        {
+            get { return categoryId; }
+            set { categoryId = value; }
+        }
+
+        public Category Category
+        {
+            get { return category; }
+            set { category = value; }
         }
 
         public int CartCount
@@ -136,5 +173,10 @@ namespace DvizhSeller.entities
         {
             image = setImage;
         }
+    }
+
+    public class UpdateEventArgs : EventArgs
+    {
+        //public Product product { get; set; }
     }
 }

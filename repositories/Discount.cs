@@ -68,6 +68,11 @@ namespace DvizhSeller.repositories
             return discounts.Find(x => x.GetCode().ToLower().Trim() == name.ToLower().Trim());
         }
 
+        public List<entities.Discount> FindByCode(string name)
+        {
+            return discounts.FindAll(x => x.GetCode().Contains(name));
+        }
+
         public List<entities.Discount> FindByName(string name)
         {
             return discounts.FindAll(x => x.GetCode().Contains(name));

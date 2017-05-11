@@ -15,17 +15,14 @@ namespace DvizhSeller
         services.Database db = new services.Database();
 
         tools.OrderProvider ordersProvider = new tools.OrderProvider();
+        tools.OrderElementProvider elementsProvider;
+
         repositories.Order orders;
         services.DataMapper dataMapper;
-        tools.OrderElementProvider elementsProvider;
+        
         services.Fiscal fiscal;
 
         public OrdersForm()
-        {
-            InitializeComponent();
-        }
-
-        private void OrdersForm_Load(object sender, EventArgs e)
         {
             fiscal = new services.Fiscal();
 
@@ -34,14 +31,14 @@ namespace DvizhSeller
             dataMapper = new services.DataMapper(db);
             dataMapper.FillOrders(orders);
 
-            foreach(entities.Order order in orders.GetList())
+            foreach (entities.Order order in orders.GetList())
             {
                 ordersProvider.Add(order);
             }
 
             ordersListGridView.DataSource = ordersProvider;
 
-            if(orders.GetList().Count() > 0)
+            if (orders.GetList().Count() > 0)
             {
                 orderElementsBox.Visible = true;
 
@@ -56,6 +53,13 @@ namespace DvizhSeller
 
                 elementsListGridView.DataSource = elementsProvider;
             }
+
+            InitializeComponent();
+        }
+
+        private void OrdersForm_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void ordersListGridView_CellClick(object sender, DataGridViewCellEventArgs e)

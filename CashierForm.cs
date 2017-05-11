@@ -217,10 +217,13 @@ namespace DvizhSeller
 
         private void productsSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(productsSearchBox.Text == "")
-                RenderProducts(products.GetList());
-            else
-                RenderProducts(products.FindByString(productsSearchBox.Text));
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (productsSearchBox.Text == "")
+                    RenderProducts(products.GetList());
+                else
+                    RenderProducts(products.FindByString(productsSearchBox.Text));
+            }
         }
 
         private void productsListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -521,6 +524,24 @@ namespace DvizhSeller
                 openShiftToolStripMenuItem.Enabled = true;
                 closeShiftToolStripMenuItem.Enabled = false;
             }
+        }
+
+        private void shopListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShopBookForm shopbookWindow = new ShopBookForm();
+            shopbookWindow.Show();
+        }
+
+        private void clientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClientsBookForm clientsbookWindow = new ClientsBookForm();
+            clientsbookWindow.Show();
+        }
+
+        private void promocodesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DiscountsBookForm discountsbookWindow = new DiscountsBookForm();
+            discountsbookWindow.Show();
         }
     }
 }

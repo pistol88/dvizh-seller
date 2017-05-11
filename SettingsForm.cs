@@ -36,6 +36,7 @@ namespace DvizhSeller
         {
             protocolBox.Text = Properties.Settings.Default.protocol;
             hostBox.Text = Properties.Settings.Default.host;
+            dbFileBox.Text = Properties.Settings.Default.dbFile;
             clientBox.Text = Properties.Settings.Default.client;
             currencyBox.Text = Properties.Settings.Default.currency;
             tokenBox.Text = Properties.Settings.Default.token;
@@ -72,6 +73,7 @@ namespace DvizhSeller
             Properties.Settings.Default.checkNote = checkNoteBox.Text;
             Properties.Settings.Default.roundingType = roundingTypeBox.SelectedIndex;
             Properties.Settings.Default.rounding = Convert.ToInt16(roundingBox.Text);
+            Properties.Settings.Default.dbFile = dbFileBox.Text;
 
             object selectedItem = cashboxId.SelectedItem;
             Properties.Settings.Default.cashboxId = Convert.ToInt32(selectedItem.GetHashCode());

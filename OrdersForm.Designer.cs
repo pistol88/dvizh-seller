@@ -36,14 +36,14 @@
             this.orderProviderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.elementsListGridView = new System.Windows.Forms.DataGridView();
-            this.orderElementsBox = new System.Windows.Forms.GroupBox();
-            this.canceSelectedElement = new System.Windows.Forms.Button();
-            this.orderElementProviderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.orderElementProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderElementPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderElementQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderElementCancelAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderElementId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderElementsBox = new System.Windows.Forms.GroupBox();
+            this.canceSelectedElement = new System.Windows.Forms.Button();
+            this.orderElementProviderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ordersListGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderProviderBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
@@ -118,34 +118,6 @@
             this.elementsListGridView.StandardTab = true;
             this.elementsListGridView.TabIndex = 3;
             // 
-            // orderElementsBox
-            // 
-            this.orderElementsBox.Controls.Add(this.canceSelectedElement);
-            this.orderElementsBox.Controls.Add(this.elementsListGridView);
-            this.orderElementsBox.Location = new System.Drawing.Point(264, 12);
-            this.orderElementsBox.Name = "orderElementsBox";
-            this.orderElementsBox.Size = new System.Drawing.Size(476, 337);
-            this.orderElementsBox.TabIndex = 4;
-            this.orderElementsBox.TabStop = false;
-            this.orderElementsBox.Text = "Состав заказа";
-            this.orderElementsBox.Visible = false;
-            // 
-            // canceSelectedElement
-            // 
-            this.canceSelectedElement.BackColor = System.Drawing.Color.Salmon;
-            this.canceSelectedElement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.canceSelectedElement.Location = new System.Drawing.Point(384, 308);
-            this.canceSelectedElement.Name = "canceSelectedElement";
-            this.canceSelectedElement.Size = new System.Drawing.Size(86, 23);
-            this.canceSelectedElement.TabIndex = 4;
-            this.canceSelectedElement.Text = "Анулировать";
-            this.canceSelectedElement.UseVisualStyleBackColor = false;
-            this.canceSelectedElement.Click += new System.EventHandler(this.canceSelectedElement_Click);
-            // 
-            // orderElementProviderBindingSource
-            // 
-            this.orderElementProviderBindingSource.DataSource = typeof(DvizhSeller.tools.OrderElementProvider);
-            // 
             // orderElementProduct
             // 
             this.orderElementProduct.DataPropertyName = "ProductName";
@@ -186,6 +158,34 @@
             this.orderElementId.ReadOnly = true;
             this.orderElementId.Visible = false;
             this.orderElementId.Width = 5;
+            // 
+            // orderElementsBox
+            // 
+            this.orderElementsBox.Controls.Add(this.canceSelectedElement);
+            this.orderElementsBox.Controls.Add(this.elementsListGridView);
+            this.orderElementsBox.Location = new System.Drawing.Point(264, 12);
+            this.orderElementsBox.Name = "orderElementsBox";
+            this.orderElementsBox.Size = new System.Drawing.Size(476, 337);
+            this.orderElementsBox.TabIndex = 4;
+            this.orderElementsBox.TabStop = false;
+            this.orderElementsBox.Text = "Состав заказа";
+            this.orderElementsBox.Visible = false;
+            // 
+            // canceSelectedElement
+            // 
+            this.canceSelectedElement.BackColor = System.Drawing.Color.Salmon;
+            this.canceSelectedElement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.canceSelectedElement.Location = new System.Drawing.Point(384, 308);
+            this.canceSelectedElement.Name = "canceSelectedElement";
+            this.canceSelectedElement.Size = new System.Drawing.Size(86, 23);
+            this.canceSelectedElement.TabIndex = 4;
+            this.canceSelectedElement.Text = "Аннулировать";
+            this.canceSelectedElement.UseVisualStyleBackColor = false;
+            this.canceSelectedElement.Click += new System.EventHandler(this.canceSelectedElement_Click);
+            // 
+            // orderElementProviderBindingSource
+            // 
+            this.orderElementProviderBindingSource.DataSource = typeof(DvizhSeller.tools.OrderElementProvider);
             // 
             // OrdersForm
             // 

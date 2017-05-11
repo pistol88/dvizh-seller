@@ -19,6 +19,21 @@ namespace DvizhSeller.entities
             phone = setPhone;
         }
 
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string Phone
+        {
+            get { return phone; }
+            set { phone = value; }
+        }
+
         public string GetName()
         {
             return name;

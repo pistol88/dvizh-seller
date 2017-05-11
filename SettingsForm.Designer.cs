@@ -56,6 +56,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.currencyBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.dbFileBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -236,6 +238,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.dbFileBox);
+            this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.roundingTypeBox);
             this.groupBox3.Controls.Add(this.roundingBox);
@@ -323,7 +327,6 @@
             this.currencyBox.Name = "currencyBox";
             this.currencyBox.Size = new System.Drawing.Size(141, 20);
             this.currencyBox.TabIndex = 12;
-            this.currencyBox.Text = "р.\r\nгрн.\r\n$\r\neuro";
             // 
             // label8
             // 
@@ -333,6 +336,27 @@
             this.label8.Size = new System.Drawing.Size(48, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "Валюта:";
+            // 
+            // dbFileBox
+            // 
+            this.dbFileBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "р.",
+            "грн.",
+            "$",
+            "euro"});
+            this.dbFileBox.Location = new System.Drawing.Point(73, 179);
+            this.dbFileBox.Name = "dbFileBox";
+            this.dbFileBox.Size = new System.Drawing.Size(141, 20);
+            this.dbFileBox.TabIndex = 27;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 182);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 13);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "База:";
             // 
             // SettingsForm
             // 
@@ -390,5 +414,7 @@
         private System.Windows.Forms.TextBox roundingBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox dbFileBox;
+        private System.Windows.Forms.Label label11;
     }
 }

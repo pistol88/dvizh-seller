@@ -19,6 +19,21 @@ namespace DvizhSeller.entities
             discount = setDiscount;
         }
 
+        public string Code
+        {
+            get { return code; }
+            set
+            {
+                code = value;
+            }
+        }
+
+        public int DiscountVal
+        {
+            get { return discount; }
+            set { discount = value; }
+        }
+
         public string GetName()
         {
             return code;

@@ -184,7 +184,7 @@ namespace DvizhSeller.services
             return new entities.Order(
                         reader.GetInt32(0), //id
                         reader.GetString(3), //date
-                        Convert.ToDouble(reader.GetDecimal(8)), //total
+                        Convert.ToDouble(reader["total"].ToString()), //total
                         reader.GetInt32(2), //cashier
                         reader.GetInt32(7), //client
                         reader.GetInt32(6), //discount
