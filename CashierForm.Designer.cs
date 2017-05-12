@@ -113,7 +113,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(870, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(863, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -615,7 +615,7 @@
             // 
             this.cashierName.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cashierName.AutoSize = true;
-            this.cashierName.Location = new System.Drawing.Point(582, 9);
+            this.cashierName.Location = new System.Drawing.Point(575, 11);
             this.cashierName.Name = "cashierName";
             this.cashierName.Size = new System.Drawing.Size(51, 13);
             this.cashierName.TabIndex = 12;
@@ -629,7 +629,7 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label8.Location = new System.Drawing.Point(542, 9);
+            this.label8.Location = new System.Drawing.Point(535, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(44, 13);
             this.label8.TabIndex = 13;
@@ -717,7 +717,7 @@
             this.shiftOpened.AutoSize = true;
             this.shiftOpened.BackColor = System.Drawing.Color.Transparent;
             this.shiftOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.shiftOpened.Location = new System.Drawing.Point(759, 11);
+            this.shiftOpened.Location = new System.Drawing.Point(752, 11);
             this.shiftOpened.Name = "shiftOpened";
             this.shiftOpened.Size = new System.Drawing.Size(10, 13);
             this.shiftOpened.TabIndex = 16;
@@ -729,7 +729,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Lavender;
-            this.ClientSize = new System.Drawing.Size(870, 500);
+            this.ClientSize = new System.Drawing.Size(863, 500);
             this.Controls.Add(this.shiftOpened);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label8);

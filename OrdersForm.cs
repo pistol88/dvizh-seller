@@ -24,6 +24,8 @@ namespace DvizhSeller
 
         public OrdersForm()
         {
+            InitializeComponent();
+
             fiscal = new services.Fiscal();
 
             orders = new repositories.Order(db);
@@ -53,8 +55,6 @@ namespace DvizhSeller
 
                 elementsListGridView.DataSource = elementsProvider;
             }
-
-            InitializeComponent();
         }
 
         private void OrdersForm_Load(object sender, EventArgs e)
