@@ -48,6 +48,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cashboxId = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dbFileBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.roundingTypeBox = new System.Windows.Forms.ComboBox();
             this.roundingBox = new System.Windows.Forms.TextBox();
@@ -56,8 +58,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.currencyBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.dbFileBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.testMode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -65,7 +66,7 @@
             // 
             // settingsSave
             // 
-            this.settingsSave.Location = new System.Drawing.Point(207, 356);
+            this.settingsSave.Location = new System.Drawing.Point(208, 365);
             this.settingsSave.Name = "settingsSave";
             this.settingsSave.Size = new System.Drawing.Size(75, 23);
             this.settingsSave.TabIndex = 20;
@@ -159,20 +160,21 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.testMode);
             this.groupBox1.Controls.Add(this.checkNoteBox);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.barcodescaner);
             this.groupBox1.Controls.Add(this.fiscal);
             this.groupBox1.Location = new System.Drawing.Point(9, 227);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(229, 104);
+            this.groupBox1.Size = new System.Drawing.Size(229, 123);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Оборудование";
             // 
             // checkNoteBox
             // 
-            this.checkNoteBox.Location = new System.Drawing.Point(107, 65);
+            this.checkNoteBox.Location = new System.Drawing.Point(107, 97);
             this.checkNoteBox.Name = "checkNoteBox";
             this.checkNoteBox.Size = new System.Drawing.Size(107, 20);
             this.checkNoteBox.TabIndex = 19;
@@ -180,7 +182,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 68);
+            this.label6.Location = new System.Drawing.Point(12, 100);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(96, 13);
             this.label6.TabIndex = 20;
@@ -190,7 +192,7 @@
             // 
             this.barcodescaner.AutoSize = true;
             this.barcodescaner.Enabled = false;
-            this.barcodescaner.Location = new System.Drawing.Point(6, 42);
+            this.barcodescaner.Location = new System.Drawing.Point(6, 65);
             this.barcodescaner.Name = "barcodescaner";
             this.barcodescaner.Size = new System.Drawing.Size(120, 17);
             this.barcodescaner.TabIndex = 22;
@@ -250,10 +252,31 @@
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Location = new System.Drawing.Point(249, 22);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(229, 309);
+            this.groupBox3.Size = new System.Drawing.Size(229, 328);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Общие";
+            // 
+            // dbFileBox
+            // 
+            this.dbFileBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "р.",
+            "грн.",
+            "$",
+            "euro"});
+            this.dbFileBox.Location = new System.Drawing.Point(73, 179);
+            this.dbFileBox.Name = "dbFileBox";
+            this.dbFileBox.Size = new System.Drawing.Size(141, 20);
+            this.dbFileBox.TabIndex = 27;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 182);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 13);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "База:";
             // 
             // label10
             // 
@@ -337,32 +360,21 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "Валюта:";
             // 
-            // dbFileBox
+            // testMode
             // 
-            this.dbFileBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "р.",
-            "грн.",
-            "$",
-            "euro"});
-            this.dbFileBox.Location = new System.Drawing.Point(73, 179);
-            this.dbFileBox.Name = "dbFileBox";
-            this.dbFileBox.Size = new System.Drawing.Size(141, 20);
-            this.dbFileBox.TabIndex = 27;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 182);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(35, 13);
-            this.label11.TabIndex = 28;
-            this.label11.Text = "База:";
+            this.testMode.AutoSize = true;
+            this.testMode.Location = new System.Drawing.Point(6, 42);
+            this.testMode.Name = "testMode";
+            this.testMode.Size = new System.Drawing.Size(113, 17);
+            this.testMode.TabIndex = 23;
+            this.testMode.Text = "Тестовый режим";
+            this.testMode.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(490, 391);
+            this.ClientSize = new System.Drawing.Size(490, 400);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -416,5 +428,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox dbFileBox;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox testMode;
     }
 }

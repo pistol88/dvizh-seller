@@ -30,7 +30,12 @@ namespace DvizhSeller.services
                 int id = Convert.ToInt32(line[0]);
                 string sku = line[1];
                 string name = line[2];
-                double price = Convert.ToDouble(line[3]);
+                double price;
+
+                if (line[3] == "")
+                    price = 0;
+                else
+                    price = Convert.ToDouble(line[3]);
 
                 int category_id;
                 if (line[4] != "")
@@ -289,6 +294,8 @@ namespace DvizhSeller.services
                 + order.GetCashierId().ToString()
                 + "&clientId="
                 + order.GetClientId().ToString();
+
+            Clipboard.SetData(DataFormats.Text, (Object)url);
 
             try
             {

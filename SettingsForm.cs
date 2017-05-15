@@ -42,6 +42,7 @@ namespace DvizhSeller
             tokenBox.Text = Properties.Settings.Default.token;
             online.Checked = Properties.Settings.Default.online;
             fiscal.Checked = Properties.Settings.Default.fiscal;
+            testMode.Checked = Properties.Settings.Default.testMode;
             barcodescaner.Checked = Properties.Settings.Default.barcodescaner;
             checkNoteBox.Text = Properties.Settings.Default.checkNote;
             roundingTypeBox.SelectedIndex = Properties.Settings.Default.roundingType;
@@ -69,6 +70,7 @@ namespace DvizhSeller
             Properties.Settings.Default.token = tokenBox.Text;
             Properties.Settings.Default.online = online.Checked;
             Properties.Settings.Default.fiscal = fiscal.Checked;
+            Properties.Settings.Default.testMode = testMode.Checked;
             Properties.Settings.Default.barcodescaner = barcodescaner.Checked;
             Properties.Settings.Default.checkNote = checkNoteBox.Text;
             Properties.Settings.Default.roundingType = roundingTypeBox.SelectedIndex;

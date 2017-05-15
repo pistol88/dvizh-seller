@@ -109,7 +109,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool online {
             get {
                 return ((bool)(this["online"]));
@@ -121,7 +121,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool fiscal {
             get {
                 return ((bool)(this["fiscal"]));
@@ -212,6 +212,18 @@ namespace DvizhSeller.Properties {
             }
             set {
                 this["tokenPrefix"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool testMode {
+            get {
+                return ((bool)(this["testMode"]));
+            }
+            set {
+                this["testMode"] = value;
             }
         }
     }

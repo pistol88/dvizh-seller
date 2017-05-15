@@ -12,6 +12,8 @@ namespace DvizhSeller
 {
     public partial class AboutForm : Form
     {
+        services.Fiscal fiscal = new services.Fiscal();
+
         public AboutForm()
         {
             InitializeComponent();
@@ -36,6 +38,11 @@ namespace DvizhSeller
         private void montanaMail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(e.Link.LinkData as string);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            fiscal.March();
         }
     }
 }

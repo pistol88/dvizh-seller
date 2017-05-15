@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DvizhSeller
 {
@@ -13,7 +14,7 @@ namespace DvizhSeller
     {
         CashierChooseForm cashierForm;
 
-        services.Database db = new services.Database();
+        services.Database db;
 
         repositories.Category categories;
         repositories.Product products;
@@ -30,6 +31,7 @@ namespace DvizhSeller
         int selectedClientId = 0;
         int selectedCashierId = 0;
         int selectedDiscountId = 0;
+        int selectedDiscountVal = 0;
 
         services.DataMapper dataMapper;
         services.DataExchanger dataExchanger;
@@ -40,11 +42,28 @@ namespace DvizhSeller
 
         public CashierForm()
         {
+            string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            if (!File.Exists(applicationDataPath + "\\dvizh-main-database.db"))
+            {
+                File.Copy("database.db", applicationDataPath + "\\dvizh-main-database.db");
+
+                if(Properties.Settings.Default.dbFile == "database.db")
+                {
+                    Properties.Settings.Default.dbFile = applicationDataPath + "\\dvizh-main-database.db";
+                    Properties.Settings.Default.Save();
+                }
+            }
+
+            db = new services.Database();
+
             InitializeComponent();
         }
 
         private void Cashier_Load(object sender, EventArgs e)
         {
+            barCodeBox.Select();
+
             categories = new repositories.Category(db);
             products = new repositories.Product(db);
             clients = new repositories.Client(db);
@@ -312,6 +331,7 @@ namespace DvizhSeller
             {
                 cart.SetDiscount(discount);
                 selectedDiscountId = discount.GetId();
+                selectedDiscountVal = discount.GetDiscount();
                 MessageBox.Show("Промокод применен. Скидка " + discount.GetDiscount().ToString() + "%");
                 RenderCart();
             }
@@ -336,25 +356,27 @@ namespace DvizhSeller
             ordersForm.Show();
         }
 
-        private void orderButton_Click(object sender, EventArgs e)
+        private void AddOrder()
         {
             if (cart.GetElements().Count <= 0)
                 return;
 
             entities.Order order = new entities.Order(0, DateTime.Now.ToString(), cart.GetTotal(), selectedCashierId, selectedClientId, selectedDiscountId);
 
-            foreach(entities.Product product in cart.GetElements())
+            foreach (entities.Product product in cart.GetElements())
             {
                 entities.OrderElement orderElement = new entities.OrderElement(0, product.GetId(), product.GetName(), product.GetPrice(), product.GetCartCount(), "");
 
                 order.AddElement(orderElement);
             }
 
-            if(Properties.Settings.Default.fiscal)
+            bool ok = true;
+
+            if (Properties.Settings.Default.fiscal)
             {
                 string cashierName;
 
-                if(selectedCashierId > 0)
+                if (selectedCashierId > 0)
                 {
                     entities.Cashier cashier = cashiers.FindOne(selectedCashierId);
                     cashierName = cashier.GetName();
@@ -371,27 +393,38 @@ namespace DvizhSeller
                 else
                     paymentType = 3;
 
-                FiscalRegister(cashierName, paymentType);
+                ok = FiscalRegister(cashierName, paymentType);
             }
 
-            cart.Clear();
-
-            if(Properties.Settings.Default.online)
+            if (ok)
             {
-                int dvizhOrderId = dataExchanger.SendOrder(order);
-                if (dvizhOrderId > 0)
+                cart.Clear();
+
+                if (Properties.Settings.Default.online)
                 {
-                    order.SetDvizhId(dvizhOrderId);
+                    int dvizhOrderId = dataExchanger.SendOrder(order);
+                    if (dvizhOrderId > 0)
+                    {
+                        order.SetDvizhId(dvizhOrderId);
+                    }
                 }
+
+                orders.AddWithSql(order);
+
+                RenderCart();
+                ClearClient();
+                ClearDiscount();
+
+                paymentType0.Select();
             }
 
-            orders.AddWithSql(order);
+            barCodeBox.Focus();
+            barCodeBox.Select();
+        }
 
-            RenderCart();
-            ClearClient();
-            ClearDiscount();
-
-            paymentType0.Select();
+        private void orderButton_Click(object sender, EventArgs e)
+        {
+            AddOrder();
         }
 
         public void ClearClient()
@@ -404,6 +437,7 @@ namespace DvizhSeller
         {
             cart.UnsetDiscount();
             selectedDiscountId = 0;
+            selectedDiscountVal = 0;
             discountBox.Text = "";
         }
 
@@ -431,19 +465,19 @@ namespace DvizhSeller
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка категорий");
-                //dataExchanger.LoadCategories(categories);
+                dataExchanger.LoadCategories(categories);
                 RenderCategories(categories.GetList());
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка клиентов");
-                //dataExchanger.LoadClients(clients);
+                dataExchanger.LoadClients(clients);
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка скидок");
-                //dataExchanger.LoadDiscounts(discounts);
+                dataExchanger.LoadDiscounts(discounts);
                 loadWindow.Step();
 
-                loadWindow.SetMessage("Загрузка кассирова");
+                loadWindow.SetMessage("Загрузка кассиров");
                 dataExchanger.LoadCashiers(cashiers);
                 loadWindow.Step();
 
@@ -473,7 +507,7 @@ namespace DvizhSeller
         {
             if (!fiscal.OpenShift())
             {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверьте, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
             }
 
             RenderShift();
@@ -483,7 +517,7 @@ namespace DvizhSeller
         {
             if (!fiscal.CloseShift())
             {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
             }
 
             RenderShift();
@@ -498,9 +532,16 @@ namespace DvizhSeller
                 return false;
             }
 
-            if (!fiscal.Register(cashierName, paymentType))
+            bool discount = false;
+
+            if(selectedDiscountId > 0)
             {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что драйвер Атол ККМ установлен и настроен корректно.");
+                discount = true;
+            }
+
+            if (!fiscal.Register(cashierName, paymentType, discount, 1, selectedDiscountVal))
+            {
+                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
 
                 return false;
             }
@@ -542,6 +583,37 @@ namespace DvizhSeller
         {
             DiscountsBookForm discountsbookWindow = new DiscountsBookForm();
             discountsbookWindow.Show();
+        }
+
+        private void barCodeBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            String barCodeStr = barCodeBox.Text;
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                if(barCodeStr == "")
+                {
+                    AddOrder();
+                }
+                else
+                {
+                    BuyBySku(barCodeStr);
+                    barCodeBox.Text = "";
+                }
+            }
+        }
+
+        private void barCodeBox_Click(object sender, EventArgs e)
+        {
+            if(barCodeBox.Text == "Купить по штрихкоду")
+            {
+                barCodeBox.Text = "";
+            }
+        }
+
+        private void fiscalTestPrintToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fiscal.TestPrint();
         }
     }
 }

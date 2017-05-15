@@ -24,10 +24,10 @@
       <Value Profile="(Default)">k2j33hdj39aqskdenneckksa303kd</Value>
     </Setting>
     <Setting Name="online" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="fiscal" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="checkNote" Type="System.String" Scope="User">
       <Value Profile="(Default)">dvizh.net</Value>
@@ -49,6 +49,9 @@
     </Setting>
     <Setting Name="tokenPrefix" Type="System.String" Scope="User">
       <Value Profile="(Default)">?</Value>
+    </Setting>
+    <Setting Name="testMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -55,6 +55,7 @@
             // ordersListGridView
             // 
             this.ordersListGridView.AutoGenerateColumns = false;
+            this.ordersListGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.ordersListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ordersListGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DvizhId,
@@ -175,9 +176,9 @@
             // 
             this.canceSelectedElement.BackColor = System.Drawing.Color.Salmon;
             this.canceSelectedElement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.canceSelectedElement.Location = new System.Drawing.Point(384, 308);
+            this.canceSelectedElement.Location = new System.Drawing.Point(375, 308);
             this.canceSelectedElement.Name = "canceSelectedElement";
-            this.canceSelectedElement.Size = new System.Drawing.Size(86, 23);
+            this.canceSelectedElement.Size = new System.Drawing.Size(95, 23);
             this.canceSelectedElement.TabIndex = 4;
             this.canceSelectedElement.Text = "Аннулировать";
             this.canceSelectedElement.UseVisualStyleBackColor = false;

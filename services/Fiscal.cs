@@ -43,6 +43,155 @@ namespace DvizhSeller.services
             }
         }
 
+        public Boolean TestPrint()
+        {
+            if (!DriverExists())
+            {
+                return false;
+            }
+
+            cmd.DeviceEnabled = 1;
+
+            cmd.Alignment = 1;
+            cmd.Caption = "-------------------------DVIZH";
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "Тестирование печати.";
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "Все ОК.";
+            cmd.PrintString();
+
+            cmd.Beep();
+
+            cmd.Alignment = 1;
+            cmd.Caption = cmd.UModel + " - " + cmd.Model + " - " + cmd.ROMVersion;
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "Номер чека: " + cmd.CheckNumber;
+            cmd.PrintString();
+            
+
+            cmd.Alignment = 1;
+            cmd.Caption = cmd.DeviceSettings;
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            if (cmd.Fiscal)
+                cmd.Caption = "Фискальный";
+            else
+                cmd.Caption = "Нефискальный";
+            cmd.PrintString();
+
+
+            cmd.Alignment = 1;
+            cmd.Caption = "ИНН" + cmd.INN;
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "-------------------------DVIZH";
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "                ";
+            cmd.PrintString();
+
+            cmd.Alignment = 1;
+            cmd.Caption = "                ";
+            cmd.PrintString();
+
+            return true;
+        }
+
+        public void March()
+        {
+            if (!DriverExists())
+            {
+                return;
+            }
+
+            cmd.DeviceEnabled = 1;
+
+            cmd.Password = 30;
+            cmd.Mode = 1;
+            cmd.SetMode();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 349;
+            cmd.Duration = 350;
+            cmd.Sound();
+
+            cmd.Frequency = 523;
+            cmd.Duration = 150;
+            cmd.Sound();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 349;
+            cmd.Duration = 350;
+            cmd.Sound();
+
+            cmd.Frequency = 523;
+            cmd.Duration = 150;
+            cmd.Sound();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 650;
+            cmd.Sound();
+            //
+            cmd.Frequency = 659;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 659;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 659;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 698;
+            cmd.Duration = 350;
+            cmd.Sound();
+
+            cmd.Frequency = 523;
+            cmd.Duration = 150;
+            cmd.Sound();
+
+            cmd.Frequency = 415;
+            cmd.Duration = 500;
+            cmd.Sound();
+
+            cmd.Frequency = 349;
+            cmd.Duration = 350;
+            cmd.Sound();
+
+            cmd.Frequency = 523;
+            cmd.Duration = 150;
+            cmd.Sound();
+
+            cmd.Frequency = 261;
+            cmd.Duration = 650;
+            cmd.Sound();
+        }
+
         public Boolean SessionOpened()
         {
             if (!DriverExists())
@@ -89,6 +238,7 @@ namespace DvizhSeller.services
                 cmd.Password = 30;
                 cmd.Mode = 1;
                 cmd.SetMode();
+                cmd.TestMode = Properties.Settings.Default.testMode;
                 cmd.CheckType = 2;
                 cmd.OpenCheck();
                 cmd.BeginDocument();
@@ -133,7 +283,7 @@ namespace DvizhSeller.services
             return true;
         }
 
-        public Boolean Register(string cashierName, int paymentType = 0)
+        public Boolean Register(string cashierName, int paymentType = 0, bool discount = false, int discountType = 1, int discountVal = 0)
         {
             if (!DriverExists())
             {
@@ -161,6 +311,7 @@ namespace DvizhSeller.services
                 cmd.Password = 30;
                 cmd.Mode = 1;
                 cmd.SetMode();
+                cmd.TestMode = Properties.Settings.Default.testMode;
                 cmd.CheckType = 1;
                 cmd.OpenCheck();
                 cmd.BeginDocument();
@@ -179,33 +330,41 @@ namespace DvizhSeller.services
 
                 lastElements.Clear();
 
+                int i = 1;
+
                 foreach (entities.Product element in cart.GetElements())
                 {
                     cmd.Name = element.GetName();
                     cmd.Price = element.GetPrice();
                     cmd.Quantity = element.GetCartCount();
+                    cmd.Department = i;
                     sum += element.GetPrice() * element.GetCartCount();
-                    cmd.Buy();
-                    //cmd.Registration();
+                    i++;
+                    //cmd.Buy();
+                    cmd.Registration();
 
                     lastElements.Add(element);
                 }
 
                 cmd.Summ = sum;
 
+                if(discount)
+                {
+                    cmd.DiscountType = discountType;
+                    cmd.DiscountValue = discountVal;
+                }
+
                 cmd.Caption = "                              ";
                 cmd.PrintString();
                 cmd.Caption = "-------------------------DVIZH";
                 cmd.PrintString();
                 cmd.Caption = "                              ";
-                cmd.PrintString();
-                cmd.Caption = "                              ";
-                cmd.PrintString();
-                cmd.Caption = "                              ";
-                cmd.PrintString();
 
                 cmd.TypeClose = paymentType;
                 cmd.Payment();
+
+                //cmd.Registration();
+
                 cmd.CloseCheck();
                 cmd.EndDocument();
             }
