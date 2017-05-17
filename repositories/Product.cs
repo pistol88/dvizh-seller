@@ -54,9 +54,29 @@ namespace DvizhSeller.repositories
             return num;
         }
 
+        public int DeleteWithSql(entities.Product product)
+        {
+            entities.Product hasProduct = FindOne(product.GetId());
+
+            SQLiteCommand command;
+
+            command = new SQLiteCommand("DELETE FROM product WHERE id = @id", db.connection);
+
+            command.Parameters.AddWithValue("@id", product.GetId());
+
+            int num = command.ExecuteNonQuery();
+
+            return num;
+        }
+
         public void Delete(entities.Product product)
         {
             products.Remove(product);
+        }
+
+        public void Clear()
+        {
+            products.Clear();
         }
 
         public List<entities.Product> GetList()

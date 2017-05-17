@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrdersForm));
             this.ordersListGridView = new System.Windows.Forms.DataGridView();
-            this.DvizhId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderProviderBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.elementsListGridView = new System.Windows.Forms.DataGridView();
@@ -44,6 +42,8 @@
             this.orderElementsBox = new System.Windows.Forms.GroupBox();
             this.canceSelectedElement = new System.Windows.Forms.Button();
             this.orderElementProviderBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.DvizhId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ordersListGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderProviderBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
@@ -70,22 +70,6 @@
             this.ordersListGridView.Size = new System.Drawing.Size(246, 337);
             this.ordersListGridView.TabIndex = 2;
             this.ordersListGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ordersListGridView_CellClick);
-            // 
-            // DvizhId
-            // 
-            this.DvizhId.DataPropertyName = "DvizhId";
-            this.DvizhId.HeaderText = "DvizhId";
-            this.DvizhId.Name = "DvizhId";
-            this.DvizhId.ReadOnly = true;
-            this.DvizhId.Width = 60;
-            // 
-            // totalDataGridViewTextBoxColumn
-            // 
-            this.totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
-            this.totalDataGridViewTextBoxColumn.HeaderText = "Сумма";
-            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
-            this.totalDataGridViewTextBoxColumn.ReadOnly = true;
-            this.totalDataGridViewTextBoxColumn.Width = 140;
             // 
             // orderProviderBindingSource
             // 
@@ -174,7 +158,7 @@
             // 
             // canceSelectedElement
             // 
-            this.canceSelectedElement.BackColor = System.Drawing.Color.Salmon;
+            this.canceSelectedElement.BackColor = System.Drawing.Color.PeachPuff;
             this.canceSelectedElement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.canceSelectedElement.Location = new System.Drawing.Point(375, 308);
             this.canceSelectedElement.Name = "canceSelectedElement";
@@ -187,6 +171,22 @@
             // orderElementProviderBindingSource
             // 
             this.orderElementProviderBindingSource.DataSource = typeof(DvizhSeller.tools.OrderElementProvider);
+            // 
+            // DvizhId
+            // 
+            this.DvizhId.DataPropertyName = "DvizhId";
+            this.DvizhId.HeaderText = "DvizhID";
+            this.DvizhId.Name = "DvizhId";
+            this.DvizhId.ReadOnly = true;
+            this.DvizhId.Width = 60;
+            // 
+            // totalDataGridViewTextBoxColumn
+            // 
+            this.totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
+            this.totalDataGridViewTextBoxColumn.HeaderText = "Сумма";
+            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
+            this.totalDataGridViewTextBoxColumn.ReadOnly = true;
+            this.totalDataGridViewTextBoxColumn.Width = 140;
             // 
             // OrdersForm
             // 
@@ -218,13 +218,13 @@
         private System.Windows.Forms.BindingSource orderProviderBindingSource;
         private System.Windows.Forms.GroupBox orderElementsBox;
         private System.Windows.Forms.Button canceSelectedElement;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DvizhId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource orderElementProviderBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderElementProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderElementPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderElementQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderElementCancelAt;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderElementId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DvizhId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
     }
 }

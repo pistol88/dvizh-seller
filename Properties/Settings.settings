@@ -18,13 +18,13 @@
       <Value Profile="(Default)">http</Value>
     </Setting>
     <Setting Name="client" Type="System.String" Scope="User">
-      <Value Profile="(Default)">demo-dss</Value>
+      <Value Profile="(Default)">demo4</Value>
     </Setting>
     <Setting Name="token" Type="System.String" Scope="User">
       <Value Profile="(Default)">k2j33hdj39aqskdenneckksa303kd</Value>
     </Setting>
     <Setting Name="online" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="fiscal" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

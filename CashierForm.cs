@@ -121,6 +121,19 @@ namespace DvizhSeller
             cashboxToolStripMenuItem.Enabled = false;
         }
 
+        public void ReRenderAllProducts()
+        {
+            products.Clear();
+            dataMapper.FillProducts(products, categories);
+            RenderProducts(products.GetList());
+        }
+
+        public void ReRenderAllCashiers()
+        {
+            cashiers.Clear();
+            dataMapper.FillCashiers(cashiers);
+        }
+
         private void RenderProducts(List<entities.Product> products)
         {
             productsListView.Items.Clear();
@@ -527,7 +540,7 @@ namespace DvizhSeller
         {
             if (!shiftOpen)
             {
-                MessageBox.Show("Смена не запущена, не удается провести заказ.");
+                MessageBox.Show("Смена фискального регистратора не запущена, не удается провести заказ.");
 
                 return false;
             }
@@ -569,7 +582,7 @@ namespace DvizhSeller
 
         private void shopListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShopBookForm shopbookWindow = new ShopBookForm();
+            ShopBookForm shopbookWindow = new ShopBookForm(this);
             shopbookWindow.Show();
         }
 
@@ -614,6 +627,12 @@ namespace DvizhSeller
         private void fiscalTestPrintToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fiscal.TestPrint();
+        }
+
+        private void cashiersBookToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CashiersBookForm cashiersBookWindow = new CashiersBookForm(this);
+            cashiersBookWindow.Show();
         }
     }
 }

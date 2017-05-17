@@ -92,6 +92,7 @@ namespace DvizhSeller
                 fiscal.Annulate(orderElement);
 
             elementsListGridView.Update();
+            elementsListGridView.Focus();
         }
     }
 }

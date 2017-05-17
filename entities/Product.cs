@@ -34,23 +34,10 @@ namespace DvizhSeller.entities
             }
         }
 
-        private void updateDb()
-        {
-            //EventHandler<UpdateEventArgs> handler = 1;
-
-            //if (handler != null)
-            //{
-            //    handler(this, e);
-            //}
-        }
-
         public string Name
         {
             get { return name; }
-            set {
-                name = value;
-                updateDb();
-            }
+            set { name = value; }
         }
 
         public string Sku

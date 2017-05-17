@@ -295,7 +295,7 @@ namespace DvizhSeller.services
                 + "&clientId="
                 + order.GetClientId().ToString();
 
-            Clipboard.SetData(DataFormats.Text, (Object)url);
+            //Clipboard.SetData(DataFormats.Text, (Object)url);
 
             try
             {

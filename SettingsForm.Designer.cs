@@ -41,6 +41,7 @@
             this.online = new System.Windows.Forms.CheckBox();
             this.fiscal = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.testMode = new System.Windows.Forms.CheckBox();
             this.checkNoteBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.barcodescaner = new System.Windows.Forms.CheckBox();
@@ -58,7 +59,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.currencyBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.testMode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -171,6 +171,16 @@
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Оборудование";
+            // 
+            // testMode
+            // 
+            this.testMode.AutoSize = true;
+            this.testMode.Location = new System.Drawing.Point(6, 42);
+            this.testMode.Name = "testMode";
+            this.testMode.Size = new System.Drawing.Size(113, 17);
+            this.testMode.TabIndex = 23;
+            this.testMode.Text = "Тестовый режим";
+            this.testMode.UseVisualStyleBackColor = true;
             // 
             // checkNoteBox
             // 
@@ -359,16 +369,6 @@
             this.label8.Size = new System.Drawing.Size(48, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "Валюта:";
-            // 
-            // testMode
-            // 
-            this.testMode.AutoSize = true;
-            this.testMode.Location = new System.Drawing.Point(6, 42);
-            this.testMode.Name = "testMode";
-            this.testMode.Size = new System.Drawing.Size(113, 17);
-            this.testMode.TabIndex = 23;
-            this.testMode.Text = "Тестовый режим";
-            this.testMode.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 

@@ -18,6 +18,12 @@ namespace DvizhSeller.entities
             name = setName;
         }
 
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
         public string GetName()
         {
             return name;

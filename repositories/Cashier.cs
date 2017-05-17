@@ -47,6 +47,21 @@ namespace DvizhSeller.repositories
             return num;
         }
 
+        public int DeleteWithSql(entities.Cashier cashier)
+        {
+            entities.Cashier hasCashier = FindOne(cashier.GetId());
+
+            SQLiteCommand command;
+
+            command = new SQLiteCommand("DELETE FROM cashier WHERE id = @id", db.connection);
+
+            command.Parameters.AddWithValue("@id", cashier.GetId());
+
+            int num = command.ExecuteNonQuery();
+
+            return num;
+        }
+
         public void Delete(entities.Cashier cashbox)
         {
             cashiers.Remove(cashbox);
@@ -65,6 +80,11 @@ namespace DvizhSeller.repositories
         public List<entities.Cashier> FindByName(string name)
         {
             return cashiers.FindAll(x => x.GetName().Contains(name));
+        }
+
+        public void Clear()
+        {
+            cashiers.Clear();
         }
     }
 }
