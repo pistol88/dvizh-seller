@@ -37,9 +37,11 @@
             this.closeShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stornToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fiscalTestPrintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fiscalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barCodeScanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shopListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cashiersBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.promocodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,16 +51,6 @@
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.productBox = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.productAmount = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.productPicture = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.productSku = new System.Windows.Forms.Label();
-            this.productCount = new System.Windows.Forms.NumericUpDown();
-            this.productPrice = new System.Windows.Forms.Label();
-            this.toCartButton = new System.Windows.Forms.Button();
             this.cartBox = new System.Windows.Forms.GroupBox();
             this.cartGridView = new System.Windows.Forms.DataGridView();
             this.cartProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,28 +78,19 @@
             this.orderTotal = new System.Windows.Forms.Label();
             this.cashierName = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
-            this.productsSearchBox = new System.Windows.Forms.TextBox();
-            this.productsCategoriesComboBox = new System.Windows.Forms.ComboBox();
-            this.productsListView = new System.Windows.Forms.ListView();
-            this.productNameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.productPriceHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.shiftOpened = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.barCodeBox = new System.Windows.Forms.TextBox();
-            this.cashiersBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.shopBooksLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.menuStrip1.SuspendLayout();
-            this.productBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.productCount)).BeginInit();
             this.cartBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
             this.orderBox.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -120,7 +103,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1036, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(514, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -139,7 +122,8 @@
             this.openShiftToolStripMenuItem,
             this.closeShiftToolStripMenuItem,
             this.stornToolStripMenuItem,
-            this.fiscalTestPrintToolStripMenuItem});
+            this.fiscalTestPrintToolStripMenuItem,
+            this.fiscalToolStripMenuItem});
             this.cashboxToolStripMenuItem.Name = "cashboxToolStripMenuItem";
             this.cashboxToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.cashboxToolStripMenuItem.Text = "Касса";
@@ -172,6 +156,13 @@
             this.fiscalTestPrintToolStripMenuItem.Text = "Тестовая печать";
             this.fiscalTestPrintToolStripMenuItem.Click += new System.EventHandler(this.fiscalTestPrintToolStripMenuItem_Click);
             // 
+            // fiscalToolStripMenuItem
+            // 
+            this.fiscalToolStripMenuItem.Name = "fiscalToolStripMenuItem";
+            this.fiscalToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.fiscalToolStripMenuItem.Text = "Настройки";
+            this.fiscalToolStripMenuItem.Click += new System.EventHandler(this.fiscalToolStripMenuItem_Click);
+            // 
             // barCodeScanerToolStripMenuItem
             // 
             this.barCodeScanerToolStripMenuItem.Name = "barCodeScanerToolStripMenuItem";
@@ -193,21 +184,28 @@
             // shopListToolStripMenuItem
             // 
             this.shopListToolStripMenuItem.Name = "shopListToolStripMenuItem";
-            this.shopListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.shopListToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.shopListToolStripMenuItem.Text = "Магазин";
             this.shopListToolStripMenuItem.Click += new System.EventHandler(this.shopListToolStripMenuItem_Click);
+            // 
+            // cashiersBookToolStripMenuItem
+            // 
+            this.cashiersBookToolStripMenuItem.Name = "cashiersBookToolStripMenuItem";
+            this.cashiersBookToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.cashiersBookToolStripMenuItem.Text = "Кассиры";
+            this.cashiersBookToolStripMenuItem.Click += new System.EventHandler(this.cashiersBookToolStripMenuItem_Click);
             // 
             // clientsToolStripMenuItem
             // 
             this.clientsToolStripMenuItem.Name = "clientsToolStripMenuItem";
-            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.clientsToolStripMenuItem.Text = "Клиенты";
             this.clientsToolStripMenuItem.Click += new System.EventHandler(this.clientsToolStripMenuItem_Click);
             // 
             // promocodesToolStripMenuItem
             // 
             this.promocodesToolStripMenuItem.Name = "promocodesToolStripMenuItem";
-            this.promocodesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.promocodesToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.promocodesToolStripMenuItem.Text = "Промокоды";
             this.promocodesToolStripMenuItem.Click += new System.EventHandler(this.promocodesToolStripMenuItem_Click);
             // 
@@ -264,142 +262,12 @@
             this.информацияToolStripMenuItem.Text = "О программе";
             this.информацияToolStripMenuItem.Click += new System.EventHandler(this.информацияToolStripMenuItem_Click);
             // 
-            // productBox
-            // 
-            this.productBox.AutoSize = true;
-            this.productBox.Controls.Add(this.label7);
-            this.productBox.Controls.Add(this.productAmount);
-            this.productBox.Controls.Add(this.label6);
-            this.productBox.Controls.Add(this.productPicture);
-            this.productBox.Controls.Add(this.label4);
-            this.productBox.Controls.Add(this.productSku);
-            this.productBox.Controls.Add(this.productCount);
-            this.productBox.Controls.Add(this.productPrice);
-            this.productBox.Controls.Add(this.toCartButton);
-            this.productBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.productBox.Location = new System.Drawing.Point(10, 26);
-            this.productBox.Name = "productBox";
-            this.productBox.Size = new System.Drawing.Size(485, 161);
-            this.productBox.TabIndex = 4;
-            this.productBox.TabStop = false;
-            this.productBox.Text = "Название товара";
-            this.productBox.Visible = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(135, 45);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Остаток:";
-            // 
-            // productAmount
-            // 
-            this.productAmount.AutoSize = true;
-            this.productAmount.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.productAmount.Location = new System.Drawing.Point(193, 47);
-            this.productAmount.Name = "productAmount";
-            this.productAmount.Size = new System.Drawing.Size(13, 13);
-            this.productAmount.TabIndex = 11;
-            this.productAmount.Text = "0";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(135, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(51, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Артикул:";
-            // 
-            // productPicture
-            // 
-            this.productPicture.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.productPicture.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.productPicture.ErrorImage = null;
-            this.productPicture.ImageLocation = "http://dvizh.net/images/placeholder-product.png";
-            this.productPicture.Location = new System.Drawing.Point(6, 27);
-            this.productPicture.Name = "productPicture";
-            this.productPicture.Size = new System.Drawing.Size(120, 120);
-            this.productPicture.TabIndex = 6;
-            this.productPicture.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(138, 77);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(13, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "=";
-            // 
-            // productSku
-            // 
-            this.productSku.AutoSize = true;
-            this.productSku.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.productSku.Location = new System.Drawing.Point(192, 27);
-            this.productSku.Name = "productSku";
-            this.productSku.Size = new System.Drawing.Size(29, 13);
-            this.productSku.TabIndex = 7;
-            this.productSku.Text = "SKU";
-            // 
-            // productCount
-            // 
-            this.productCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.productCount.Location = new System.Drawing.Point(395, 29);
-            this.productCount.Maximum = new decimal(new int[] {
-            1410065407,
-            2,
-            0,
-            0});
-            this.productCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.productCount.Name = "productCount";
-            this.productCount.Size = new System.Drawing.Size(75, 31);
-            this.productCount.TabIndex = 5;
-            this.productCount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // productPrice
-            // 
-            this.productPrice.AutoSize = true;
-            this.productPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.productPrice.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.productPrice.Location = new System.Drawing.Point(157, 68);
-            this.productPrice.Name = "productPrice";
-            this.productPrice.Size = new System.Drawing.Size(24, 25);
-            this.productPrice.TabIndex = 1;
-            this.productPrice.Text = "0";
-            // 
-            // toCartButton
-            // 
-            this.toCartButton.BackColor = System.Drawing.Color.Transparent;
-            this.toCartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.toCartButton.Location = new System.Drawing.Point(395, 66);
-            this.toCartButton.Name = "toCartButton";
-            this.toCartButton.Size = new System.Drawing.Size(75, 31);
-            this.toCartButton.TabIndex = 0;
-            this.toCartButton.Text = "В корзину";
-            this.toCartButton.UseVisualStyleBackColor = false;
-            this.toCartButton.Click += new System.EventHandler(this.toCartButton_Click);
-            // 
             // cartBox
             // 
             this.cartBox.Controls.Add(this.cartGridView);
-            this.cartBox.Location = new System.Drawing.Point(521, 37);
+            this.cartBox.Location = new System.Drawing.Point(5, 106);
             this.cartBox.Name = "cartBox";
-            this.cartBox.Size = new System.Drawing.Size(503, 246);
+            this.cartBox.Size = new System.Drawing.Size(504, 173);
             this.cartBox.TabIndex = 5;
             this.cartBox.TabStop = false;
             this.cartBox.Text = "Корзина";
@@ -428,12 +296,12 @@
             this.cartGridView.DataSource = this.cartDataBindingSource;
             this.cartGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cartGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cartGridView.Location = new System.Drawing.Point(7, 20);
+            this.cartGridView.Location = new System.Drawing.Point(7, 22);
             this.cartGridView.MultiSelect = false;
             this.cartGridView.Name = "cartGridView";
             this.cartGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.cartGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.cartGridView.Size = new System.Drawing.Size(490, 217);
+            this.cartGridView.Size = new System.Drawing.Size(490, 145);
             this.cartGridView.TabIndex = 0;
             this.cartGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cartGridView_CellClick);
             this.cartGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cartGridView_CellEndEdit);
@@ -531,16 +399,16 @@
             this.orderBox.Controls.Add(this.label1);
             this.orderBox.Controls.Add(this.orderButton);
             this.orderBox.Controls.Add(this.orderTotal);
-            this.orderBox.Location = new System.Drawing.Point(528, 297);
+            this.orderBox.Location = new System.Drawing.Point(12, 293);
             this.orderBox.Name = "orderBox";
-            this.orderBox.Size = new System.Drawing.Size(496, 206);
+            this.orderBox.Size = new System.Drawing.Size(497, 142);
             this.orderBox.TabIndex = 6;
             this.orderBox.TabStop = false;
             this.orderBox.Text = "Заказ";
             // 
             // discountBox
             // 
-            this.discountBox.Location = new System.Drawing.Point(401, 29);
+            this.discountBox.Location = new System.Drawing.Point(289, 28);
             this.discountBox.Name = "discountBox";
             this.discountBox.Size = new System.Drawing.Size(89, 20);
             this.discountBox.TabIndex = 14;
@@ -549,7 +417,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(76, 73);
+            this.linkLabel1.Location = new System.Drawing.Point(284, 71);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(95, 13);
             this.linkLabel1.TabIndex = 13;
@@ -561,7 +429,7 @@
             // 
             this.clientName.AutoSize = true;
             this.clientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.clientName.Location = new System.Drawing.Point(76, 60);
+            this.clientName.Location = new System.Drawing.Point(284, 58);
             this.clientName.Name = "clientName";
             this.clientName.Size = new System.Drawing.Size(11, 13);
             this.clientName.TabIndex = 12;
@@ -602,7 +470,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(328, 33);
+            this.label2.Location = new System.Drawing.Point(216, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 7;
@@ -611,7 +479,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 60);
+            this.label1.Location = new System.Drawing.Point(216, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 6;
@@ -622,7 +490,7 @@
             this.orderButton.BackColor = System.Drawing.Color.Honeydew;
             this.orderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.orderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.orderButton.Location = new System.Drawing.Point(134, 156);
+            this.orderButton.Location = new System.Drawing.Point(219, 99);
             this.orderButton.Name = "orderButton";
             this.orderButton.Size = new System.Drawing.Size(230, 31);
             this.orderButton.TabIndex = 4;
@@ -644,7 +512,7 @@
             // 
             this.cashierName.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cashierName.AutoSize = true;
-            this.cashierName.Location = new System.Drawing.Point(775, 14);
+            this.cashierName.Location = new System.Drawing.Point(319, 438);
             this.cashierName.Name = "cashierName";
             this.cashierName.Size = new System.Drawing.Size(51, 13);
             this.cashierName.TabIndex = 12;
@@ -658,87 +526,11 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label8.Location = new System.Drawing.Point(728, 14);
+            this.label8.Location = new System.Drawing.Point(272, 438);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(44, 13);
             this.label8.TabIndex = 13;
             this.label8.Text = "Кассир";
-            // 
-            // productsSearchBox
-            // 
-            this.productsSearchBox.Location = new System.Drawing.Point(5, 20);
-            this.productsSearchBox.Name = "productsSearchBox";
-            this.productsSearchBox.Size = new System.Drawing.Size(345, 20);
-            this.productsSearchBox.TabIndex = 3;
-            this.productsSearchBox.Text = "Название или штрихкод";
-            this.productsSearchBox.Click += new System.EventHandler(this.productsSearchBox_Click);
-            this.productsSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productsSearchBox_KeyDown);
-            // 
-            // productsCategoriesComboBox
-            // 
-            this.productsCategoriesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.productsCategoriesComboBox.FormattingEnabled = true;
-            this.productsCategoriesComboBox.Location = new System.Drawing.Point(356, 19);
-            this.productsCategoriesComboBox.Name = "productsCategoriesComboBox";
-            this.productsCategoriesComboBox.Size = new System.Drawing.Size(139, 21);
-            this.productsCategoriesComboBox.TabIndex = 2;
-            this.productsCategoriesComboBox.SelectedValueChanged += new System.EventHandler(this.productsCategoriesComboBox_SelectedValueChanged);
-            // 
-            // productsListView
-            // 
-            this.productsListView.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.productsListView.AllowColumnReorder = true;
-            this.productsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.productNameHeader,
-            this.productPriceHeader});
-            this.productsListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.productsListView.FullRowSelect = true;
-            this.productsListView.GridLines = true;
-            this.productsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.productsListView.HideSelection = false;
-            this.productsListView.Location = new System.Drawing.Point(6, 44);
-            this.productsListView.Name = "productsListView";
-            this.productsListView.Size = new System.Drawing.Size(491, 120);
-            this.productsListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.productsListView.TabIndex = 0;
-            this.productsListView.UseCompatibleStateImageBehavior = false;
-            this.productsListView.View = System.Windows.Forms.View.Details;
-            this.productsListView.SelectedIndexChanged += new System.EventHandler(this.productsListView_SelectedIndexChanged);
-            this.productsListView.DoubleClick += new System.EventHandler(this.productsListView_DoubleClick);
-            // 
-            // productNameHeader
-            // 
-            this.productNameHeader.Text = "Товар";
-            this.productNameHeader.Width = 420;
-            // 
-            // productPriceHeader
-            // 
-            this.productPriceHeader.Text = "Цена";
-            this.productPriceHeader.Width = 50;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.productsListView);
-            this.groupBox2.Controls.Add(this.productsCategoriesComboBox);
-            this.groupBox2.Controls.Add(this.productsSearchBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 110);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(503, 173);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Каталог";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.AutoSize = true;
-            this.groupBox1.Controls.Add(this.productBox);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(12, 297);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(503, 206);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Карточка товара";
             // 
             // shiftOpened
             // 
@@ -746,7 +538,7 @@
             this.shiftOpened.AutoSize = true;
             this.shiftOpened.BackColor = System.Drawing.Color.Transparent;
             this.shiftOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.shiftOpened.Location = new System.Drawing.Point(525, 14);
+            this.shiftOpened.Location = new System.Drawing.Point(20, 438);
             this.shiftOpened.Name = "shiftOpened";
             this.shiftOpened.Size = new System.Drawing.Size(10, 13);
             this.shiftOpened.TabIndex = 16;
@@ -755,9 +547,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.barCodeBox);
-            this.groupBox3.Location = new System.Drawing.Point(12, 37);
+            this.groupBox3.Location = new System.Drawing.Point(5, 33);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(503, 67);
+            this.groupBox3.Size = new System.Drawing.Size(346, 67);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Купить по сканеру штрихкода";
@@ -767,16 +559,44 @@
             this.barCodeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.barCodeBox.Location = new System.Drawing.Point(7, 19);
             this.barCodeBox.Name = "barCodeBox";
-            this.barCodeBox.Size = new System.Drawing.Size(490, 35);
+            this.barCodeBox.Size = new System.Drawing.Size(333, 35);
             this.barCodeBox.TabIndex = 12;
             this.barCodeBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.barCodeBox_KeyDown);
             // 
-            // cashiersBookToolStripMenuItem
+            // groupBox1
             // 
-            this.cashiersBookToolStripMenuItem.Name = "cashiersBookToolStripMenuItem";
-            this.cashiersBookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cashiersBookToolStripMenuItem.Text = "Кассиры";
-            this.cashiersBookToolStripMenuItem.Click += new System.EventHandler(this.cashiersBookToolStripMenuItem_Click);
+            this.groupBox1.Controls.Add(this.shopBooksLinkLabel);
+            this.groupBox1.Location = new System.Drawing.Point(357, 33);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(145, 67);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Поиск по стравочнику";
+            // 
+            // shopBooksLinkLabel
+            // 
+            this.shopBooksLinkLabel.AutoSize = true;
+            this.shopBooksLinkLabel.Location = new System.Drawing.Point(6, 34);
+            this.shopBooksLinkLabel.Name = "shopBooksLinkLabel";
+            this.shopBooksLinkLabel.Size = new System.Drawing.Size(113, 13);
+            this.shopBooksLinkLabel.TabIndex = 15;
+            this.shopBooksLinkLabel.TabStop = true;
+            this.shopBooksLinkLabel.Text = "Открыть справочник";
+            this.shopBooksLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.shopBooksLinkLabel_LinkClicked);
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.AllowNavigation = false;
+            this.webBrowser.AllowWebBrowserDrop = false;
+            this.webBrowser.CausesValidation = false;
+            this.webBrowser.Location = new System.Drawing.Point(5, 464);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.ScrollBarsEnabled = false;
+            this.webBrowser.Size = new System.Drawing.Size(504, 65);
+            this.webBrowser.TabIndex = 19;
+            this.webBrowser.Url = new System.Uri("http://dvizh.net/info/dvizh.cashier.html", System.UriKind.Absolute);
             // 
             // CashierForm
             // 
@@ -784,14 +604,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Lavender;
-            this.ClientSize = new System.Drawing.Size(1036, 511);
+            this.ClientSize = new System.Drawing.Size(514, 530);
+            this.Controls.Add(this.webBrowser);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.shiftOpened);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.cashierName);
             this.Controls.Add(this.orderBox);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.cartBox);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -804,21 +624,15 @@
             this.Load += new System.EventHandler(this.Cashier_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.productBox.ResumeLayout(false);
-            this.productBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.productPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.productCount)).EndInit();
             this.cartBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).EndInit();
             this.orderBox.ResumeLayout(false);
             this.orderBox.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -837,41 +651,24 @@
         private System.Windows.Forms.ToolStripMenuItem ordersListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
-        private System.Windows.Forms.GroupBox productBox;
-        private System.Windows.Forms.Label productPrice;
-        private System.Windows.Forms.Button toCartButton;
         private System.Windows.Forms.GroupBox cartBox;
-        private System.Windows.Forms.NumericUpDown productCount;
         private System.Windows.Forms.GroupBox orderBox;
         private System.Windows.Forms.Label orderTotal;
-        private System.Windows.Forms.PictureBox productPicture;
-        private System.Windows.Forms.Label productSku;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button orderButton;
         private System.Windows.Forms.RadioButton paymentType1;
         private System.Windows.Forms.RadioButton paymentType0;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem barCodeScanerToolStripMenuItem;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label productAmount;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.LinkLabel cashierName;
         private System.Windows.Forms.Label clientName;
         private System.Windows.Forms.TextBox discountBox;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox productsSearchBox;
-        private System.Windows.Forms.ComboBox productsCategoriesComboBox;
-        private System.Windows.Forms.ListView productsListView;
-        private System.Windows.Forms.ColumnHeader productNameHeader;
-        private System.Windows.Forms.ColumnHeader productPriceHeader;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView cartGridView;
         private System.Windows.Forms.BindingSource cartDataBindingSource;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label shiftOpened;
         private System.Windows.Forms.ToolStripMenuItem allListsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shopListToolStripMenuItem;
@@ -892,6 +689,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cartCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem cashiersBookToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fiscalToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel shopBooksLinkLabel;
+        private System.Windows.Forms.WebBrowser webBrowser;
     }
 }
 

@@ -33,12 +33,7 @@ namespace DvizhSeller
 
             InitializeComponent();
 
-            products = new repositories.Product(db);
-            categories = new repositories.Category(db);
-
-            dataMapper = new services.DataMapper(db);
-            dataMapper.FillCategories(categories);
-            dataMapper.FillProducts(products, categories);
+            SetProductsList();
 
             foreach (entities.Product product in products.GetList())
             {
@@ -56,20 +51,18 @@ namespace DvizhSeller
             }
 
             productsGridView.DataSource = productsProvider;
-            categoriesGridView.DataSource = productsProvider;
             
             productsGridView.Update();
-            categoriesGridView.Update();
         }
 
-        private void RenderLists()
+        public void SetProductsList()
         {
+            products = new repositories.Product(db);
+            categories = new repositories.Category(db);
 
-        }
-
-        private void ShopBook_Load(object sender, EventArgs e)
-        {
-
+            dataMapper = new services.DataMapper(db);
+            dataMapper.FillCategories(categories);
+            dataMapper.FillProducts(products, categories);
         }
 
         private void searchBox_KeyDown(object sender, KeyEventArgs e)
@@ -102,11 +95,17 @@ namespace DvizhSeller
 
         private void SelectFormProduct(entities.Product product)
         {
+            productsTabControl.Visible = true;
             selectedProduct = product;
-            productBox.Visible = true;
             productNameBox.Text = product.GetName();
             productPriceBox.Text = product.GetPrice().ToString();
             productSkuBox.Text = product.GetSku();
+
+            productPrice.Text = product.GetPrice().ToString() + Properties.Settings.Default.currency;
+            productSku.Text = product.GetSku();
+            productCount.Value = 1;
+            productAmount.Text = product.GetAmount().ToString();
+            productPicture.ImageLocation = product.GetImage();
         }
 
         private void productsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -138,17 +137,12 @@ namespace DvizhSeller
                 products.DeleteWithSql(selectedProduct);
 
                 productsProvider.Remove(selectedProduct);
-
-                productBox.Visible = false;
             }
 
             productsGridView.Update();
             productsGridView.Focus();
-        }
 
-        private void ShopBookForm_Leave(object sender, EventArgs e)
-        {
-            cashierForm.ReRenderAllProducts();
+            productsTabControl.Visible = false;
         }
 
         private bool AddProduct()
@@ -179,9 +173,17 @@ namespace DvizhSeller
             addProductSkuBox.Text = "";
             addProductPriceBox.Text = "";
 
+            SetProductsList();
+
             MessageBox.Show("Сохранено");
 
             return true;
+        }
+
+        private void PutToCart()
+        {
+            cashierForm.PutToCart(selectedProduct, Convert.ToInt32(productCount.Value));
+            productCount.Value = 1;
         }
 
         private void addProdutButton_Click(object sender, EventArgs e)
@@ -189,14 +191,19 @@ namespace DvizhSeller
             AddProduct();
         }
 
-        private void ShopBookForm_Deactivate(object sender, EventArgs e)
+        private void toCartButton_Click(object sender, EventArgs e)
         {
-            cashierForm.ReRenderAllProducts();
+            PutToCart();
         }
 
-        private void ShopBookForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void ShopBookForm_Load(object sender, EventArgs e)
         {
-            cashierForm.ReRenderAllProducts();
+
+        }
+
+        private void ShopBookForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            cashierForm.SetProductsList();
         }
     }
 }

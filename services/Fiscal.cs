@@ -3,54 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DvizhSeller.services
 {
+
     class Fiscal
     {
         repositories.Cart cart;
         public List<entities.Product> lastElements;
-        dynamic driver = false;
-        dynamic cmd = false;
+        FprnM1C.IFprnM45 cmd;
+        bool driverExists;
 
         public Fiscal(repositories.Cart setCart = null)
         {
             cart = setCart;
             lastElements = new List<entities.Product>();
 
-            driver = Type.GetTypeFromProgID("AddIn.FPrnM45");
-
-            if (driver != null)
+            try
             {
-                cmd = Activator.CreateInstance(driver);
+                cmd = new FprnM1C.FprnM45();
+
+                driverExists = true;
+
+                if (cmd.CheckState != 0)
+                    cmd.CancelCheck();
+
+                if(cmd.SessionExceedLimit)
+                {
+                    MessageBox.Show("Продолжительность смены превысила 24 часа. Закройте и снова откройте смену.");
+                    driverExists = false;
+                }
             }
+            catch (Exception)
+            {
+                driverExists = false;
+            }
+            
         }
 
         public Boolean DriverExists()
         {
-            if (driver == null)
-            {
-                return false;
-            }
-
-            if (driver.ToString() == "System.__ComObject")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return driverExists;
         }
 
         public Boolean TestPrint()
         {
             if (!DriverExists())
             {
+                MessageBox.Show("Не удалось подключиться. Проверьте, установлен ли драйвер.");
                 return false;
             }
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             cmd.Alignment = 1;
             cmd.Caption = "-------------------------DVIZH";
@@ -67,11 +72,11 @@ namespace DvizhSeller.services
             cmd.Beep();
 
             cmd.Alignment = 1;
-            cmd.Caption = cmd.UModel + " - " + cmd.Model + " - " + cmd.ROMVersion;
+            //cmd.Caption = cmd.UModel.ToString() + " - " + cmd.Model.ToString() + " - " + cmd.ROMVersion;
             cmd.PrintString();
 
             cmd.Alignment = 1;
-            cmd.Caption = "Номер чека: " + cmd.CheckNumber;
+            cmd.Caption = "Номер чека: " + cmd.CheckNumber.ToString();
             cmd.PrintString();
             
 
@@ -113,9 +118,9 @@ namespace DvizhSeller.services
                 return;
             }
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
-            cmd.Password = 30;
+            cmd.Password = "30";
             cmd.Mode = 1;
             cmd.SetMode();
 
@@ -199,7 +204,7 @@ namespace DvizhSeller.services
                 return false;
             }
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             if (cmd.GetStatus() < 0)
             {
@@ -207,11 +212,11 @@ namespace DvizhSeller.services
             }
             else
             {
-                cmd.Password = 30;
+                cmd.Password = "30";
                 cmd.Mode = 1;
                 cmd.SetMode();
 
-                return cmd.SessionOpened();
+                return cmd.SessionOpened;
             }
         }
 
@@ -227,7 +232,7 @@ namespace DvizhSeller.services
             cmd.SlipDocLeftMargin = 1;
             cmd.SlipDocOrientation = 0;
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             if (cmd.GetStatus() < 0)
             {
@@ -235,7 +240,7 @@ namespace DvizhSeller.services
             }
             else
             {
-                cmd.Password = 30;
+                cmd.Password = "30";
                 cmd.Mode = 1;
                 cmd.SetMode();
                 cmd.TestMode = Properties.Settings.Default.testMode;
@@ -278,7 +283,7 @@ namespace DvizhSeller.services
                 cmd.EndDocument();
             }
             //cmd.Beep();
-            cmd.DeviceEnabled = 0;
+            cmd.DeviceEnabled = false;
 
             return true;
         }
@@ -300,7 +305,7 @@ namespace DvizhSeller.services
             cmd.SlipDocLeftMargin = 1;
             cmd.SlipDocOrientation = 0;
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             if (cmd.GetStatus() < 0)
             {
@@ -308,7 +313,7 @@ namespace DvizhSeller.services
             }
             else
             {
-                cmd.Password = 30;
+                cmd.Password = "30";
                 cmd.Mode = 1;
                 cmd.SetMode();
                 cmd.TestMode = Properties.Settings.Default.testMode;
@@ -369,7 +374,7 @@ namespace DvizhSeller.services
                 cmd.EndDocument();
             }
             //cmd.Beep();
-            cmd.DeviceEnabled = 0;
+            cmd.DeviceEnabled = false;
 
             return true;
         }
@@ -386,7 +391,7 @@ namespace DvizhSeller.services
             cmd.SlipDocLeftMargin = 1;
             cmd.SlipDocOrientation = 0;
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             if (cmd.GetStatus() < 0)
             {
@@ -394,14 +399,14 @@ namespace DvizhSeller.services
             }
             else
             {
-                cmd.Password = 30;
+                cmd.Password = "30";
                 cmd.Mode = 1;
                 cmd.SetMode();
                 cmd.OpenSession();
                 cmd.Beep();
             }
 
-            cmd.DeviceEnabled = 0;
+            cmd.DeviceEnabled = false;
 
             return true;
         }
@@ -418,7 +423,7 @@ namespace DvizhSeller.services
             cmd.SlipDocLeftMargin = 1;
             cmd.SlipDocOrientation = 0;
 
-            cmd.DeviceEnabled = 1;
+            cmd.DeviceEnabled = true;
 
             if (cmd.GetStatus() < 0)
             {
@@ -426,14 +431,14 @@ namespace DvizhSeller.services
             }
             else
             {
-                cmd.Password = 30;
+                cmd.Password = "30";
                 cmd.Mode = 3;
                 cmd.SetMode();
                 cmd.ReportType = 1;
                 cmd.Report();
                 cmd.Beep();
             }
-            cmd.DeviceEnabled = 0;
+            cmd.DeviceEnabled = false;
 
             return true;
         }

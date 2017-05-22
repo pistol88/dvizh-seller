@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.entities.interfaces
 {
-    interface  CartElement
+    public interface  CartElement
     {
         int GetCartCount();
 

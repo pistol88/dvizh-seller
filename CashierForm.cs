@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace DvizhSeller
 {
@@ -25,9 +26,9 @@ namespace DvizhSeller
         repositories.Discount discounts;
 
         tools.CartProvider cartData = new tools.CartProvider();
-
-        entities.Product selectedProduct;
+        
         entities.Product cartElementSelected;
+
         int selectedClientId = 0;
         int selectedCashierId = 0;
         int selectedDiscountId = 0;
@@ -40,10 +41,10 @@ namespace DvizhSeller
         bool shiftOpen;
         bool fiscalActivated;
 
+        string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
         public CashierForm()
         {
-            string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
             if (!File.Exists(applicationDataPath + "\\dvizh-main-database.db"))
             {
                 File.Copy("database.db", applicationDataPath + "\\dvizh-main-database.db");
@@ -56,7 +57,7 @@ namespace DvizhSeller
             }
 
             db = new services.Database();
-
+            
             InitializeComponent();
         }
 
@@ -64,8 +65,6 @@ namespace DvizhSeller
         {
             barCodeBox.Select();
 
-            categories = new repositories.Category(db);
-            products = new repositories.Product(db);
             clients = new repositories.Client(db);
             cashiers = new repositories.Cashier(db);
             orders = new repositories.Order(db);
@@ -74,17 +73,12 @@ namespace DvizhSeller
 
             dataExchanger = new services.DataExchanger(db);
 
-            dataMapper = new services.DataMapper(db);
-            dataMapper.FillCategories(categories);
-            dataMapper.FillProducts(products, categories);
+            SetProductsList();
             dataMapper.FillDiscounts(discounts);
             dataMapper.FillClients(clients);
             dataMapper.FillCashiers(cashiers);
 
             fiscal = new services.Fiscal(cart);
-
-            RenderProducts(products.GetList());
-            RenderCategories(categories.GetList());
 
             if (Properties.Settings.Default.fiscal && fiscal.DriverExists())
                 ActivateFiscal();
@@ -95,6 +89,16 @@ namespace DvizhSeller
 
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
+        }
+
+        public void SetProductsList()
+        {
+            products = new repositories.Product(db);
+            categories = new repositories.Category(db);
+
+            dataMapper = new services.DataMapper(db);
+            dataMapper.FillCategories(categories);
+            dataMapper.FillProducts(products, categories);
         }
 
         public void ChooseCashier(int id, string name)
@@ -121,65 +125,10 @@ namespace DvizhSeller
             cashboxToolStripMenuItem.Enabled = false;
         }
 
-        public void ReRenderAllProducts()
-        {
-            products.Clear();
-            dataMapper.FillProducts(products, categories);
-            RenderProducts(products.GetList());
-        }
-
         public void ReRenderAllCashiers()
         {
             cashiers.Clear();
             dataMapper.FillCashiers(cashiers);
-        }
-
-        private void RenderProducts(List<entities.Product> products)
-        {
-            productsListView.Items.Clear();
-
-            foreach (entities.Product product in products)
-            {
-                Item item = new Item(product.GetName(), product.GetId());
-
-                dynamic row = productsListView.Items.Add(product.GetName());
-
-                row.Tag = item.Value;
-
-                int index = row.Index;
-
-                productsListView.Items[index].SubItems.Add(product.GetPrice().ToString());
-            }
-        }
-
-        private void RenderCategories(List<entities.Category> categories)
-        {
-            productsCategoriesComboBox.Items.Clear();
-
-            Item defaultItem = new Item("Все", 0);
-            productsCategoriesComboBox.Items.Add(defaultItem);
-
-            foreach (entities.Category category in categories)
-            {
-                Item item = new Item(category.GetName(), category.GetId());
-                productsCategoriesComboBox.Items.Add(item);
-            }
-        }
-
-        private void HideProductBox()
-        {
-            productBox.Visible = false;
-        }
-
-        private void RenderSelectedProduct(entities.Product product)
-        {
-            productPrice.Text = product.GetPrice().ToString() + Properties.Settings.Default.currency;
-            productSku.Text = product.GetSku();
-            productCount.Value = 1;
-            productBox.Text = product.GetName();
-            productBox.Visible = true;
-            productAmount.Text = product.GetAmount().ToString();
-            productPicture.ImageLocation = product.GetImage();
         }
 
         private void RenderCart()
@@ -194,9 +143,9 @@ namespace DvizhSeller
             orderTotal.Text = cart.GetTotal().ToString() + Properties.Settings.Default.currency;
         }
 
-        private void PutToCart()
+        public void PutToCart(entities.Product product, int count = 1)
         {
-            cart.Put(selectedProduct, Convert.ToInt16(productCount.Value));
+            cart.Put(product, count);
 
             cartBox.Visible = true;
     
@@ -215,22 +164,6 @@ namespace DvizhSeller
             RenderCart();
         }
 
-        private void productsSearchBox_Click(object sender, EventArgs e)
-        {
-            if (productsSearchBox.Text == "Название или штрихкод")
-                productsSearchBox.Text = "";
-        }
-
-        private void productsCategoriesComboBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            Item item = (Item)productsCategoriesComboBox.SelectedItem;
-
-            if(item.Value == 0)
-                RenderProducts(products.GetList());
-            else
-                RenderProducts(products.FindByCategoryId(item.Value));
-        }
-
         private class Item
         {
             public string Name;
@@ -245,38 +178,6 @@ namespace DvizhSeller
             {
                 return Name;
             }
-        }
-
-        private void productsSearchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (productsSearchBox.Text == "")
-                    RenderProducts(products.GetList());
-                else
-                    RenderProducts(products.FindByString(productsSearchBox.Text));
-            }
-        }
-
-        private void productsListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in productsListView.SelectedItems)
-            {
-                selectedProduct = products.FindOne(Convert.ToInt32(item.Tag));
-            }
-
-            RenderSelectedProduct(selectedProduct);
-            //HideSelectedCartElement();
-        }
-
-        private void productsListView_DoubleClick(object sender, EventArgs e)
-        {
-            PutToCart();
-        }
-
-        private void toCartButton_Click(object sender, EventArgs e)
-        {
-            PutToCart();
         }
 
         private void cartElementRemove_Click(object sender, EventArgs e)
@@ -474,12 +375,10 @@ namespace DvizhSeller
             {
                 loadWindow.SetMessage("Загрузка товаров");
                 Tuple<int, int, int>  productsResult = dataExchanger.LoadProducts(products, categories);
-                RenderProducts(products.GetList());
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка категорий");
                 dataExchanger.LoadCategories(categories);
-                RenderCategories(categories.GetList());
                 loadWindow.Step();
 
                 loadWindow.SetMessage("Загрузка клиентов");
@@ -633,6 +532,25 @@ namespace DvizhSeller
         {
             CashiersBookForm cashiersBookWindow = new CashiersBookForm(this);
             cashiersBookWindow.Show();
+        }
+
+        private void fiscalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FprnM1C.IFprnM45 cmd = new FprnM1C.FprnM45();
+                cmd.ShowProperties();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Драйвер не установлен или поврежден. Скачайте и установите драйвера оборудования с сайта dvizh.net!");
+            }
+        }
+
+        private void shopBooksLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ShopBookForm shopbookWindow = new ShopBookForm(this);
+            shopbookWindow.Show();
         }
     }
 }

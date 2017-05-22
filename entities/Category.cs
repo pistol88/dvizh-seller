@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.entities
 {
-    class Category
+    public class Category
     {
         int id;
         string name;
