@@ -63,7 +63,7 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
-            barCodeBox.Select();
+            BarCodeFocus();
 
             clients = new repositories.Client(db);
             cashiers = new repositories.Cashier(db);
@@ -89,6 +89,12 @@ namespace DvizhSeller
 
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
+        }
+
+        public void BarCodeFocus()
+        {
+            barCodeBox.Select();
+            barCodeBox.Focus();
         }
 
         public void SetProductsList()
@@ -551,6 +557,12 @@ namespace DvizhSeller
         {
             ShopBookForm shopbookWindow = new ShopBookForm(this);
             shopbookWindow.Show();
+        }
+
+        private void freeSale_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FreeSaleForm freesaleWindow = new FreeSaleForm(this);
+            freesaleWindow.Show();
         }
     }
 }

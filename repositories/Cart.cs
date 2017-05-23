@@ -15,13 +15,16 @@ namespace DvizhSeller.repositories
 
         public void Put(entities.interfaces.CartElement product, int count = 1)
         {
-            foreach (entities.interfaces.CartElement existsProduct in GetElements())
+            if(product.GetId() != 0)
             {
-                if(existsProduct.GetId() == product.GetId())
+                foreach (entities.interfaces.CartElement existsProduct in GetElements())
                 {
-                    existsProduct.SetCartCount(existsProduct.GetCartCount() + count);
+                    if (existsProduct.GetId() == product.GetId())
+                    {
+                        existsProduct.SetCartCount(existsProduct.GetCartCount() + count);
 
-                    return;
+                        return;
+                    }
                 }
             }
 
