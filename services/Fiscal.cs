@@ -47,6 +47,65 @@ namespace DvizhSeller.services
             return driverExists;
         }
 
+        public Boolean TestPrintString(string str)
+        {
+            if (!DriverExists())
+            {
+                MessageBox.Show("Не удалось подключиться. Проверьте, установлен ли драйвер.");
+                return false;
+            }
+
+            cmd.DeviceEnabled = true;
+
+            cmd.Password = "30";
+            cmd.Mode = 1;
+            cmd.SetMode();
+
+            cmd.BeginDocument();
+
+            cmd.Alignment = 1;
+            cmd.Caption = str;
+            cmd.PrintString();
+
+            cmd.EndDocument();
+
+            cmd.Beep();
+
+            return true;
+        }
+
+        public int GetStatus()
+        {
+            if (!DriverExists())
+            {
+                return 0;
+            } else
+            {
+                return cmd.GetStatus();
+            }
+        }
+
+        public Boolean ReportPrint()
+        {
+            if (!DriverExists())
+            {
+                MessageBox.Show("Не удалось подключиться. Проверьте, установлен ли драйвер.");
+                return false;
+            }
+
+            cmd.DeviceEnabled = true;
+
+            cmd.Beep();
+
+            cmd.BeginReport();
+
+            cmd.Report();
+
+            cmd.EndReport();
+
+            return true;
+        }
+
         public Boolean TestPrint()
         {
             if (!DriverExists())
@@ -58,7 +117,7 @@ namespace DvizhSeller.services
             cmd.DeviceEnabled = true;
 
             cmd.Alignment = 1;
-            cmd.Caption = "-------------------------DVIZH";
+            cmd.Caption = "-------------------------";
             cmd.PrintString();
 
             cmd.Alignment = 1;
@@ -97,7 +156,7 @@ namespace DvizhSeller.services
             cmd.PrintString();
 
             cmd.Alignment = 1;
-            cmd.Caption = "-------------------------DVIZH";
+            cmd.Caption = "-------------------------";
             cmd.PrintString();
 
             cmd.Alignment = 1;
@@ -246,9 +305,14 @@ namespace DvizhSeller.services
                 cmd.TestMode = Properties.Settings.Default.testMode;
                 cmd.CheckType = 2;
                 cmd.OpenCheck();
-                cmd.BeginDocument();
+
+                if (cmd.Fiscal)
+                    cmd.BeginFiscDocument();
+                else
+                    cmd.BeginDocument();
+
                 cmd.Alignment = 1;
-                cmd.Caption = "-------------------------DVIZH";
+                cmd.Caption = "------------------------------";
                 cmd.PrintString();
                 cmd.Alignment = 1;
                 cmd.Caption = "Отмена операции";
@@ -269,7 +333,7 @@ namespace DvizhSeller.services
 
                 cmd.Caption = "                              ";
                 cmd.PrintString();
-                cmd.Caption = "-------------------------DVIZH";
+                cmd.Caption = "------------------------------";
                 cmd.PrintString();
                 cmd.Caption = "                              ";
                 cmd.PrintString();
@@ -280,7 +344,10 @@ namespace DvizhSeller.services
 
                 cmd.CloseCheck();
 
-                cmd.EndDocument();
+                if (cmd.Fiscal)
+                    cmd.EndFiscDocument();
+                else
+                    cmd.EndDocument();
             }
             //cmd.Beep();
             cmd.DeviceEnabled = false;
@@ -319,9 +386,12 @@ namespace DvizhSeller.services
                 cmd.TestMode = Properties.Settings.Default.testMode;
                 cmd.CheckType = 1;
                 cmd.OpenCheck();
-                cmd.BeginDocument();
+                if(cmd.Fiscal) 
+                    cmd.BeginFiscDocument();
+                else
+                    cmd.BeginDocument();
                 cmd.Alignment = 1;
-                cmd.Caption = "-------------------------DVIZH";
+                cmd.Caption = "------------------------------";
                 cmd.PrintString();
                 cmd.Alignment = 1;
                 cmd.Caption = Properties.Settings.Default.checkNote;
@@ -352,8 +422,9 @@ namespace DvizhSeller.services
                 }
 
                 cmd.Summ = sum;
+                cmd.CashIncome();
 
-                if(discount)
+                if (discount)
                 {
                     cmd.DiscountType = discountType;
                     cmd.DiscountValue = discountVal;
@@ -361,7 +432,7 @@ namespace DvizhSeller.services
 
                 cmd.Caption = "                              ";
                 cmd.PrintString();
-                cmd.Caption = "-------------------------DVIZH";
+                cmd.Caption = "------------------------------";
                 cmd.PrintString();
                 cmd.Caption = "                              ";
 
@@ -371,7 +442,11 @@ namespace DvizhSeller.services
                 //cmd.Registration();
 
                 cmd.CloseCheck();
-                cmd.EndDocument();
+
+                if (cmd.Fiscal)
+                    cmd.EndFiscDocument();
+                else
+                    cmd.EndDocument();
             }
             //cmd.Beep();
             cmd.DeviceEnabled = false;

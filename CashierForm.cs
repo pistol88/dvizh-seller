@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using OposFiscalPrinter_CCO;
 
 namespace DvizhSeller
 {
@@ -45,6 +46,7 @@ namespace DvizhSeller
 
         public CashierForm()
         {
+
             if (!File.Exists(applicationDataPath + "\\dvizh-main-database.db"))
             {
                 File.Copy("database.db", applicationDataPath + "\\dvizh-main-database.db");
@@ -531,7 +533,8 @@ namespace DvizhSeller
 
         private void fiscalTestPrintToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fiscal.TestPrint();
+            FiscalTestForm fiscalTestForm = new FiscalTestForm();
+            fiscalTestForm.Show();
         }
 
         private void cashiersBookToolStripMenuItem_Click(object sender, EventArgs e)
@@ -563,6 +566,33 @@ namespace DvizhSeller
         {
             FreeSaleForm freesaleWindow = new FreeSaleForm(this);
             freesaleWindow.Show();
+        }
+
+        //testing new drivers
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OPOSFiscalPrinter device = new OPOSFiscalPrinterClass();
+
+            device.Open("FiscPrinter");  //Opened succes
+            device.ClaimDevice(5000);    //Claimed success
+            device.DeviceEnabled = true; //Enabled success
+            device.PrintXReport();
+            if (device.DayOpened)
+            {
+                device.PrintZReport();
+            }
+            device.PrintZReport();
+            device.FiscalReceiptType = 4;
+
+            device.BeginFiscalReceipt(true).ToString();
+
+            device.PrintRecItem("Milk", 1, 1, 0, 1, "");
+            device.EndFiscalReceipt(false); //After that: Receipt cannot be closed, ResultCode=114, ResultCodeExtended=207
+
+            //device.Release();
+            device.Close();
+
+            MessageBox.Show(device.State.ToString());
         }
     }
 }

@@ -44,15 +44,15 @@
             this.nameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.nameBox.Location = new System.Drawing.Point(12, 25);
             this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(260, 40);
+            this.nameBox.Size = new System.Drawing.Size(305, 40);
             this.nameBox.TabIndex = 11;
-            this.nameBox.Text = "Товары ABC";
+            this.nameBox.Text = "Свободная цена";
             this.nameBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FreeSaleForm_KeyDown);
             // 
             // priceBox
             // 
             this.priceBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.priceBox.Location = new System.Drawing.Point(278, 25);
+            this.priceBox.Location = new System.Drawing.Point(323, 25);
             this.priceBox.Name = "priceBox";
             this.priceBox.Size = new System.Drawing.Size(108, 40);
             this.priceBox.TabIndex = 12;
@@ -70,7 +70,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(275, 9);
+            this.label1.Location = new System.Drawing.Point(320, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 14;
@@ -88,7 +88,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(389, 9);
+            this.label3.Location = new System.Drawing.Point(434, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 17;
@@ -97,7 +97,7 @@
             // productCount
             // 
             this.productCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.75F);
-            this.productCount.Location = new System.Drawing.Point(393, 26);
+            this.productCount.Location = new System.Drawing.Point(438, 26);
             this.productCount.Name = "productCount";
             this.productCount.Size = new System.Drawing.Size(62, 39);
             this.productCount.TabIndex = 18;
@@ -112,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 107);
+            this.ClientSize = new System.Drawing.Size(507, 107);
             this.Controls.Add(this.productCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
