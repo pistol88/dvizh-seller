@@ -16,7 +16,7 @@ namespace DvizhSeller
 
         public FiscalTestForm()
         {
-            fiscal = new services.Fiscal();
+            fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric());
             
             InitializeComponent();
 
@@ -30,7 +30,7 @@ namespace DvizhSeller
 
         private void printText_Click(object sender, EventArgs e)
         {
-            fiscal.TestPrintString(textBox.Text);
+            fiscal.TestPrint();
             labelStatus.Text = fiscal.GetStatus().ToString();
         }
 
@@ -42,7 +42,7 @@ namespace DvizhSeller
 
         private void button2_Click(object sender, EventArgs e)
         {
-            fiscal.ReportPrint();
+            fiscal.TestPrint();
             labelStatus.Text = fiscal.GetStatus().ToString();
         }
     }

@@ -12,7 +12,7 @@ namespace DvizhSeller
 {
     public partial class AboutForm : Form
     {
-        services.Fiscal fiscal = new services.Fiscal();
+        services.Fiscal fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric());
 
         public AboutForm()
         {

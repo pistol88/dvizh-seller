@@ -226,5 +226,29 @@ namespace DvizhSeller.Properties {
                 this["testMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int fiscalDriverType {
+            get {
+                return ((int)(this["fiscalDriverType"]));
+            }
+            set {
+                this["fiscalDriverType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM5")]
+        public string fiscalComPort {
+            get {
+                return ((string)(this["fiscalComPort"]));
+            }
+            set {
+                this["fiscalComPort"] = value;
+            }
+        }
     }
 }

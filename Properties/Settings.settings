@@ -53,5 +53,11 @@
     <Setting Name="testMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="fiscalDriverType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="fiscalComPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

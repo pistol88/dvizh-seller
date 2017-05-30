@@ -32,6 +32,26 @@ namespace DvizhSeller
             InitializeComponent();
         }
 
+        private void renderFiscalSettings()
+        {
+            if(fiscal.Checked)
+                fiscalSettings.Enabled = true;
+            else
+                fiscalSettings.Enabled = false;
+
+            if (fiscalDriverTypeBox.SelectedIndex == 0)
+            {
+                fiscalComPortBox.Enabled = true;
+                atolSettingsButton.Enabled = false;
+            }
+
+            if (fiscalDriverTypeBox.SelectedIndex == 1)
+            {
+                fiscalComPortBox.Enabled = false;
+                atolSettingsButton.Enabled = true;
+            }
+        }
+
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             protocolBox.Text = Properties.Settings.Default.protocol;
@@ -47,6 +67,13 @@ namespace DvizhSeller
             checkNoteBox.Text = Properties.Settings.Default.checkNote;
             roundingTypeBox.SelectedIndex = Properties.Settings.Default.roundingType;
             roundingBox.Text = Properties.Settings.Default.rounding.ToString();
+            fiscalComPortBox.Text = Properties.Settings.Default.fiscalComPort.ToString();
+
+            Item vikiItem = new Item("VikiPrint (Пирит)", 1);
+            fiscalDriverTypeBox.Items.Add(vikiItem);
+
+            Item atolItem = new Item("АТОЛ", 2);
+            fiscalDriverTypeBox.Items.Add(atolItem);
 
             foreach (entities.Cashbox cashbox in cashboxes.GetList())
             {
@@ -59,6 +86,14 @@ namespace DvizhSeller
                     cashboxId.SelectedItem = item;
                 }
             }
+
+            if (Properties.Settings.Default.fiscalDriverType == 0)
+                fiscalDriverTypeBox.SelectedItem = vikiItem;
+            else
+                fiscalDriverTypeBox.SelectedItem = atolItem;
+
+
+            renderFiscalSettings();
         }
 
         private void settingsSave_Click(object sender, EventArgs e)
@@ -108,6 +143,29 @@ namespace DvizhSeller
             public override int GetHashCode()
             {
                 return Value;
+            }
+        }
+
+        private void fiscal_CheckedChanged(object sender, EventArgs e)
+        {
+            renderFiscalSettings();
+        }
+
+        private void fiscalDriverTypeBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            renderFiscalSettings();
+        }
+
+        private void atolSettingsButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FprnM1C.IFprnM45 cmd = new FprnM1C.FprnM45();
+                cmd.ShowProperties();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Драйвер не установлен или поврежден. Скачайте и установите драйвера оборудования с сайта dvizh.net!");
             }
         }
     }

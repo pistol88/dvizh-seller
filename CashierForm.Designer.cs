@@ -37,7 +37,6 @@
             this.closeShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stornToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fiscalTestPrintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fiscalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barCodeScanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shopListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,8 +122,7 @@
             this.openShiftToolStripMenuItem,
             this.closeShiftToolStripMenuItem,
             this.stornToolStripMenuItem,
-            this.fiscalTestPrintToolStripMenuItem,
-            this.fiscalToolStripMenuItem});
+            this.fiscalTestPrintToolStripMenuItem});
             this.cashboxToolStripMenuItem.Name = "cashboxToolStripMenuItem";
             this.cashboxToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.cashboxToolStripMenuItem.Text = "Касса";
@@ -156,13 +154,6 @@
             this.fiscalTestPrintToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.fiscalTestPrintToolStripMenuItem.Text = "Тестовая печать";
             this.fiscalTestPrintToolStripMenuItem.Click += new System.EventHandler(this.fiscalTestPrintToolStripMenuItem_Click);
-            // 
-            // fiscalToolStripMenuItem
-            // 
-            this.fiscalToolStripMenuItem.Name = "fiscalToolStripMenuItem";
-            this.fiscalToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.fiscalToolStripMenuItem.Text = "Настройки";
-            this.fiscalToolStripMenuItem.Click += new System.EventHandler(this.fiscalToolStripMenuItem_Click);
             // 
             // barCodeScanerToolStripMenuItem
             // 
@@ -702,7 +693,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cartCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem cashiersBookToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fiscalToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel shopBooksLinkLabel;
         private System.Windows.Forms.WebBrowser webBrowser;

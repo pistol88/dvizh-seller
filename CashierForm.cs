@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using OposFiscalPrinter_CCO;
+using System.IO;
+using System.IO.Ports;
 
 namespace DvizhSeller
 {
@@ -43,10 +45,9 @@ namespace DvizhSeller
         bool fiscalActivated;
 
         string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
+        
         public CashierForm()
         {
-
             if (!File.Exists(applicationDataPath + "\\dvizh-main-database.db"))
             {
                 File.Copy("database.db", applicationDataPath + "\\dvizh-main-database.db");
@@ -65,6 +66,8 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
+            //fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
+
             BarCodeFocus();
 
             clients = new repositories.Client(db);
@@ -80,9 +83,9 @@ namespace DvizhSeller
             dataMapper.FillClients(clients);
             dataMapper.FillCashiers(cashiers);
 
-            fiscal = new services.Fiscal(cart);
+            fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
 
-            if (Properties.Settings.Default.fiscal && fiscal.DriverExists())
+            if (Properties.Settings.Default.fiscal && fiscal.Ready())
                 ActivateFiscal();
             else
                 DeactivateFiscal();
@@ -425,20 +428,14 @@ namespace DvizhSeller
 
         private void openShiftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!fiscal.OpenShift())
-            {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверьте, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
-            }
+            fiscal.OpenShift();
 
             RenderShift();
         }
 
         private void closeShiftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!fiscal.CloseShift())
-            {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
-            }
+            fiscal.CloseShift();
 
             RenderShift();
         }
@@ -459,12 +456,7 @@ namespace DvizhSeller
                 discount = true;
             }
 
-            if (!fiscal.Register(cashierName, paymentType, discount, 1, selectedDiscountVal))
-            {
-                MessageBox.Show("Не удалось соединиться с ККМ. Проверите, что касса подключена и драйвер Атол ККМ установлен и настроен корректно.");
-
-                return false;
-            }
+            fiscal.Register(cashierName, paymentType, discount, 1, selectedDiscountVal);
 
             return true;
         }
@@ -533,27 +525,13 @@ namespace DvizhSeller
 
         private void fiscalTestPrintToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FiscalTestForm fiscalTestForm = new FiscalTestForm();
-            fiscalTestForm.Show();
+            fiscal.TestPrint();
         }
 
         private void cashiersBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CashiersBookForm cashiersBookWindow = new CashiersBookForm(this);
             cashiersBookWindow.Show();
-        }
-
-        private void fiscalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                FprnM1C.IFprnM45 cmd = new FprnM1C.FprnM45();
-                cmd.ShowProperties();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Драйвер не установлен или поврежден. Скачайте и установите драйвера оборудования с сайта dvizh.net!");
-            }
         }
 
         private void shopBooksLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -566,33 +544,6 @@ namespace DvizhSeller
         {
             FreeSaleForm freesaleWindow = new FreeSaleForm(this);
             freesaleWindow.Show();
-        }
-
-        //testing new drivers
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OPOSFiscalPrinter device = new OPOSFiscalPrinterClass();
-
-            device.Open("FiscPrinter");  //Opened succes
-            device.ClaimDevice(5000);    //Claimed success
-            device.DeviceEnabled = true; //Enabled success
-            device.PrintXReport();
-            if (device.DayOpened)
-            {
-                device.PrintZReport();
-            }
-            device.PrintZReport();
-            device.FiscalReceiptType = 4;
-
-            device.BeginFiscalReceipt(true).ToString();
-
-            device.PrintRecItem("Milk", 1, 1, 0, 1, "");
-            device.EndFiscalReceipt(false); //After that: Receipt cannot be closed, ResultCode=114, ResultCodeExtended=207
-
-            //device.Release();
-            device.Close();
-
-            MessageBox.Show(device.State.ToString());
         }
     }
 }

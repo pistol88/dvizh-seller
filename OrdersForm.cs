@@ -26,7 +26,7 @@ namespace DvizhSeller
         {
             InitializeComponent();
 
-            fiscal = new services.Fiscal();
+            fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric());
 
             orders = new repositories.Order(db);
 
