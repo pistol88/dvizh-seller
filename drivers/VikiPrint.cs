@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DvizhSeller.drivers
 {
@@ -30,21 +31,22 @@ namespace DvizhSeller.drivers
             portName = setPortName;
             portSpeed = setPortSpeed;
 
-            openPort(portName, portSpeed);
+            int result = openPort(portName, portSpeed);
+
+            //commandStart();
 
             statuses = new List<int>();
         }
 
-        public void OpenDocument(int type)
+        public void OpenDocument(byte type)
         {
-            statuses.Add(libOpenDocument(1, numDepart, cashierName, docNumber));
+            int result = libOpenDocument(type, numDepart, cashierName, docNumber);
         }
 
         public void CloseDocument()
         {
             MData test = new MData();
             libCloseDocument(ref test, 1);
-            statuses.Add(test.errCode);
         }
 
         public List<int> GetStatuses()
@@ -59,7 +61,7 @@ namespace DvizhSeller.drivers
 
         public void SetCashierName(string name)
         {
-            cashierName = name;
+            cashierName = ConvertTo866(name);
         }
 
         public void SetNumDepart(byte number)
@@ -79,39 +81,68 @@ namespace DvizhSeller.drivers
 
         public void PrintString(string text)
         {
-            statuses.Add(libPrintString(text, null));
+            libPrintString(text, null);
 
             MData test = new MData();
             libCloseDocument(ref test, 1);
-
-            statuses.Add(test.errCode);
         }
 
-        public void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1)
+        public void RegisterProduct(string name, string barcode, double price, double quantity, int numPos = 1)
         {
-            statuses.Add(libOpenDocument(2, numDepart, cashierName, docNumber));
-            statuses.Add(libAddPosition(name, barcode, quantity, price, 1, numPos, 1, 1, "", 0));
-            PrintPayment(1);
+            int result = libAddPosition(ConvertTo866(name), ConvertTo866(barcode), quantity, price, 1, numPos, 1, 1, "", 0);
         }
 
-        public void PrintPayment(double sum)
+        public void RegisterPayment(double sum)
         {
-            statuses.Add(libAddPaymentD(0, sum, ""));
+            int result = libAddPaymentD(0, sum, "");
         }
 
         public void PrintTotal()
         {
-            statuses.Add(libSubTotal());
+            libSubTotal();
         }
 
-        public void PrintDiscount()
+        public void RegisterDiscount(byte type, string nameDiscount, int sum)
         {
-            libAddDiscount(0, "%", 10);
+            libAddDiscount(type, nameDiscount, sum);
         }
         
         public void PrintServiceData()
         {
-            statuses.Add(libPrintServiceData());
+            libPrintServiceData();
+        }
+
+        public void OpenShift()
+        {
+            libOpenShift(cashierName);
+        }
+
+        public void CloseShift()
+        {
+            libPrintZReport(cashierName, 0);
+        }
+
+        public bool IsSessionOpen()
+        {
+            int fatalStatus, currentFlagsStatus, documentStatus;
+            int flagsStatus = getStatusFlags(out fatalStatus, out currentFlagsStatus, out documentStatus);
+
+            //MessageBox.Show(flagsStatus.ToString() + '-' + fatalStatus.ToString() + '-' + currentFlagsStatus.ToString() + '-' + documentStatus.ToString());
+            return true;
+            if(flagsStatus == 0)
+            {
+                if (currentFlagsStatus == 4)
+                    return true;
+                else
+                    return false;
+            }
+
+            return false;
+        }
+
+        private string ConvertTo866(string str)
+        {
+            return System.Text.Encoding.Default.GetString(Encoding.Convert(Encoding.GetEncoding("windows-1251"), Encoding.GetEncoding("CP866"), Encoding.GetEncoding("windows-1251").GetBytes(str)));
         }
 
         ~VikiPrint()

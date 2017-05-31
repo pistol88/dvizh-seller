@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DvizhSeller.drivers
 {
-    class Atol : FiscalInterface
+    public class Atol : FiscalInterface
     {
         private string cashierName = "Unknow";
         private int docNumber = 1;
         private byte numDepart = 1;
         private List<int> statuses;
         private sbyte taxNumber = 1;
-        bool driverExists;
+        bool driverExists = false;
 
         FprnM1C.IFprnM45 cmd;
 
@@ -24,7 +24,7 @@ namespace DvizhSeller.drivers
         public const int DOC_TYPE_OUTCOME = 5;
         public const int DOC_TYPE_BUY = 6;
         public const int DOC_TYPE_ANNULATE = 7;
-        
+
         public Atol()
         {
             statuses = new List<int>();
@@ -37,18 +37,21 @@ namespace DvizhSeller.drivers
 
                 if (cmd.CheckState != 0)
                     cmd.CancelCheck();
+
+                cmd.Password = "30";
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show("Драйвер Атол не удалось загрузить.");
                 driverExists = false;
             }
         }
 
-        public void OpenDocument(int type)
+        public void OpenDocument(byte type)
         {
             cmd.DeviceEnabled = true;
-
             cmd.Password = "30";
+
             cmd.Mode = 1;
             cmd.SetMode();
 
@@ -82,7 +85,7 @@ namespace DvizhSeller.drivers
 
         public void SetTaxNumber(sbyte number)
         {
-            
+            taxNumber = number;
         }
 
         public void SetCashierName(string name)
@@ -107,9 +110,14 @@ namespace DvizhSeller.drivers
 
         public void PrintString(string text)
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
+            cmd.Mode = 1;
+            cmd.SetMode();
             cmd.Alignment = 1;
             cmd.Caption = text;
             cmd.PrintString();
+            cmd.DeviceEnabled = false;
         }
 
         public void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1)
@@ -118,29 +126,38 @@ namespace DvizhSeller.drivers
             cmd.Price = price;
             cmd.Quantity = quantity;
             cmd.Department = numDepart;
-
-            //cmd.Buy();
+            
             cmd.Registration();
         }
 
-        public void PrintPayment(double sum)
+        public void RegisterPayment(double sum)
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
+            cmd.Mode = 1;
+            cmd.SetMode();
             cmd.Summ = sum;
             cmd.Payment();
+            cmd.DeviceEnabled = false;
         }
 
         public void PrintTotal()
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
             cmd.CashIncome();
+            cmd.DeviceEnabled = false;
         }
 
-        public void PrintDiscount()
+        public void RegisterDiscount(byte type, string nameDiscount, int sum)
         {
-            
+            return;
         }
 
         public void PrintServiceData()
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
             cmd.Alignment = 1;
             cmd.Caption = "Тестирование печати.";
             cmd.PrintString();
@@ -171,31 +188,44 @@ namespace DvizhSeller.drivers
             cmd.Alignment = 1;
             cmd.Caption = "ИНН" + cmd.INN;
             cmd.PrintString();
-
-            cmd.Alignment = 1;
-            cmd.Caption = "-------------------------";
-            cmd.PrintString();
-
-            cmd.Alignment = 1;
-            cmd.Caption = "                ";
-            cmd.PrintString();
-
-            cmd.Alignment = 1;
-            cmd.Caption = "                ";
-            cmd.PrintString();
+            cmd.DeviceEnabled = false;
         }
 
         public void OpenShift()
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
             cmd.Mode = 1;
             cmd.SetMode();
             cmd.OpenSession();
+            cmd.Beep();
+            cmd.DeviceEnabled = false;
         }
 
         public void CloseShift()
         {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
+            cmd.Mode = 3;
+            cmd.SetMode();
             cmd.ReportType = 1;
             cmd.Report();
+            cmd.Beep();
+            cmd.DeviceEnabled = false;
+        }
+
+        public bool IsSessionOpen()
+        {
+            cmd.DeviceEnabled = true;
+            cmd.Password = "30";
+            cmd.Mode = 1;
+            cmd.SetMode();
+
+            bool opened = cmd.SessionOpened;
+
+            cmd.DeviceEnabled = false;
+
+            return opened;
         }
 
         ~Atol()

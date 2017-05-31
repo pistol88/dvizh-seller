@@ -8,7 +8,7 @@ namespace DvizhSeller.drivers
 {
     interface FiscalInterface
     {
-        void OpenDocument(int type);
+        void OpenDocument(byte type);
 
         void CloseDocument();
 
@@ -26,13 +26,19 @@ namespace DvizhSeller.drivers
 
         void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1);
 
-        void PrintPayment(double sum);
+        void RegisterPayment(double sum);
+
+        void RegisterDiscount(byte type, string nameDiscount, int sum);
 
         void PrintTotal();
-
-        void PrintDiscount();
         
         void PrintServiceData();
+
+        bool IsSessionOpen();
+
+        void OpenShift();
+
+        void CloseShift();
 
         List<int> GetStatuses();
     }

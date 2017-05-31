@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
-using OposFiscalPrinter_CCO;
 using System.IO;
 using System.IO.Ports;
 
@@ -66,8 +65,6 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
-            //fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
-
             BarCodeFocus();
 
             clients = new repositories.Client(db);
@@ -83,12 +80,23 @@ namespace DvizhSeller
             dataMapper.FillClients(clients);
             dataMapper.FillCashiers(cashiers);
 
-            fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
+            if(Properties.Settings.Default.fiscal) {
+                fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
 
-            if (Properties.Settings.Default.fiscal && fiscal.Ready())
-                ActivateFiscal();
-            else
+                if (fiscal.Ready())
+                    ActivateFiscal();
+                else
+                {
+                    DeactivateFiscal();
+                }
+                    
+            } else
+            {
                 DeactivateFiscal();
+            }
+
+            ActivateFiscal();
+
 
             RenderShift();
 
@@ -420,12 +428,6 @@ namespace DvizhSeller
             
         }
 
-        private void информацияToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutForm aboutWindow = new AboutForm();
-            aboutWindow.Show();
-        }
-
         private void openShiftToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fiscal.OpenShift();
@@ -440,11 +442,11 @@ namespace DvizhSeller
             RenderShift();
         }
 
-        private Boolean FiscalRegister(string cashierName, int paymentType)
+        private bool FiscalRegister(string cashierName, int paymentType)
         {
             if (!shiftOpen)
             {
-                MessageBox.Show("Смена фискального регистратора не запущена, не удается провести заказ.");
+                MessageBox.Show("Смена фискального регистратора не запущена (либо длится более 24 часов). Не удается провести заказ.");
 
                 return false;
             }
@@ -456,14 +458,14 @@ namespace DvizhSeller
                 discount = true;
             }
 
-            fiscal.Register(cashierName, paymentType, discount, 1, selectedDiscountVal);
+            fiscal.Register(cashierName, paymentType);
 
             return true;
         }
 
         public void RenderShift()
         {
-            shiftOpen = fiscal.SessionOpened();
+            shiftOpen = fiscal.IsSessionOpen();
 
             if (shiftOpen)
             {
@@ -544,6 +546,12 @@ namespace DvizhSeller
         {
             FreeSaleForm freesaleWindow = new FreeSaleForm(this);
             freesaleWindow.Show();
+        }
+
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm aboutWindow = new AboutForm();
+            aboutWindow.Show();
         }
     }
 }

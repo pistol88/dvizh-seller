@@ -23,7 +23,7 @@ namespace DvizhSeller.drivers
         public static extern int commandStart();
 
         [DllImport("PiritLib.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern int libAddDiscount(byte typeDiscount, string nameDiscount, long sum);
+        public static extern int libAddDiscount(byte typeDiscount, string nameDiscount, int sum);
 
         //libSubTotal
         [DllImport("PiritLib.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
@@ -60,6 +60,23 @@ namespace DvizhSeller.drivers
         //libCloseDocument
         [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern int libDoCheckCorrection(string nameCashier, double cash, double cashless, byte correctionFlags);
+
+        //libPrintZReport
+        [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern int libPrintZReport(string nameCashier, int options);
+
+        //libOpenShift
+        [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern int libOpenShift(string nameCashier);
+
+        //getStatusFlags
+        [DllImport("PiritLib.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int getStatusFlags([Out] out int fatalStatus, [Out] out int currentFlagsStatus, [Out] out int documentStatus);
+
+        //libGetStatusFlags
+        [DllImport("PiritLib.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr libGetStatusFlags(ref MData data);
+
 
         //libAddPosition
         [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]

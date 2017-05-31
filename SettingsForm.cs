@@ -111,6 +111,8 @@ namespace DvizhSeller
             Properties.Settings.Default.roundingType = roundingTypeBox.SelectedIndex;
             Properties.Settings.Default.rounding = Convert.ToInt16(roundingBox.Text);
             Properties.Settings.Default.dbFile = dbFileBox.Text;
+            Properties.Settings.Default.fiscalComPort = fiscalComPortBox.Text;
+            Properties.Settings.Default.fiscalDriverType = fiscalDriverTypeBox.SelectedIndex;
 
             object selectedItem = cashboxId.SelectedItem;
             Properties.Settings.Default.cashboxId = Convert.ToInt32(selectedItem.GetHashCode());
