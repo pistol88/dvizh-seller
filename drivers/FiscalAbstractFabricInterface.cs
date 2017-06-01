@@ -1,6 +1,6 @@
 ﻿namespace DvizhSeller.drivers
 {
-    interface FiscalAbstractFabricInterface
+    public interface FiscalAbstractFabricInterface
     {
         FiscalInterface Build();
     }

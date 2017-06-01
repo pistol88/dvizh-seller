@@ -12,18 +12,16 @@ namespace DvizhSeller.drivers
         private int docNumber = 1;
         private byte numDepart = 1;
         private List<int> statuses;
-        private sbyte taxNumber = 1;
-        bool driverExists = false;
+        private byte taxNumber = 1;
+        bool driverExists = true;
 
         FprnM1C.IFprnM45 cmd;
 
-        public const int DOC_TYPE_SERVICE = 1; //For print texts
-        public const int DOC_TYPE_REGISTER = 2; //For fiscal registration
-        public const int DOC_TYPE_RETURN = 3;
-        public const int DOC_TYPE_INCOME = 4;
-        public const int DOC_TYPE_OUTCOME = 5;
-        public const int DOC_TYPE_BUY = 6;
-        public const int DOC_TYPE_ANNULATE = 7;
+        dynamic driver = false;
+
+        public const int DOC_TYPE_SERVICE = 0; //For print texts
+        public const int DOC_TYPE_REGISTER = 1; //For fiscal registration
+        public const int DOC_TYPE_ANNULATE = 2;
 
         public Atol()
         {
@@ -31,32 +29,57 @@ namespace DvizhSeller.drivers
 
             try
             {
-                cmd = new FprnM1C.FprnM45();
+                driver = Type.GetTypeFromProgID("AddIn.FPrnM45");
+
+                if (driver != null)
+                    cmd = Activator.CreateInstance(driver);
+                else
+                {
+                    driverExists = false;
+                    return;
+                }
+
 
                 driverExists = true;
 
                 if (cmd.CheckState != 0)
                     cmd.CancelCheck();
+                
+                cmd.AttrPrint = 1;
 
+                cmd.DeviceEnabled = true;
                 cmd.Password = "30";
+
+                if (cmd.GetStatus() < 0)
+                    MessageBox.Show("Ошибка ККТ: " + cmd.GetStatus().ToString());
             }
             catch (Exception e)
             {
-                MessageBox.Show("Драйвер Атол не удалось загрузить.");
+                MessageBox.Show("Не удалось загрузить драйвер Атол.");
                 driverExists = false;
             }
         }
 
+        public bool Ready()
+        {
+            return driverExists;
+        }
+
         public void OpenDocument(byte type)
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
 
+            if (type > 2)
+                type = DOC_TYPE_ANNULATE;
+            else
+                type = DOC_TYPE_REGISTER;
+            
             cmd.Mode = 1;
             cmd.SetMode();
 
             cmd.TestMode = Properties.Settings.Default.testMode;
-            cmd.CheckType = 1;
+            cmd.CheckType = type;
 
             cmd.OpenCheck();
 
@@ -68,14 +91,15 @@ namespace DvizhSeller.drivers
 
         public void CloseDocument()
         {
+            if (!driverExists)
+                return;
+
             cmd.CloseCheck();
 
             if (cmd.Fiscal)
                 cmd.EndFiscDocument();
             else
                 cmd.EndDocument();
-
-            cmd.DeviceEnabled = false;
         }
 
         public List<int> GetStatuses()
@@ -83,7 +107,7 @@ namespace DvizhSeller.drivers
             return statuses;
         }
 
-        public void SetTaxNumber(sbyte number)
+        public void SetTaxNumber(byte number)
         {
             taxNumber = number;
         }
@@ -105,132 +129,176 @@ namespace DvizhSeller.drivers
 
         public void ScrollPaper()
         {
-            
+            //none
         }
 
         public void PrintString(string text)
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+            
             cmd.Mode = 1;
             cmd.SetMode();
             cmd.Alignment = 1;
             cmd.Caption = text;
             cmd.PrintString();
-            cmd.DeviceEnabled = false;
         }
 
         public void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1)
         {
+            if (!driverExists)
+                return;
+
+            if (cmd.GetStatus() < 0)
+            {
+                MessageBox.Show("Ошибка ККМ: " + cmd.GetStatus().ToString());
+                return;
+            }
+
             cmd.Name = name;
             cmd.Price = price;
             cmd.Quantity = quantity;
-            cmd.Department = numDepart;
+            cmd.Department = numPos;
             
             cmd.Registration();
         }
 
-        public void RegisterPayment(double sum)
+        public void AnnulateProduct(string name, double quantity, double price)
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+
+            if (cmd.GetStatus() < 0) {
+                MessageBox.Show("Ошибка ККМ: " + cmd.GetStatus().ToString());
+                return;
+            }
+                
+            cmd.Alignment = 1;
+            cmd.Caption = "Отмена операции";
+            cmd.PrintString();
+
+            cmd.Name = name;
+            cmd.Price = price;
+            cmd.Quantity = quantity;
+
+            cmd.Caption = name + " - отменен";
+            cmd.PrintString();
+
+            cmd.BuyReturn();
+            
+            cmd.Registration();
+        }
+
+        public void RegisterPayment(double sum, byte type = 0)
+        {
+            if (!driverExists)
+                return;
+
             cmd.Mode = 1;
             cmd.SetMode();
+            cmd.TypeClose = type;
             cmd.Summ = sum;
             cmd.Payment();
-            cmd.DeviceEnabled = false;
         }
 
         public void PrintTotal()
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+            
             cmd.CashIncome();
-            cmd.DeviceEnabled = false;
         }
 
         public void RegisterDiscount(byte type, string nameDiscount, int sum)
         {
-            return;
+            cmd.DiscountType = type;
+            cmd.DiscountValue = sum;
         }
 
         public void PrintServiceData()
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+            
             cmd.Alignment = 1;
             cmd.Caption = "Тестирование печати.";
             cmd.PrintString();
-
-            cmd.Alignment = 1;
+            
             cmd.Caption = "Все ОК.";
             cmd.PrintString();
-
-            cmd.Alignment = 1;
-            //cmd.Caption = cmd.UModel.ToString() + " - " + cmd.Model.ToString() + " - " + cmd.ROMVersion;
-            cmd.PrintString();
-
-            cmd.Alignment = 1;
+            
             cmd.Caption = "Номер чека: " + cmd.CheckNumber.ToString();
             cmd.PrintString();
-
-            cmd.Alignment = 1;
+            
             cmd.Caption = cmd.DeviceSettings;
             cmd.PrintString();
-
-            cmd.Alignment = 1;
+            
             if (cmd.Fiscal)
                 cmd.Caption = "Фискальный";
             else
                 cmd.Caption = "Нефискальный";
             cmd.PrintString();
             
-            cmd.Alignment = 1;
             cmd.Caption = "ИНН" + cmd.INN;
             cmd.PrintString();
-            cmd.DeviceEnabled = false;
         }
 
-        public void OpenShift()
+        public void OpenSession()
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+
+            if (cmd.GetStatus() < 0)
+                return;
+
             cmd.Mode = 1;
             cmd.SetMode();
             cmd.OpenSession();
             cmd.Beep();
-            cmd.DeviceEnabled = false;
         }
 
-        public void CloseShift()
+        public void CloseSession()
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if (!driverExists)
+                return;
+
+            if (cmd.CheckState != 0)
+                cmd.CancelCheck();
+
+            if (cmd.GetStatus() < 0)
+                return;
+
             cmd.Mode = 3;
             cmd.SetMode();
             cmd.ReportType = 1;
             cmd.Report();
             cmd.Beep();
-            cmd.DeviceEnabled = false;
         }
 
         public bool IsSessionOpen()
         {
-            cmd.DeviceEnabled = true;
-            cmd.Password = "30";
+            if(cmd.SessionExceedLimit)
+            {
+                MessageBox.Show("Смена превысила 24 часа, нужно перезапустить ее.");
+            }
+
+            if (cmd.GetStatus() < 0)
+                return false;
+
+            if (!driverExists)
+                return false;
+             
             cmd.Mode = 1;
             cmd.SetMode();
 
             bool opened = cmd.SessionOpened;
-
-            cmd.DeviceEnabled = false;
-
+            
             return opened;
         }
 
         ~Atol()
         {
-            
+            cmd.DeviceEnabled = false;
         }
     }
 }

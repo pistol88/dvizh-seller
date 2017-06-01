@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.repositories
 {
-    class Cart
+    public class Cart
     {
         private List<entities.interfaces.CartElement> products = new List<entities.interfaces.CartElement>();
 

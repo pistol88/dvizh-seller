@@ -64,6 +64,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.fiscalSettings = new System.Windows.Forms.GroupBox();
+            this.savingInfo = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -73,7 +74,7 @@
             // 
             // settingsSave
             // 
-            this.settingsSave.Location = new System.Drawing.Point(168, 296);
+            this.settingsSave.Location = new System.Drawing.Point(169, 271);
             this.settingsSave.Name = "settingsSave";
             this.settingsSave.Size = new System.Drawing.Size(75, 23);
             this.settingsSave.TabIndex = 20;
@@ -368,7 +369,7 @@
             this.tabControl1.Location = new System.Drawing.Point(13, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(402, 277);
+            this.tabControl1.Size = new System.Drawing.Size(402, 252);
             this.tabControl1.TabIndex = 25;
             // 
             // tabPage1
@@ -386,7 +387,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(394, 251);
+            this.tabPage1.Size = new System.Drawing.Size(394, 226);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Общие";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -440,11 +441,21 @@
             this.fiscalSettings.TabStop = false;
             this.fiscalSettings.Text = "Настройки";
             // 
+            // savingInfo
+            // 
+            this.savingInfo.AutoSize = true;
+            this.savingInfo.Location = new System.Drawing.Point(71, 301);
+            this.savingInfo.Name = "savingInfo";
+            this.savingInfo.Size = new System.Drawing.Size(41, 13);
+            this.savingInfo.TabIndex = 26;
+            this.savingInfo.Text = "label12";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(426, 337);
+            this.Controls.Add(this.savingInfo);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.settingsSave);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -464,6 +475,7 @@
             this.fiscalSettings.ResumeLayout(false);
             this.fiscalSettings.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -504,5 +516,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox fiscalSettings;
+        private System.Windows.Forms.Label savingInfo;
     }
 }

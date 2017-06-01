@@ -40,7 +40,7 @@ namespace DvizhSeller
         services.DataExchanger dataExchanger;
         services.Fiscal fiscal;
 
-        bool shiftOpen;
+        bool SessionOpen;
         bool fiscalActivated;
 
         string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -80,25 +80,27 @@ namespace DvizhSeller
             dataMapper.FillClients(clients);
             dataMapper.FillCashiers(cashiers);
 
-            if(Properties.Settings.Default.fiscal) {
+            if (Properties.Settings.Default.fiscal) {
                 fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
 
                 if (fiscal.Ready())
                     ActivateFiscal();
                 else
                 {
+                    MessageBox.Show("Не удалось подключиться к ККТ. Попробуйте перезапустить программу.");
                     DeactivateFiscal();
                 }
-                    
+
+                if (Properties.Settings.Default.fiscalDriverType == 1)
+                    discountBox.Enabled = true;
+
             } else
             {
+                discountBox.Enabled = true;
                 DeactivateFiscal();
             }
 
-            ActivateFiscal();
-
-
-            RenderShift();
+            RenderSession();
 
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
@@ -285,8 +287,26 @@ namespace DvizhSeller
 
         private void ordersListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OrdersForm ordersForm = new OrdersForm();
+
+            OrdersForm ordersForm = new OrdersForm(fiscal, GetCashierName());
             ordersForm.Show();
+        }
+
+        private string GetCashierName()
+        {
+            string selectedCashierName;
+
+            if (selectedCashierId > 0)
+            {
+                entities.Cashier cashier = cashiers.FindOne(selectedCashierId);
+                selectedCashierName = cashier.GetName();
+            }
+            else
+            {
+                selectedCashierName = "Основной";
+            }
+
+            return selectedCashierName;
         }
 
         private void AddOrder()
@@ -307,26 +327,14 @@ namespace DvizhSeller
 
             if (Properties.Settings.Default.fiscal)
             {
-                string cashierName;
-
-                if (selectedCashierId > 0)
-                {
-                    entities.Cashier cashier = cashiers.FindOne(selectedCashierId);
-                    cashierName = cashier.GetName();
-                }
-                else
-                {
-                    cashierName = "Основной";
-                }
-
-                int paymentType;
+                byte paymentType;
 
                 if (paymentType0.Checked)
                     paymentType = 0;
                 else
-                    paymentType = 3;
+                    paymentType = 1;
 
-                ok = FiscalRegister(cashierName, paymentType);
+                ok = FiscalRegister(GetCashierName(), paymentType);
             }
 
             if (ok)
@@ -428,23 +436,23 @@ namespace DvizhSeller
             
         }
 
-        private void openShiftToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fiscal.OpenShift();
+            fiscal.OpenSession();
 
-            RenderShift();
+            RenderSession();
         }
 
-        private void closeShiftToolStripMenuItem_Click(object sender, EventArgs e)
+        private void closeSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fiscal.CloseShift();
+            fiscal.CloseSession();
 
-            RenderShift();
+            RenderSession();
         }
 
-        private bool FiscalRegister(string cashierName, int paymentType)
+        private bool FiscalRegister(string cashierName, byte paymentType)
         {
-            if (!shiftOpen)
+            if (!SessionOpen)
             {
                 MessageBox.Show("Смена фискального регистратора не запущена (либо длится более 24 часов). Не удается провести заказ.");
 
@@ -458,26 +466,27 @@ namespace DvizhSeller
                 discount = true;
             }
 
-            fiscal.Register(cashierName, paymentType);
+            fiscal.SetCashier(cashierName);
+            fiscal.Register(paymentType);
 
             return true;
         }
 
-        public void RenderShift()
+        public void RenderSession()
         {
-            shiftOpen = fiscal.IsSessionOpen();
+            SessionOpen = fiscal.IsSessionOpen();
 
-            if (shiftOpen)
+            if (SessionOpen)
             {
-                shiftOpened.Text = "Смена открыта";
-                openShiftToolStripMenuItem.Enabled = false;
-                closeShiftToolStripMenuItem.Enabled = true;
+                SessionOpened.Text = "Смена открыта";
+                openSessionToolStripMenuItem.Enabled = false;
+                closeSessionToolStripMenuItem.Enabled = true;
             }
             else
             {
-                shiftOpened.Text = "Смена не открыта";
-                openShiftToolStripMenuItem.Enabled = true;
-                closeShiftToolStripMenuItem.Enabled = false;
+                SessionOpened.Text = "Смена не открыта";
+                openSessionToolStripMenuItem.Enabled = true;
+                closeSessionToolStripMenuItem.Enabled = false;
             }
         }
 

@@ -124,7 +124,7 @@ namespace DvizhSeller
 
             Properties.Settings.Default.Save();
 
-            MessageBox.Show("Сохранено");
+            savingInfo.Text = "Сохранено. При изменении настроек драйверов ККМ может потребоваться перезапуск.";
         }
 
         private class Item

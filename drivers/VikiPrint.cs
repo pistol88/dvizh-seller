@@ -14,7 +14,7 @@ namespace DvizhSeller.drivers
         private int docNumber = 1;
         private byte numDepart = 1;
         private List<int> statuses;
-        private sbyte taxNumber = 1;
+        private byte taxNumber = 1;
         string portName;
         int portSpeed;
 
@@ -38,9 +38,20 @@ namespace DvizhSeller.drivers
             statuses = new List<int>();
         }
 
+        public bool Ready()
+        {
+            int fatalStatus, currentFlagsStatus, documentStatus;
+            int flagsStatus = getStatusFlags(out fatalStatus, out currentFlagsStatus, out documentStatus);
+
+            if (flagsStatus == 0)
+                return true;
+            else
+                return false;
+        }
+
         public void OpenDocument(byte type)
         {
-            int result = libOpenDocument(type, numDepart, cashierName, docNumber);
+            libOpenDocument(type, numDepart, cashierName, docNumber);
         }
 
         public void CloseDocument()
@@ -54,7 +65,7 @@ namespace DvizhSeller.drivers
             return statuses;
         }
 
-        public void SetTaxNumber(sbyte number)
+        public void SetTaxNumber(byte number)
         {
             taxNumber = number;
         }
@@ -87,14 +98,20 @@ namespace DvizhSeller.drivers
             libCloseDocument(ref test, 1);
         }
 
-        public void RegisterProduct(string name, string barcode, double price, double quantity, int numPos = 1)
+        public void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1)
         {
-            int result = libAddPosition(ConvertTo866(name), ConvertTo866(barcode), quantity, price, 1, numPos, 1, 1, "", 0);
+            libAddPosition(ConvertTo866(name), ConvertTo866(barcode), quantity, price, taxNumber, numPos, numDepart, 0, "", 0);
         }
 
-        public void RegisterPayment(double sum)
+        public void AnnulateProduct(string name, double quantity, double price)
         {
-            int result = libAddPaymentD(0, sum, "");
+            int numPos = 1;
+            libAddPosition(ConvertTo866(name), ConvertTo866(name), quantity, price, taxNumber, numPos, numDepart, 0, "", 0);
+        }
+
+        public void RegisterPayment(double sum, byte type = 0)
+        {
+            int result = libAddPaymentD(type, sum, "");
         }
 
         public void PrintTotal()
@@ -112,12 +129,12 @@ namespace DvizhSeller.drivers
             libPrintServiceData();
         }
 
-        public void OpenShift()
+        public void OpenSession()
         {
             libOpenShift(cashierName);
         }
 
-        public void CloseShift()
+        public void CloseSession()
         {
             libPrintZReport(cashierName, 0);
         }
@@ -126,10 +143,8 @@ namespace DvizhSeller.drivers
         {
             int fatalStatus, currentFlagsStatus, documentStatus;
             int flagsStatus = getStatusFlags(out fatalStatus, out currentFlagsStatus, out documentStatus);
-
-            //MessageBox.Show(flagsStatus.ToString() + '-' + fatalStatus.ToString() + '-' + currentFlagsStatus.ToString() + '-' + documentStatus.ToString());
-            return true;
-            if(flagsStatus == 0)
+            
+            if (flagsStatus == 0)
             {
                 if (currentFlagsStatus == 4)
                     return true;

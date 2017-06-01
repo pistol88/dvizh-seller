@@ -93,6 +93,18 @@ namespace DvizhSeller.drivers
             double coefValue
         );
 
+        //libDelPosition
+        [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern int libDelPosition(
+            string goodsName,
+            string barcode,
+            double quantity,
+            double price,
+            byte taxNumber,
+            int numGoodsPos,
+            byte numDepart
+        );
+
         //libPrintServiceData
         [DllImport("PiritLib.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern int libPrintServiceData();

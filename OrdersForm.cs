@@ -19,15 +19,18 @@ namespace DvizhSeller
 
         repositories.Order orders;
         services.DataMapper dataMapper;
-        
-        services.Fiscal fiscal;
 
-        public OrdersForm()
+        string cashierName;
+
+        public services.Fiscal fiscal;
+
+        public OrdersForm(services.Fiscal setFiscal, string setCashierName = "Unknow")
         {
+            fiscal = setFiscal;
+            cashierName = setCashierName;
+
             InitializeComponent();
-
-            fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric());
-
+            
             orders = new repositories.Order(db);
 
             dataMapper = new services.DataMapper(db);
@@ -89,8 +92,11 @@ namespace DvizhSeller
             orders.CancelElement(orderElement);
 
             if(Properties.Settings.Default.fiscal)
+            {
+                fiscal.SetCashier(cashierName);
                 fiscal.Annulate(orderElement);
-
+            }
+            
             elementsListGridView.Update();
             elementsListGridView.Focus();
         }

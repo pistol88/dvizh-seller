@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace DvizhSeller.services
 {
-    class Fiscal
+    public class Fiscal
     {
         repositories.Cart cart;
         drivers.FiscalInterface driver;
@@ -25,7 +25,7 @@ namespace DvizhSeller.services
 
         public bool Ready()
         {
-            return true;
+            return driver.Ready();
         }
 
         public void PrintString(string str)
@@ -47,15 +47,23 @@ namespace DvizhSeller.services
 
         public void Annulate(entities.OrderElement orderElement)
         {
-            //
+            driver.OpenDocument(DOC_TYPE_ANNULATE);
+            driver.AnnulateProduct(orderElement.GetProductName(), orderElement.GetCount(), orderElement.GetPrice());
+            driver.PrintTotal();
+            driver.RegisterPayment(orderElement.GetPrice(), 0);
+            driver.CloseDocument();
         }
 
-        public void Register(string cashierName, int paymentType = 0)
+        public void SetCashier(string cashierName)
+        {
+            driver.SetCashierName(cashierName);
+        }
+
+        public void Register(byte paymentType = 0)
         {
             if (cart.GetCount() <= 0)
                 return;
-
-            driver.SetCashierName(cashierName);
+            
             driver.OpenDocument(DOC_TYPE_REGISTER);
             int i = 1;
             double cartSum = cart.GetTotal();
@@ -83,18 +91,18 @@ namespace DvizhSeller.services
             }
 
             driver.PrintTotal();
-            driver.RegisterPayment(cartSum);
+            driver.RegisterPayment(cartSum, paymentType);
             driver.CloseDocument();
         }
 
-        public void OpenShift()
+        public void OpenSession()
         {
-            driver.OpenShift();
+            driver.OpenSession();
         }
 
-        public void CloseShift()
+        public void CloseSession()
         {
-            driver.CloseShift();
+            driver.CloseSession();
         }
         
         public bool IsSessionOpen()

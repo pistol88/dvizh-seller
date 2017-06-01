@@ -33,8 +33,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cashboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stornToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fiscalTestPrintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barCodeScanerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +68,7 @@
             this.discountBox = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.clientName = new System.Windows.Forms.Label();
-            this.shiftOpened = new System.Windows.Forms.Label();
+            this.SessionOpened = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.paymentType1 = new System.Windows.Forms.RadioButton();
@@ -119,27 +119,27 @@
             // cashboxToolStripMenuItem
             // 
             this.cashboxToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openShiftToolStripMenuItem,
-            this.closeShiftToolStripMenuItem,
+            this.openSessionToolStripMenuItem,
+            this.closeSessionToolStripMenuItem,
             this.stornToolStripMenuItem,
             this.fiscalTestPrintToolStripMenuItem});
             this.cashboxToolStripMenuItem.Name = "cashboxToolStripMenuItem";
             this.cashboxToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.cashboxToolStripMenuItem.Text = "Касса";
             // 
-            // openShiftToolStripMenuItem
+            // openSessionToolStripMenuItem
             // 
-            this.openShiftToolStripMenuItem.Name = "openShiftToolStripMenuItem";
-            this.openShiftToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.openShiftToolStripMenuItem.Text = "Открыть смену";
-            this.openShiftToolStripMenuItem.Click += new System.EventHandler(this.openShiftToolStripMenuItem_Click);
+            this.openSessionToolStripMenuItem.Name = "openSessionToolStripMenuItem";
+            this.openSessionToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.openSessionToolStripMenuItem.Text = "Открыть смену";
+            this.openSessionToolStripMenuItem.Click += new System.EventHandler(this.openSessionToolStripMenuItem_Click);
             // 
-            // closeShiftToolStripMenuItem
+            // closeSessionToolStripMenuItem
             // 
-            this.closeShiftToolStripMenuItem.Name = "closeShiftToolStripMenuItem";
-            this.closeShiftToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.closeShiftToolStripMenuItem.Text = "Закрыть смену";
-            this.closeShiftToolStripMenuItem.Click += new System.EventHandler(this.closeShiftToolStripMenuItem_Click);
+            this.closeSessionToolStripMenuItem.Name = "closeSessionToolStripMenuItem";
+            this.closeSessionToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.closeSessionToolStripMenuItem.Text = "Закрыть смену";
+            this.closeSessionToolStripMenuItem.Click += new System.EventHandler(this.closeSessionToolStripMenuItem_Click);
             // 
             // stornToolStripMenuItem
             // 
@@ -384,7 +384,7 @@
             this.orderBox.Controls.Add(this.discountBox);
             this.orderBox.Controls.Add(this.linkLabel1);
             this.orderBox.Controls.Add(this.clientName);
-            this.orderBox.Controls.Add(this.shiftOpened);
+            this.orderBox.Controls.Add(this.SessionOpened);
             this.orderBox.Controls.Add(this.label5);
             this.orderBox.Controls.Add(this.label8);
             this.orderBox.Controls.Add(this.paymentType1);
@@ -431,17 +431,17 @@
             this.clientName.TabIndex = 12;
             this.clientName.Text = "-";
             // 
-            // shiftOpened
+            // SessionOpened
             // 
-            this.shiftOpened.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.shiftOpened.AutoSize = true;
-            this.shiftOpened.BackColor = System.Drawing.Color.Transparent;
-            this.shiftOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.shiftOpened.Location = new System.Drawing.Point(8, 84);
-            this.shiftOpened.Name = "shiftOpened";
-            this.shiftOpened.Size = new System.Drawing.Size(10, 13);
-            this.shiftOpened.TabIndex = 16;
-            this.shiftOpened.Text = "-";
+            this.SessionOpened.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.SessionOpened.AutoSize = true;
+            this.SessionOpened.BackColor = System.Drawing.Color.Transparent;
+            this.SessionOpened.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.SessionOpened.Location = new System.Drawing.Point(8, 84);
+            this.SessionOpened.Name = "SessionOpened";
+            this.SessionOpened.Size = new System.Drawing.Size(10, 13);
+            this.SessionOpened.TabIndex = 16;
+            this.SessionOpened.Text = "-";
             // 
             // label5
             // 
@@ -649,8 +649,8 @@
         private System.Windows.Forms.ToolStripMenuItem productsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem devicesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cashboxToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openShiftToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem closeShiftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeSessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stornToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordersListToolStripMenuItem;
@@ -674,7 +674,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView cartGridView;
         private System.Windows.Forms.BindingSource cartDataBindingSource;
-        private System.Windows.Forms.Label shiftOpened;
+        private System.Windows.Forms.Label SessionOpened;
         private System.Windows.Forms.ToolStripMenuItem allListsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shopListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientsToolStripMenuItem;

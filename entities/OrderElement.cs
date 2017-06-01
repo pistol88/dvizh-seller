@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.entities
 {
-    class OrderElement
+    public class OrderElement
     {
         int id;
         int productId;

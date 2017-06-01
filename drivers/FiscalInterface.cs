@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.drivers
 {
-    interface FiscalInterface
+    public interface FiscalInterface
     {
         void OpenDocument(byte type);
 
         void CloseDocument();
 
-        void SetTaxNumber(sbyte number);
+        void SetTaxNumber(byte number);
 
         void SetCashierName(string name);
 
@@ -26,7 +26,7 @@ namespace DvizhSeller.drivers
 
         void RegisterProduct(string name, string barcode, double quantity, double price, int numPos = 1);
 
-        void RegisterPayment(double sum);
+        void RegisterPayment(double sum, byte type = 0);
 
         void RegisterDiscount(byte type, string nameDiscount, int sum);
 
@@ -34,11 +34,15 @@ namespace DvizhSeller.drivers
         
         void PrintServiceData();
 
+        bool Ready();
+
         bool IsSessionOpen();
 
-        void OpenShift();
+        void OpenSession();
 
-        void CloseShift();
+        void AnnulateProduct(string name, double quantity, double price);
+
+        void CloseSession();
 
         List<int> GetStatuses();
     }

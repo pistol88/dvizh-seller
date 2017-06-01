@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DvizhSeller.drivers
 {
-    class FiscalAbstractFabric : FiscalAbstractFabricInterface
+    public class FiscalAbstractFabric : FiscalAbstractFabricInterface
     {
         public FiscalInterface Build()
         {

@@ -229,7 +229,7 @@ namespace DvizhSeller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int fiscalDriverType {
             get {
                 return ((int)(this["fiscalDriverType"]));
