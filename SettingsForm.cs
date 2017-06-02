@@ -16,6 +16,8 @@ namespace DvizhSeller
 
         services.Database db = new services.Database();
 
+        int loadedFiscalType;
+
         repositories.Cashbox cashboxes;
 
         services.DataMapper dataMapper;
@@ -68,6 +70,7 @@ namespace DvizhSeller
             roundingTypeBox.SelectedIndex = Properties.Settings.Default.roundingType;
             roundingBox.Text = Properties.Settings.Default.rounding.ToString();
             fiscalComPortBox.Text = Properties.Settings.Default.fiscalComPort.ToString();
+            
 
             Item vikiItem = new Item("VikiPrint (Пирит)", 1);
             fiscalDriverTypeBox.Items.Add(vikiItem);
@@ -92,6 +95,7 @@ namespace DvizhSeller
             else
                 fiscalDriverTypeBox.SelectedItem = atolItem;
 
+            loadedFiscalType = fiscalDriverTypeBox.SelectedIndex;
 
             renderFiscalSettings();
         }
@@ -124,7 +128,10 @@ namespace DvizhSeller
 
             Properties.Settings.Default.Save();
 
-            savingInfo.Text = "Сохранено. При изменении настроек драйверов ККМ может потребоваться перезапуск.";
+            if (Properties.Settings.Default.fiscalDriverType != loadedFiscalType)
+                MessageBox.Show("Перезапустите программу, чтобы сменить драйвер.");
+
+            savingInfo.Text = "Сохранено.";
         }
 
         private class Item
