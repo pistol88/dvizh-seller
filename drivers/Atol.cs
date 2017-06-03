@@ -39,7 +39,6 @@ namespace DvizhSeller.drivers
                     return;
                 }
 
-
                 driverExists = true;
 
                 if (cmd.CheckState != 0)
