@@ -250,5 +250,17 @@ namespace DvizhSeller.Properties {
                 this["fiscalComPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoOpenTablet {
+            get {
+                return ((bool)(this["autoOpenTablet"]));
+            }
+            set {
+                this["autoOpenTablet"] = value;
+            }
+        }
     }
 }

@@ -80,7 +80,14 @@ namespace DvizhSeller
             dataMapper.FillClients(clients);
             dataMapper.FillCashiers(cashiers);
 
-            if (Properties.Settings.Default.fiscal) {
+            if(Properties.Settings.Default.autoOpenTablet)
+            {
+                TabletForm tabletWindow = new TabletForm(this);
+                tabletWindow.Show();
+            }
+
+            if (Properties.Settings.Default.fiscal)
+            {
                 fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
 
                 if (fiscal.Ready())
@@ -94,14 +101,14 @@ namespace DvizhSeller
                 if (Properties.Settings.Default.fiscalDriverType == 1)
                     discountBox.Enabled = true;
 
+                RenderSession();
+
             } else
             {
                 discountBox.Enabled = true;
                 DeactivateFiscal();
             }
-
-            RenderSession();
-
+            
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
         }

@@ -65,6 +65,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.fiscalSettings = new System.Windows.Forms.GroupBox();
             this.savingInfo = new System.Windows.Forms.Label();
+            this.autoOpenTabletBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -374,6 +375,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.autoOpenTabletBox);
             this.tabPage1.Controls.Add(this.dbFileBox);
             this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.label8);
@@ -449,6 +451,16 @@
             this.savingInfo.Size = new System.Drawing.Size(0, 13);
             this.savingInfo.TabIndex = 26;
             // 
+            // autoOpenTabletBox
+            // 
+            this.autoOpenTabletBox.AutoSize = true;
+            this.autoOpenTabletBox.Location = new System.Drawing.Point(19, 146);
+            this.autoOpenTabletBox.Name = "autoOpenTabletBox";
+            this.autoOpenTabletBox.Size = new System.Drawing.Size(261, 17);
+            this.autoOpenTabletBox.TabIndex = 29;
+            this.autoOpenTabletBox.Text = "Автоматически открывать окно для планшета";
+            this.autoOpenTabletBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -516,5 +528,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox fiscalSettings;
         private System.Windows.Forms.Label savingInfo;
+        private System.Windows.Forms.CheckBox autoOpenTabletBox;
     }
 }

@@ -143,9 +143,18 @@ namespace DvizhSeller.drivers
         {
             int fatalStatus, currentFlagsStatus, documentStatus;
             int flagsStatus = getStatusFlags(out fatalStatus, out currentFlagsStatus, out documentStatus);
-            
+
+            //MessageBox.Show(flagsStatus.ToString() + '-' + fatalStatus.ToString() + '-' + currentFlagsStatus.ToString() + '-' + documentStatus.ToString());
+
             if (flagsStatus == 0)
             {
+                if (currentFlagsStatus == 12)
+                {
+                    MessageBox.Show("Смена длится более 24 часов. Перезапустите смену.");
+                    return true;
+                }
+                    
+
                 if (currentFlagsStatus == 4)
                     return true;
                 else
