@@ -229,7 +229,6 @@ namespace DvizhSeller
             clientsForm.Show();
         }
 
-
         private void cashierName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             cashierForm = new CashierChooseForm(this);
