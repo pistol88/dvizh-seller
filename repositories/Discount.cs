@@ -32,7 +32,7 @@ namespace DvizhSeller.repositories
             if (hasDiscount == null)
             {
                 Add(discount);
-                command = new SQLiteCommand("INSERT INTO discount(id, code, discount) VALUES(@id, @code, @discount)", db.connection);
+                command = new SQLiteCommand("INSERT INTO discount(code, discount) VALUES(@code, @discount)", db.connection);
             }
             else
             {

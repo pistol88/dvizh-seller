@@ -34,7 +34,7 @@ namespace DvizhSeller.repositories
             {
                 Add(product);
                 
-                command = new SQLiteCommand("INSERT INTO product(id, sku, name, price, category_id, image, amount) VALUES(@id, @sku, @name, @price, @category_id, @image, @amount)", db.connection);
+                command = new SQLiteCommand("INSERT INTO product(sku, name, price, category_id, image, amount) VALUES(@sku, @name, @price, @category_id, @image, @amount)", db.connection);
             }
             else
             {

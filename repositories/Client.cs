@@ -33,7 +33,7 @@ namespace DvizhSeller.repositories
             if (hasClient == null)
             {
                 Add(client);
-                command = new SQLiteCommand("INSERT INTO client(id, name, phone) VALUES(@id, @name, @phone)", db.connection);
+                command = new SQLiteCommand("INSERT INTO client(name, phone) VALUES(@name, @phone)", db.connection);
             }
             else
             {

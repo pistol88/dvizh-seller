@@ -32,7 +32,7 @@ namespace DvizhSeller.repositories
             if (hasCashier == null)
             {
                 Add(cashier);
-                command = new SQLiteCommand("INSERT INTO cashier(id, name) VALUES(@id, @name)", db.connection);
+                command = new SQLiteCommand("INSERT INTO cashier(name) VALUES(@name)", db.connection);
             }
             else
             {
