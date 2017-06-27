@@ -32,7 +32,7 @@ namespace DvizhSeller.repositories
             if (hasCategory == null)
             {
                 Add(category);
-                command = new SQLiteCommand("INSERT INTO category(id, name, parent_id) VALUES(@id, @name, @parent_id)", db.connection);
+                command = new SQLiteCommand("INSERT INTO category(name, parent_id) VALUES(@name, @parent_id)", db.connection);
             }
             else
             {
