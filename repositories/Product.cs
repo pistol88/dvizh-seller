@@ -30,8 +30,8 @@ namespace DvizhSeller.repositories
 
             SQLiteCommand command;
 
-            if (hasProduct == null)
-            {
+            if (product.GetId() == 0 | hasProduct == null)
+            { 
                 Add(product);
                 
                 command = new SQLiteCommand("INSERT INTO product(sku, name, price, category_id, image, amount) VALUES(@sku, @name, @price, @category_id, @image, @amount)", db.connection);
@@ -48,7 +48,7 @@ namespace DvizhSeller.repositories
             command.Parameters.AddWithValue("@category_id", product.GetCategoryId());
             command.Parameters.AddWithValue("@image", product.GetImage());
             command.Parameters.AddWithValue("@amount", product.GetAmount());
-
+            
             int num = command.ExecuteNonQuery();
 
             return num;
