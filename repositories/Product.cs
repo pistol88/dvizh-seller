@@ -50,7 +50,7 @@ namespace DvizhSeller.repositories
             command.Parameters.AddWithValue("@amount", product.GetAmount());
             
             int num = command.ExecuteNonQuery();
-
+            
             return num;
         }
 
