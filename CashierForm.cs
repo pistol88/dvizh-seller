@@ -339,7 +339,7 @@ namespace DvizhSeller
                     paymentType = 0;
                 else
                     paymentType = 1;
-
+                
                 ok = FiscalRegister(GetCashierName(), paymentType);
             }
 

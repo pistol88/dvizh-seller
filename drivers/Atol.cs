@@ -73,7 +73,9 @@ namespace DvizhSeller.drivers
                 type = DOC_TYPE_ANNULATE;
             else
                 type = DOC_TYPE_REGISTER;
-            
+
+            cmd.OperatorName = cashierName;
+
             cmd.Mode = 1;
             cmd.SetMode();
 
