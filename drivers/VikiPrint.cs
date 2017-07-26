@@ -31,6 +31,8 @@ namespace DvizhSeller.drivers
             portName = setPortName;
             portSpeed = setPortSpeed;
 
+            taxNumber = Convert.ToByte(Properties.Settings.Default.taxType);
+
             int result = openPort(portName, portSpeed);
 
             //commandStart();
@@ -153,7 +155,6 @@ namespace DvizhSeller.drivers
                     MessageBox.Show("Смена длится более 24 часов. Перезапустите смену.");
                     return true;
                 }
-                    
 
                 if (currentFlagsStatus == 4)
                     return true;

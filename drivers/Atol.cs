@@ -156,6 +156,9 @@ namespace DvizhSeller.drivers
                 return;
             }
 
+            cmd.TaxTypeNumber = Properties.Settings.Default.taxType;
+            cmd.SummTax();
+
             cmd.Name = name;
             cmd.Price = price;
             cmd.Quantity = quantity;

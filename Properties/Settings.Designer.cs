@@ -262,5 +262,17 @@ namespace DvizhSeller.Properties {
                 this["autoOpenTablet"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int taxType {
+            get {
+                return ((int)(this["taxType"]));
+            }
+            set {
+                this["taxType"] = value;
+            }
+        }
     }
 }

@@ -71,6 +71,7 @@ namespace DvizhSeller
             roundingBox.Text = Properties.Settings.Default.rounding.ToString();
             fiscalComPortBox.Text = Properties.Settings.Default.fiscalComPort.ToString();
             autoOpenTabletBox.Checked = Properties.Settings.Default.autoOpenTablet;
+            taxBox.Text = Properties.Settings.Default.taxType.ToString();
 
             Item vikiItem = new Item("VikiPrint (Пирит)", 1);
             fiscalDriverTypeBox.Items.Add(vikiItem);
@@ -118,6 +119,7 @@ namespace DvizhSeller
             Properties.Settings.Default.fiscalComPort = fiscalComPortBox.Text;
             Properties.Settings.Default.fiscalDriverType = fiscalDriverTypeBox.SelectedIndex;
             Properties.Settings.Default.autoOpenTablet = autoOpenTabletBox.Checked;
+            Properties.Settings.Default.taxType = Convert.ToInt16(taxBox.Text);
 
             object selectedItem = cashboxId.SelectedItem;
             Properties.Settings.Default.cashboxId = Convert.ToInt32(selectedItem.GetHashCode());
