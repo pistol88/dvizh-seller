@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.Ports;
+using System.Net;
 
 namespace DvizhSeller
 {
@@ -111,6 +112,9 @@ namespace DvizhSeller
             
             cashierForm = new CashierChooseForm(this);
             cashierForm.Show();
+
+            WebServer ws = new WebServer(SendResponse, "http://localhost:8080/test/");
+            ws.Run();
         }
 
         public void BarCodeFocus()
@@ -567,6 +571,11 @@ namespace DvizhSeller
         {
             AboutForm aboutWindow = new AboutForm();
             aboutWindow.Show();
+        }
+
+        private string SendResponse(HttpListenerRequest request)
+        {
+            return  "<HTML><BODY>Hello world<br></BODY></HTML>" ;
         }
     }
 }
