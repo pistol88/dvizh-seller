@@ -61,13 +61,14 @@
             this.atolSettingsButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.taxBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.autoOpenTabletBox = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.fiscalSettings = new System.Windows.Forms.GroupBox();
             this.savingInfo = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.taxBox = new System.Windows.Forms.TextBox();
+            this.autoStartWebServerBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -377,6 +378,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.autoStartWebServerBox);
             this.tabPage1.Controls.Add(this.taxBox);
             this.tabPage1.Controls.Add(this.label12);
             this.tabPage1.Controls.Add(this.autoOpenTabletBox);
@@ -398,10 +400,26 @@
             this.tabPage1.Text = "Общие";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // taxBox
+            // 
+            this.taxBox.Location = new System.Drawing.Point(138, 84);
+            this.taxBox.Name = "taxBox";
+            this.taxBox.Size = new System.Drawing.Size(45, 20);
+            this.taxBox.TabIndex = 31;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 87);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(73, 13);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "Типа налога:";
+            // 
             // autoOpenTabletBox
             // 
             this.autoOpenTabletBox.AutoSize = true;
-            this.autoOpenTabletBox.Location = new System.Drawing.Point(19, 174);
+            this.autoOpenTabletBox.Location = new System.Drawing.Point(16, 172);
             this.autoOpenTabletBox.Name = "autoOpenTabletBox";
             this.autoOpenTabletBox.Size = new System.Drawing.Size(261, 17);
             this.autoOpenTabletBox.TabIndex = 29;
@@ -465,21 +483,15 @@
             this.savingInfo.Size = new System.Drawing.Size(0, 13);
             this.savingInfo.TabIndex = 26;
             // 
-            // label12
+            // autoStartWebServerBox
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 87);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(73, 13);
-            this.label12.TabIndex = 30;
-            this.label12.Text = "Типа налога:";
-            // 
-            // taxBox
-            // 
-            this.taxBox.Location = new System.Drawing.Point(138, 84);
-            this.taxBox.Name = "taxBox";
-            this.taxBox.Size = new System.Drawing.Size(45, 20);
-            this.taxBox.TabIndex = 31;
+            this.autoStartWebServerBox.AutoSize = true;
+            this.autoStartWebServerBox.Location = new System.Drawing.Point(16, 195);
+            this.autoStartWebServerBox.Name = "autoStartWebServerBox";
+            this.autoStartWebServerBox.Size = new System.Drawing.Size(219, 17);
+            this.autoStartWebServerBox.TabIndex = 32;
+            this.autoStartWebServerBox.Text = "Автоматически запускать веб-сервер";
+            this.autoStartWebServerBox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -551,5 +563,6 @@
         private System.Windows.Forms.CheckBox autoOpenTabletBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox taxBox;
+        private System.Windows.Forms.CheckBox autoStartWebServerBox;
     }
 }

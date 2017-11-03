@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.Ports;
+using System.Net;
 
 namespace DvizhSeller
 {
@@ -86,6 +87,12 @@ namespace DvizhSeller
                 tabletWindow.Show();
             }
 
+            if (Properties.Settings.Default.autoOpenTablet)
+            {
+                WebServer ws = new WebServer(SendResponse, "http://localhost:8080/test/");
+                ws.Run();
+            }
+
             if (Properties.Settings.Default.fiscal)
             {
                 fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
@@ -108,9 +115,9 @@ namespace DvizhSeller
                 discountBox.Enabled = true;
                 DeactivateFiscal();
             }
-            
+
             cashierForm = new CashierChooseForm(this);
-            cashierForm.Show();
+            cashierForm.Show(); 
         }
 
         public void BarCodeFocus()
@@ -567,6 +574,11 @@ namespace DvizhSeller
         {
             AboutForm aboutWindow = new AboutForm();
             aboutWindow.Show();
+        }
+
+        private string SendResponse(HttpListenerRequest request)
+        {
+            return  "<HTML><BODY>Hello world<br></BODY></HTML>" ;
         }
     }
 }
