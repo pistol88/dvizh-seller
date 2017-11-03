@@ -87,9 +87,9 @@ namespace DvizhSeller
                 tabletWindow.Show();
             }
 
-            if (Properties.Settings.Default.autoOpenTablet)
+            if (Properties.Settings.Default.autoStartWebServer)
             {
-                WebServer ws = new WebServer(SendResponse, "http://localhost:8080/test/");
+                WebServer ws = new WebServer(SendResponse, "http://localhost:8911/test/");
                 ws.Run();
             }
 
