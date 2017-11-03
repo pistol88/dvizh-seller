@@ -87,6 +87,12 @@ namespace DvizhSeller
                 tabletWindow.Show();
             }
 
+            if (Properties.Settings.Default.autoOpenTablet)
+            {
+                WebServer ws = new WebServer(SendResponse, "http://localhost:8080/test/");
+                ws.Run();
+            }
+
             if (Properties.Settings.Default.fiscal)
             {
                 fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
@@ -109,12 +115,9 @@ namespace DvizhSeller
                 discountBox.Enabled = true;
                 DeactivateFiscal();
             }
-            
-            cashierForm = new CashierChooseForm(this);
-            cashierForm.Show();
 
-            WebServer ws = new WebServer(SendResponse, "http://localhost:8080/test/");
-            ws.Run();
+            cashierForm = new CashierChooseForm(this);
+            cashierForm.Show(); 
         }
 
         public void BarCodeFocus()
