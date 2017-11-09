@@ -89,7 +89,6 @@ namespace DvizhSeller.services
             {
                 paymentSum = sum;
             }
-
             driver.PrintTotal();
             driver.RegisterPayment(cartSum, paymentType);
             driver.CloseDocument();
