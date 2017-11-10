@@ -19,13 +19,10 @@ namespace DvizhSeller
             if (!HttpListener.IsSupported)
                 throw new NotSupportedException(
                     "Needs Windows XP SP2, Server 2003 or later.");
-
-            // URI prefixes are required, for example 
            
             if (prefixes == null || prefixes.Length == 0)
                 throw new ArgumentException("prefixes");
-
-            // A responder method is required
+            
             if (method == null)
                 throw new ArgumentException("method");
 
@@ -64,17 +61,16 @@ namespace DvizhSeller
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                             }
-                            catch { } // suppress any exceptions
+                            catch { }
                             finally
                             {
-                                // always close the stream
                                 ctx.Response.OutputStream.Close();
                             }
                         }, _listener.GetContext());
                     }
                 }
-                catch { } // suppress any exceptions
-            });
+                catch { } 
+            });  
         }
     }
 }

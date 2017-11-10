@@ -27,7 +27,6 @@ namespace DvizhSeller.repositories
                     }
                 }
             }
-
             product.SetCartCount(count);
             products.Add(product);
         }

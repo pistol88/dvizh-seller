@@ -11,6 +11,9 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.Ports;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace DvizhSeller
 {
@@ -89,7 +92,7 @@ namespace DvizhSeller
 
             if (Properties.Settings.Default.autoStartWebServer)
             {
-                WebServer ws = new WebServer(SendResponse, "http://localhost:8911/test/");
+                WebServer ws = new WebServer(SendResponse, "http://localhost:8911/dvizh/cashier/api/1.0/");
                 ws.Run();
             }
 
@@ -578,7 +581,46 @@ namespace DvizhSeller
 
         private string SendResponse(HttpListenerRequest request)
         {
-            return  "<HTML><BODY>Hello world<br></BODY></HTML>" ;
+            if (request.RawUrl == "/dvizh/cashier/api/1.0/")
+            {
+                System.IO.Stream body = request.InputStream;
+                System.IO.StreamReader reader = new System.IO.StreamReader(body, request.ContentEncoding);
+                string json = reader.ReadToEnd();
+                services.actions.RequestAction requestAction = JsonConvert.DeserializeObject<services.actions.RequestAction> (json);
+               /* if (requestAction.method == "purchase")
+                {
+                    services.PurchaseAction product = JsonConvert.DeserializeObject<services.PurchaseAction>(json);
+                    product.purchase();
+                }*/
+                switch (requestAction.method)
+                {
+                    case "purchase":
+                        services.actions.PurchaseAction product = JsonConvert.DeserializeObject<services.actions.PurchaseAction>(json);
+                        product.purchase();
+                        break;
+                    case "annulate":
+                        
+                        break;
+                    case "storning":
+                        break;
+                    case "start":
+                        fiscal.OpenSession();
+                        break;
+                    case "stop":
+                        fiscal.CloseSession();
+                        break;
+                    case "set cashier":
+                        services.actions.SetCashierAction setCashier = JsonConvert.DeserializeObject<services.actions.SetCashierAction>(json);
+                        ChooseCashier(setCashier._params.id, setCashier._params.name);
+                        break;
+                    case "test":
+                        fiscal.TestPrint();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return  "<HTML><BODY><br></BODY></HTML>" ;
         }
     }
 }
