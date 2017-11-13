@@ -45,6 +45,14 @@ namespace DvizhSeller.services
             //))))
         }
 
+        public void Storning(entities.OrderElement orderElement)
+        {
+            driver.OpenDocument(DOC_TYPE_OUTCOME);
+            driver.Storning(orderElement.GetProductName(), orderElement.GetCount(), orderElement.GetPrice());
+            driver.PrintTotal();
+            driver.CloseDocument();
+        }
+
         public void Annulate(entities.OrderElement orderElement)
         {
             driver.OpenDocument(DOC_TYPE_ANNULATE);
@@ -64,25 +72,24 @@ namespace DvizhSeller.services
             if (cart.GetCount() <= 0)
                 return;
             
-            driver.OpenDocument(DOC_TYPE_REGISTER);
+            driver.OpenDocument(DOC_TYPE_BUY);
             int i = 1;
             double cartSum = cart.GetTotal();
             double sum = 0;
+            if (cart.GetDiscount() >= 1) driver.RegisterDiscount(1, "-", cart.GetDiscount()); ;
             foreach (entities.Product element in cart.GetElements())
             {
                 driver.RegisterProduct(element.GetName(), element.GetSku(), element.GetCartCount(), element.GetPrice(), i);
                 sum += (element.GetCartCount()*element.GetPrice());
                 i++;
             }
-
             double paymentSum;
-            if(cartSum < sum)
+            if (cartSum < sum)
             {
                 int discount = Convert.ToInt32(sum - cartSum);
                 if (discount <= 1)
                     discount = 1;
 
-                driver.RegisterDiscount(1, "-", discount);
                 paymentSum = sum-discount;
             }
             else

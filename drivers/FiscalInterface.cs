@@ -42,6 +42,8 @@ namespace DvizhSeller.drivers
 
         void AnnulateProduct(string name, double quantity, double price);
 
+        void Storning(string name, double quantity, double price);
+
         void CloseSession();
 
         List<int> GetStatuses();

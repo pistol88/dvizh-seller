@@ -587,11 +587,6 @@ namespace DvizhSeller
                 System.IO.StreamReader reader = new System.IO.StreamReader(body, request.ContentEncoding);
                 string json = reader.ReadToEnd();
                 services.actions.RequestAction requestAction = JsonConvert.DeserializeObject<services.actions.RequestAction> (json);
-               /* if (requestAction.method == "purchase")
-                {
-                    services.PurchaseAction product = JsonConvert.DeserializeObject<services.PurchaseAction>(json);
-                    product.purchase();
-                }*/
                 switch (requestAction.method)
                 {
                     case "purchase":
@@ -599,14 +594,26 @@ namespace DvizhSeller
                         product.purchase();
                         break;
                     case "annulate":
-                        
+                        services.actions.AnnulateAction annulate = JsonConvert.DeserializeObject<services.actions.AnnulateAction>(json);
+                        foreach (var ann in annulate._params.elements)
+                        {
+                            ann.SetCancelAt(DateTime.Now.ToShortDateString());
+                            Console.WriteLine(ann.GetCount());
+                            fiscal.Annulate(ann);
+                        }
                         break;
                     case "storning":
+                        services.actions.AnnulateAction storno = JsonConvert.DeserializeObject<services.actions.AnnulateAction>(json);
+                        foreach (var st in storno._params.elements)
+                        {
+                            st.SetCancelAt(DateTime.Now.ToShortDateString());
+                            fiscal.Storning(st);
+                        }
                         break;
-                    case "start":
+                    case "session_start":
                         fiscal.OpenSession();
                         break;
-                    case "stop":
+                    case "session_stop":
                         fiscal.CloseSession();
                         break;
                     case "set cashier":

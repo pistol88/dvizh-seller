@@ -18,9 +18,14 @@ namespace DvizhSeller.services.actions
         public void purchase()
         {
             repositories.Cart cart = new repositories.Cart();
+            if (this._params.discount > 0)
+            {
+                entities.Discount discount = new entities.Discount(1, "disc", this._params.discount);
+                cart.SetDiscount(discount);
+            }
             foreach (var product in this._params.elements)
             {
-                cart.Put(product);
+                cart.Put(product,product.CartCount);
             }
             fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
             fiscal.Register(this._params.payment_type);
