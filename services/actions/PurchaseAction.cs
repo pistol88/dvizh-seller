@@ -21,13 +21,16 @@ namespace DvizhSeller.services.actions
             if (this._params.discount > 0)
             {
                 entities.Discount discount = new entities.Discount(1, "disc", this._params.discount);
+                discount.SetType(this._params.discount_type);
                 cart.SetDiscount(discount);
             }
             foreach (var product in this._params.elements)
             {
                 cart.Put(product,product.CartCount);
             }
+            Properties.Settings.Default.taxType = this._params.tax_id;
             fiscal = new services.Fiscal(new drivers.FiscalAbstractFabric(), cart);
+            fiscal.SetTax(this._params.tax_id);
             fiscal.Register(this._params.payment_type);
         }
     }
@@ -36,7 +39,8 @@ namespace DvizhSeller.services.actions
     {
         public byte payment_type { get; set; }
         public int discount { get; set; }
-        public int tax_id { get; set; }
+        public byte discount_type { get; set; }
+        public byte tax_id { get; set; }
         public entities.Product[] elements { get; set; }
 
         public int GetPayment()

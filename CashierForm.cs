@@ -69,6 +69,8 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
+
             BarCodeFocus();
 
             clients = new repositories.Client(db);
@@ -618,7 +620,11 @@ namespace DvizhSeller
                         break;
                     case "set cashier":
                         services.actions.SetCashierAction setCashier = JsonConvert.DeserializeObject<services.actions.SetCashierAction>(json);
-                        ChooseCashier(setCashier._params.id, setCashier._params.name);
+                        fiscal.SetCashier(setCashier._params.name);
+                        break;
+                    case "settings":
+                        FprnM1C.IFprnM45 cmd = new FprnM1C.FprnM45();
+                        cmd.ShowProperties();
                         break;
                     case "test":
                         fiscal.TestPrint();

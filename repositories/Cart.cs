@@ -113,5 +113,10 @@ namespace DvizhSeller.repositories
         {
             discount = null;
         }
+
+        public byte GetDiscType()
+        {
+            return discount.GetType();
+        }
     }
 }

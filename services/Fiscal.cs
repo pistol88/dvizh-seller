@@ -8,6 +8,7 @@ namespace DvizhSeller.services
     {
         repositories.Cart cart;
         drivers.FiscalInterface driver;
+        byte tax_id;
 
         public const int DOC_TYPE_SERVICE = 1; //For print texts
         public const int DOC_TYPE_REGISTER = 2; //For fiscal registration
@@ -21,6 +22,7 @@ namespace DvizhSeller.services
         {
             driver = fiscalFabric.Build();
             cart = setCart;
+            tax_id = 0;
         }
 
         public bool Ready()
@@ -76,7 +78,7 @@ namespace DvizhSeller.services
             int i = 1;
             double cartSum = cart.GetTotal();
             double sum = 0;
-            if (cart.GetDiscount() >= 1) driver.RegisterDiscount(1, "-", cart.GetDiscount()); ;
+            if (cart.GetDiscount() >= 1) driver.RegisterDiscount(cart.GetDiscType(), "-", cart.GetDiscount()); ;
             foreach (entities.Product element in cart.GetElements())
             {
                 driver.RegisterProduct(element.GetName(), element.GetSku(), element.GetCartCount(), element.GetPrice(), i);
@@ -96,6 +98,7 @@ namespace DvizhSeller.services
             {
                 paymentSum = sum;
             }
+            driver.SetTaxNumber(tax_id);
             driver.PrintTotal();
             driver.RegisterPayment(cartSum, paymentType);
             driver.CloseDocument();
@@ -119,6 +122,11 @@ namespace DvizhSeller.services
         public List<int> GetStatus()
         {
             return driver.GetStatuses();
+        }
+
+        public void SetTax(byte setTax_id)
+        {
+            tax_id = setTax_id;
         }
     }
 }
