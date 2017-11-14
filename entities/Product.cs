@@ -34,12 +34,6 @@ namespace DvizhSeller.entities
             }
         }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
         public string Name
         {
             get { return name; }

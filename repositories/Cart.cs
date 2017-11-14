@@ -89,7 +89,9 @@ namespace DvizhSeller.repositories
             double returnTotal = 0;
 
             if (discount != null && total > 0)
+            {
                 returnTotal = total - (total * discount.GetDiscount() / 100);
+            }
             else
                 returnTotal = total;
             
@@ -101,9 +103,20 @@ namespace DvizhSeller.repositories
             discount = setDiscount;
         }
 
+        public int GetDiscount()
+        {
+            if(discount != null)return discount.GetDiscount();
+            return 0;
+        }
+
         public void UnsetDiscount()
         {
             discount = null;
+        }
+
+        public byte GetDiscType()
+        {
+            return discount.GetType();
         }
     }
 }

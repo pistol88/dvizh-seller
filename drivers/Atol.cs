@@ -193,6 +193,33 @@ namespace DvizhSeller.drivers
             cmd.Registration();
         }
 
+        public void Storning(string name, double quantity, double price)
+        {
+            if (!driverExists)
+                return;
+
+            if (cmd.GetStatus() < 0)
+            {
+                MessageBox.Show("Ошибка ККМ: " + cmd.GetStatus().ToString());
+                return;
+            }
+
+            cmd.Alignment = 1;
+            cmd.Caption = "Сторнирование";
+            cmd.PrintString();
+
+            cmd.Name = name;
+            cmd.Price = price;
+            cmd.Quantity = quantity;
+
+            cmd.Caption = name + " - " + price + "х" + quantity + " = " +quantity*price;
+            cmd.PrintString();
+
+            cmd.BuyReturn();
+
+            cmd.Registration();
+        }
+
         public void RegisterPayment(double sum, byte type = 0)
         {
             if (!driverExists)

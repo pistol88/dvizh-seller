@@ -11,6 +11,7 @@ namespace DvizhSeller.entities
         int id;
         int discount;
         string code;
+        byte type;
 
         public Discount(int setId, string setCode, int setDiscount)
         {
@@ -59,6 +60,11 @@ namespace DvizhSeller.entities
             code = setCode;
         }
 
+        public void SetType(byte setType)
+        {
+            type = setType;
+        }
+
         public void SetDiscount(int setDiscount)
         {
             discount = setDiscount;
@@ -67,6 +73,11 @@ namespace DvizhSeller.entities
         public void SetId(int setId)
         {
             id = setId;
+        }
+
+        public byte GetType()
+        {
+            return type;
         }
     }
 }

@@ -111,6 +111,12 @@ namespace DvizhSeller.drivers
             libAddPosition(ConvertTo866(name), ConvertTo866(name), quantity, price, taxNumber, numPos, numDepart, 0, "", 0);
         }
 
+        public void Storning(string name, double quantity, double price)
+        {
+            int numPos = 1;
+            libAddPosition(ConvertTo866(name), ConvertTo866(name), quantity, price, taxNumber, numPos, numDepart, 0, "", 0);
+        }
+
         public void RegisterPayment(double sum, byte type = 0)
         {
             int result = libAddPaymentD(type, sum, "");
