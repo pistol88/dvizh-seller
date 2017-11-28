@@ -72,9 +72,7 @@ namespace DvizhSeller.services
         public void Register(byte paymentType = 0)
         {
             if (cart.GetCount() <= 0)
-                return;
-            
-            driver.OpenDocument(DOC_TYPE_BUY);
+                driver.OpenDocument(DOC_TYPE_BUY);
             int i = 1;
             double cartSum = cart.GetTotal();
             double sum = 0;
@@ -101,6 +99,7 @@ namespace DvizhSeller.services
             driver.SetTaxNumber(tax_id);
             driver.PrintTotal();
             driver.RegisterPayment(cartSum, paymentType);
+            driver.BotIndent();
             driver.CloseDocument();
         }
 
@@ -127,6 +126,12 @@ namespace DvizhSeller.services
         public void SetTax(byte setTax_id)
         {
             tax_id = setTax_id;
+        }
+
+        public void TopIndent()
+        {
+            driver.PrintString("");
+            driver.PrintString("");
         }
     }
 }

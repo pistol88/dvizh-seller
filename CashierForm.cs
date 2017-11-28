@@ -12,8 +12,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Net;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
+using System.Web.Http.Cors;
 
 namespace DvizhSeller
 {
@@ -69,7 +68,8 @@ namespace DvizhSeller
 
         private void Cashier_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+            this.Hide();
 
             BarCodeFocus();
 
@@ -121,8 +121,8 @@ namespace DvizhSeller
                 DeactivateFiscal();
             }
 
-            cashierForm = new CashierChooseForm(this);
-            cashierForm.Show(); 
+            //cashierForm = new CashierChooseForm(this);
+            //cashierForm.Show(); 
         }
 
         public void BarCodeFocus()
@@ -161,6 +161,7 @@ namespace DvizhSeller
 
         public void DeactivateFiscal()
         {
+            
             fiscalActivated = false;
             cashboxToolStripMenuItem.Enabled = false;
         }
@@ -492,19 +493,29 @@ namespace DvizhSeller
 
         public void RenderSession()
         {
-            SessionOpen = fiscal.IsSessionOpen();
-
-            if (SessionOpen)
+            if (fiscal.Ready()) 
             {
-                SessionOpened.Text = "Смена открыта";
-                openSessionToolStripMenuItem.Enabled = false;
-                closeSessionToolStripMenuItem.Enabled = true;
+                fiscal.IsSessionOpen();
+                if (SessionOpen)
+                {
+                    SessionOpened.Text = "Смена открыта";
+                    openSessionToolStripMenuItem.Enabled = false;
+                    closeSessionToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    SessionOpened.Text = "Смена не открыта";
+                    openSessionToolStripMenuItem.Enabled = true;
+                    closeSessionToolStripMenuItem.Enabled = false;
+                }
             }
             else
             {
-                SessionOpened.Text = "Смена не открыта";
-                openSessionToolStripMenuItem.Enabled = true;
+                SessionOpened.Text = "Отсутствует драйвер АТОЛ";
+                Console.WriteLine("Show form");
+                openSessionToolStripMenuItem.Enabled = false;
                 closeSessionToolStripMenuItem.Enabled = false;
+                orderButton.Enabled = false;
             }
         }
 
@@ -581,6 +592,7 @@ namespace DvizhSeller
             aboutWindow.Show();
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         private string SendResponse(HttpListenerRequest request)
         {
             if (request.RawUrl == "/dvizh/cashier/api/1.0/")
@@ -593,6 +605,7 @@ namespace DvizhSeller
                 {
                     case "purchase":
                         services.actions.PurchaseAction product = JsonConvert.DeserializeObject<services.actions.PurchaseAction>(json);
+                        fiscal.TopIndent();
                         product.purchase();
                         break;
                     case "annulate":
@@ -600,7 +613,6 @@ namespace DvizhSeller
                         foreach (var ann in annulate._params.elements)
                         {
                             ann.SetCancelAt(DateTime.Now.ToShortDateString());
-                            Console.WriteLine(ann.GetCount());
                             fiscal.Annulate(ann);
                         }
                         break;
@@ -616,6 +628,7 @@ namespace DvizhSeller
                         fiscal.OpenSession();
                         break;
                     case "session_stop":
+                        Console.WriteLine("stop");
                         fiscal.CloseSession();
                         break;
                     case "set cashier":
@@ -633,7 +646,23 @@ namespace DvizhSeller
                         break;
                 }
             }
-            return  "<HTML><BODY><br></BODY></HTML>" ;
+            return "DvizhSeller";
+        }
+
+        private void notifyExit_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem == notifyExit.Items[0])
+            {
+                this.Show();
+                this.Focus();
+                if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+            }
+            if (e.ClickedItem == notifyExit.Items[1]) this.Close() ;
+        }
+
+        private void CashierForm_Deactivate(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

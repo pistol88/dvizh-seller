@@ -180,5 +180,10 @@ namespace DvizhSeller.drivers
         {
             closePort();
         }
+
+        public void BotIndent()
+        {
+            
+        }
     }
 }

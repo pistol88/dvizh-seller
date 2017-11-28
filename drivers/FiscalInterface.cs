@@ -47,5 +47,7 @@ namespace DvizhSeller.drivers
         void CloseSession();
 
         List<int> GetStatuses();
+
+        void BotIndent();
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Threading;
+using System.Web.Http;
 
 
 namespace DvizhSeller
@@ -60,6 +61,7 @@ namespace DvizhSeller
                                 byte[] buf = Encoding.UTF8.GetBytes(rstr);
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
+                                ctx.Response.AddHeader("Access-Control-Allow-Origin","*");
                             }
                             catch { }
                             finally
@@ -71,6 +73,22 @@ namespace DvizhSeller
                 }
                 catch { } 
             });  
+        }
+
+        public static class WebApiConfig
+        {
+            public static void Register(HttpConfiguration config)
+            {
+                config.EnableCors();
+
+                config.MapHttpAttributeRoutes();
+                config.Routes.MapHttpRoute(
+                    name: "DefaultApi",
+                    routeTemplate: "api/{controller}/{id}",
+                    defaults: new { id = RouteParameter.Optional }
+                );
+                // ...
+            }
         }
     }
 }

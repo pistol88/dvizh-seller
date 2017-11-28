@@ -56,14 +56,6 @@
             this.cartProductPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cartProductCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cartProductDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.skuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoryIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cartCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.orderBox = new System.Windows.Forms.GroupBox();
             this.discountBox = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -84,13 +76,26 @@
             this.freeSale = new System.Windows.Forms.LinkLabel();
             this.shopBooksLinkLabel = new System.Windows.Forms.LinkLabel();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notifyExit = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.notifyMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.skuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cartDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.cartBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
             this.orderBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.notifyExit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -333,52 +338,6 @@
             this.cartProductDelete.UseColumnTextForButtonValue = true;
             this.cartProductDelete.Width = 40;
             // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // skuDataGridViewTextBoxColumn
-            // 
-            this.skuDataGridViewTextBoxColumn.DataPropertyName = "Sku";
-            this.skuDataGridViewTextBoxColumn.HeaderText = "Sku";
-            this.skuDataGridViewTextBoxColumn.Name = "skuDataGridViewTextBoxColumn";
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Price";
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            // 
-            // amountDataGridViewTextBoxColumn
-            // 
-            this.amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
-            this.amountDataGridViewTextBoxColumn.HeaderText = "Amount";
-            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            // 
-            // categoryIdDataGridViewTextBoxColumn
-            // 
-            this.categoryIdDataGridViewTextBoxColumn.DataPropertyName = "CategoryId";
-            this.categoryIdDataGridViewTextBoxColumn.HeaderText = "CategoryId";
-            this.categoryIdDataGridViewTextBoxColumn.Name = "categoryIdDataGridViewTextBoxColumn";
-            // 
-            // categoryDataGridViewTextBoxColumn
-            // 
-            this.categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
-            this.categoryDataGridViewTextBoxColumn.HeaderText = "Category";
-            this.categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
-            // 
-            // cartCountDataGridViewTextBoxColumn
-            // 
-            this.cartCountDataGridViewTextBoxColumn.DataPropertyName = "CartCount";
-            this.cartCountDataGridViewTextBoxColumn.HeaderText = "CartCount";
-            this.cartCountDataGridViewTextBoxColumn.Name = "cartCountDataGridViewTextBoxColumn";
-            // 
-            // cartDataBindingSource
-            // 
-            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartProvider);
-            // 
             // orderBox
             // 
             this.orderBox.Controls.Add(this.discountBox);
@@ -606,6 +565,81 @@
             this.webBrowser.TabIndex = 19;
             this.webBrowser.Url = new System.Uri("http://dvizh.net/info/dvizh.cashier.html", System.UriKind.Absolute);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.notifyExit;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "DvizhCashier";
+            this.notifyIcon1.Visible = true;
+            // 
+            // notifyExit
+            // 
+            this.notifyExit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notifyMenuOpen,
+            this.notifyMenuExit});
+            this.notifyExit.Name = "notifyExit";
+            this.notifyExit.Size = new System.Drawing.Size(122, 48);
+            this.notifyExit.Text = "Выход";
+            this.notifyExit.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.notifyExit_ItemClicked);
+            // 
+            // notifyMenuOpen
+            // 
+            this.notifyMenuOpen.Name = "notifyMenuOpen";
+            this.notifyMenuOpen.Size = new System.Drawing.Size(121, 22);
+            this.notifyMenuOpen.Text = "Открыть";
+            // 
+            // notifyMenuExit
+            // 
+            this.notifyMenuExit.Name = "notifyMenuExit";
+            this.notifyMenuExit.Size = new System.Drawing.Size(121, 22);
+            this.notifyMenuExit.Text = "Выход";
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // skuDataGridViewTextBoxColumn
+            // 
+            this.skuDataGridViewTextBoxColumn.DataPropertyName = "Sku";
+            this.skuDataGridViewTextBoxColumn.HeaderText = "Sku";
+            this.skuDataGridViewTextBoxColumn.Name = "skuDataGridViewTextBoxColumn";
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            this.priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            // 
+            // amountDataGridViewTextBoxColumn
+            // 
+            this.amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
+            this.amountDataGridViewTextBoxColumn.HeaderText = "Amount";
+            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
+            // 
+            // categoryIdDataGridViewTextBoxColumn
+            // 
+            this.categoryIdDataGridViewTextBoxColumn.DataPropertyName = "CategoryId";
+            this.categoryIdDataGridViewTextBoxColumn.HeaderText = "CategoryId";
+            this.categoryIdDataGridViewTextBoxColumn.Name = "categoryIdDataGridViewTextBoxColumn";
+            // 
+            // categoryDataGridViewTextBoxColumn
+            // 
+            this.categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
+            this.categoryDataGridViewTextBoxColumn.HeaderText = "Category";
+            this.categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
+            // 
+            // cartCountDataGridViewTextBoxColumn
+            // 
+            this.cartCountDataGridViewTextBoxColumn.DataPropertyName = "CartCount";
+            this.cartCountDataGridViewTextBoxColumn.HeaderText = "CartCount";
+            this.cartCountDataGridViewTextBoxColumn.Name = "cartCountDataGridViewTextBoxColumn";
+            // 
+            // cartDataBindingSource
+            // 
+            this.cartDataBindingSource.DataSource = typeof(DvizhSeller.tools.CartProvider);
+            // 
             // CashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -626,18 +660,20 @@
             this.Name = "CashierForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dvizh.АРМ.Кассир";
+            this.Deactivate += new System.EventHandler(this.CashierForm_Deactivate);
             this.Load += new System.EventHandler(this.Cashier_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.cartBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cartGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).EndInit();
             this.orderBox.ResumeLayout(false);
             this.orderBox.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.notifyExit.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cartDataBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -698,6 +734,10 @@
         private System.Windows.Forms.LinkLabel shopBooksLinkLabel;
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.LinkLabel freeSale;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip notifyExit;
+        private System.Windows.Forms.ToolStripMenuItem notifyMenuExit;
+        private System.Windows.Forms.ToolStripMenuItem notifyMenuOpen;
     }
 }
 
