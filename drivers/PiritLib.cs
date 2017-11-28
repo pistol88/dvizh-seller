@@ -6,7 +6,7 @@ namespace DvizhSeller.drivers
     public class PiritLib
     {
         [StructLayout(LayoutKind.Sequential)]
-        public /*unsafe*/ struct MData
+        public unsafe struct MData
         {
             public int errCode;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]

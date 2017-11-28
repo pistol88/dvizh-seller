@@ -30,7 +30,6 @@ namespace DvizhSeller.drivers
             try
             {
                 driver = Type.GetTypeFromProgID("AddIn.FPrnM45");
-
                 if (driver != null)
                     cmd = Activator.CreateInstance(driver);
                 else
@@ -68,7 +67,6 @@ namespace DvizhSeller.drivers
         {
             if (!driverExists)
                 return;
-
             if (type > 2)
                 type = DOC_TYPE_ANNULATE;
             else
@@ -155,7 +153,6 @@ namespace DvizhSeller.drivers
                 MessageBox.Show("Ошибка ККМ: " + cmd.GetStatus().ToString());
                 return;
             }
-
             cmd.TaxTypeNumber = Properties.Settings.Default.taxType;
             cmd.SummTax();
 
@@ -171,7 +168,6 @@ namespace DvizhSeller.drivers
         {
             if (!driverExists)
                 return;
-
             if (cmd.GetStatus() < 0) {
                 MessageBox.Show("Ошибка ККМ: " + cmd.GetStatus().ToString());
                 return;
@@ -230,6 +226,24 @@ namespace DvizhSeller.drivers
             cmd.TypeClose = type;
             cmd.Summ = sum;
             cmd.Payment();
+        }
+
+        public void BotIndent()
+        {
+            cmd.Caption = "";
+            cmd.PrintString();
+            cmd.PrintString();
+            cmd.Caption = "_________________________________";
+            cmd.PrintString();
+            cmd.Caption = "        (подпись кассира)";
+            cmd.PrintString();
+            cmd.Caption = "";
+            cmd.PrintString();
+            cmd.PrintString();
+            cmd.Caption = "==================================";
+            cmd.PrintString();
+            cmd.Caption = "        (подпись клиента)";
+            cmd.PrintString();
         }
 
         public void PrintTotal()
