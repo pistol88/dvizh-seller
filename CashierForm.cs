@@ -597,8 +597,6 @@ namespace DvizhSeller
         {
             if (request.RawUrl == "/dvizh/cashier/api/1.0/")
             {
-                
-
                 System.IO.Stream body = request.InputStream;
                 System.IO.StreamReader reader = new System.IO.StreamReader(body, request.ContentEncoding);
                 string json = reader.ReadToEnd();
